@@ -1,41 +1,39 @@
 <script lang="ts">
-  import svelteLogo from "./assets/svelte.svg";
-  import Counter from "./lib/Counter.svelte";
+  import { onMount, setContext } from "svelte";
+
+  import {
+    key as userContextKey,
+    initialValue as userContextInitialValue,
+  } from "./lib/userContext";
+
+  import LoginForm from "./lib/LoginForm.svelte";
+
+  onMount(() => {
+    setContext(userContextKey, userContextInitialValue);
+  });
+
+  const submit = (data) => {
+    return fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  };
 </script>
 
-<main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Hello HTTP/2 + Svelte!!!</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p class="read-the-docs">
-    Don't click on the Vite and Svelte logos to learn more
-  </p>
-</main>
+<section>
+  <LoginForm {submit} />
+</section>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
+  section {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #cd76e2, #e358ab);
   }
 </style>
