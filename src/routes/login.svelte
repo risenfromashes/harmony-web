@@ -15,7 +15,7 @@
         type="text"
         bind:value={username}
         placeholder="Username"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-5 font-Rubik"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-5 font-Roboto"
       />
     </div>
 
@@ -25,14 +25,14 @@
         type="password"
         bind:value={password}
         placeholder="Password"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-5 font-Rubik"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-5 font-Roboto"
       />
     </div>
     <div class="mx-auto py-8">
       <a
         type="button"
         href="/login"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2 px-4 mr-3 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        class="text-white font-Roboto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2 px-4 mr-3 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         Log in
         <svg
@@ -52,7 +52,7 @@
       <a
         type="button"
         href="/register"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-10"
+        class="text-white font-Roboto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-10"
       >
         <svg
           aria-hidden="true"
@@ -89,35 +89,7 @@
     color: #fff;
     font-size: 5rem;
     letter-spacing: 1px;
-    font-family: Rubik, Georgia, "Times New Roman", Times, serif;
-  }
-
-  .input_form__input {
-    width: 100%;
-    outline: none;
-    padding: 11px;
-    display: block;
-    color: #fff;
-    font-size: 1rem;
-    margin-top: 15px;
-    letter-spacing: 1.2px;
-    box-sizing: border-box;
-    background-color: #292524;
-    border: 1px solid #273742;
-    transition: background-color 0.2s;
-  }
-
-  .input_form__input:focus {
-    background-color: #15202b;
-  }
-
-  .input_form__input:hover {
-    background-color: #57534e;
-  }
-
-  .input_form__input::placeholder {
-    letter-spacing: 1px;
-    font-family: sans;
+    font-family: Roboto, Georgia, "Times New Roman", Times, serif;
   }
 
   a:disabled,
@@ -136,8 +108,7 @@
       width: 52%;
     }
 
-    .input_form__label,
-    .input_form__input {
+    .input_form__label {
       font-size: 0.9rem;
     }
   }
@@ -155,8 +126,7 @@
   }
 
   @media screen and (min-width: 1200px) {
-    .input_form__label,
-    .input_form__input {
+    .input_form__label {
       font-size: calc(0.8rem + 1px);
     }
   }
