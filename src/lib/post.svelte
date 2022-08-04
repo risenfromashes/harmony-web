@@ -32,7 +32,7 @@
 
 <style>
   .card {
-    width: 100%;
+    width: 98%;
     padding: 4px;
     margin-top: 40px;
     border-radius: 4px;

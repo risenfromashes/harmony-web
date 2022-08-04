@@ -2,13 +2,13 @@
   import { Router, Link, Route } from "svelte-navigator";
   import Nav from "./lib/nav.svelte";
   import About from "./routes/about.svelte";
-  import Show from "./routes/show.svelte";
+  import Feed from "./routes/feed.svelte";
   import Login from "./routes/login.svelte";
   import Register from "./routes/register.svelte";
 
   const routes: Map<string, string> = new Map([
     ["About", "/about"],
-    ["Show", "/"],
+    ["Feed", "/"],
     ["Login", "/login"],
     ["Register", "/register"],
   ]);
@@ -17,9 +17,9 @@
 <Router>
   <div class="w-screen h-screen bg-slate-900 text-slate-100">
     <Nav {routes} />
-    <div class="py-20">
+    <div class="pt-8">
       <Route path="/">
-        <Show />
+        <Feed />
       </Route>
       <Route path="/about">
         <About />

@@ -4,7 +4,7 @@
 </script>
 
 <nav
-  class="bg-white px-2 sm:px-4 py-2.5 dark:bg-indigo-600 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600"
+  class="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600"
 >
   <div class="container flex flex-wrap justify-between items-center mx-auto">
     <a href="https://www.harmony-open.com/" class="flex items-center">
@@ -23,7 +23,10 @@
       id="navbar-sticky"
     >
       {#each [...routes] as [name, path]}
-        <Link class="mx-5 text-lg underline font-serif" to={path}>{name}</Link>
+        <div class="hover:text-rose-400">
+          <Link class="mx-5 text-lg underline font-serif" to={path}>{name}</Link
+          >
+        </div>
       {/each}
     </div>
   </div>
