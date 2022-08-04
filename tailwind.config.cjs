@@ -3,6 +3,7 @@ module.exports = {
 
   theme: {
     extend: {
+      colors: {},
       fontFamily: {
        Hahmlet: ["Hahmlet", "serif"],
        Rampart: ["Rampart One", "cursive"],
