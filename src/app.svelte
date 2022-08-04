@@ -15,7 +15,7 @@
 </script>
 
 <Router>
-  <div class="w-screen h-screen bg-slate-900 text-slate-100">
+  <div class="w-full h-screen bg-slate-900 text-slate-100">
     <Nav {routes} />
     <div class="pt-8">
       <Route path="/">
