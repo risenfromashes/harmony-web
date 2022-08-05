@@ -5,6 +5,20 @@
   let dob = "";
   let username = "";
   let password = "";
+  let other_pass = "";
+
+  let color = "green";
+  let matched_message = "Passwords match";
+
+  $: {
+    if (password === other_pass) {
+      matched_message = "Passwords match";
+      color = "green";
+    } else {
+      matched_message = "Passwords do not match";
+      color = "red";
+    }
+  }
 </script>
 
 <form class="w-1/3 mx-auto pt-10">
@@ -110,13 +124,14 @@
       id="password"
       class="bg-gray-50 font-Roboto border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="•••••••••"
+      bind:value={password}
       required
     />
   </div>
   <div class="mb-6">
     <label
-      for="confirm_password"
-      class="block mb-2 font-Roboto text-sm font-medium text-gray-900 dark:text-gray-300"
+      for="match"
+      class="block mb-2 font-Roboto text-sm font-medium text-gray-700 dark:text-gray-500"
       >Confirm password</label
     >
     <input
@@ -124,10 +139,14 @@
       id="confirm_password"
       class="bg-gray-50 font-Roboto border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="•••••••••"
-      bind:value={password}
+      bind:value={other_pass}
       required
     />
   </div>
+  <!-- if matched then show text in green, else in red -->
+  <p class="mt-2 text-sm text-{color}-600 dark:text-{color}-500 mb-2">
+    <span class="font-medium font-Roboto">{matched_message}</span>
+  </p>
   <div class="flex items-start mb-6">
     <div class="flex items-center h-5">
       <input
