@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="w-11/12 min-h-[5rem] flex flex-col m-10 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
+  class="w-11/12 min-h-[5rem] flex flex-col m-4 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
   in:scale={{ duration: 300 }}
 >
   <div class="flex mb-4">
