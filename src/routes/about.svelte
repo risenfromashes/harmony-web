@@ -1,5 +1,7 @@
-<h1 class="text-4xl text-center my-8 uppercase">About</h1>
-<p>
-  This is a cool web app to increase collaboration between students. Ⓒ Ashraf
-  and Sadat
-</p>
+<script>
+  import Advertise from "../lib/advertise.svelte";
+</script>
+
+<div class="mx-auto my-40 w-1/2">
+  <Advertise />
+</div>
