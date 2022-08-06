@@ -5,16 +5,13 @@ module.exports = {
     extend: {
       colors: {},
       fontFamily: {
-       Hahmlet: ["Hahmlet", "serif"],
-       Rampart: ["Rampart One", "cursive"],
-       Rubik: ["Rubik", "sans-serif"],
-       Roboto: ["Roboto Slab", "serif"],
+        Hahmlet: ["Hahmlet", "serif"],
+        Rampart: ["Rampart One", "cursive"],
+        Rubik: ["Rubik", "sans-serif"],
+        Roboto: ["Roboto Slab", "serif"],
       },
     },
   },
-
-  plugins: [
-    require('flowbite/plugin')
-  ],
-  darkMode: 'class',
+  plugins: [],
+  darkMode: "class",
 };
