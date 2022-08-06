@@ -1,13 +1,13 @@
 <script>
-  import Accordian from "../lib/accordian.svelte";
-  import AccordionItem from "../lib/accordianitem.svelte";
+  import Accordion from "../lib/accordion.svelte";
+  import AccordionItem from "../lib/accordionitem.svelte";
 </script>
 
 //this is without using flowbite-svelte
 
 <div class="bg-slate-900 p-10">
   <div class="mx-auto w-1/2">
-    <Accordian>
+    <Accordion>
       <AccordionItem>
         <h2 slot="header" class="font-Roboto">What is Harmony?</h2>
         <div slot="body">
@@ -101,6 +101,6 @@
           </p>
         </div>
       </AccordionItem>
-    </Accordian>
+    </Accordion>
   </div>
 </div>
