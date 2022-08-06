@@ -9,10 +9,13 @@
     "p-5 border border-t-0 border-gray-200 dark:border-gray-700";
   export let isOpen: boolean = false;
   export let color: boolean = false;
+  export let isLast: boolean = false;
 
-  //   export let iconSize: number = 24;
-  //   export let iconClass: string =
-  //     "text-gray-500 sm:w-6 sm:h-6 dark:text-gray-300";
+  export let iconClass: string =
+    "text-gray-500 sm:w-6 sm:h-6 dark:text-gray-300";
+  const down_arrow: string =
+    "https://www.svgrepo.com/show/25790/down-arrow.svg";
+  const up_arrow: string = "https://www.svgrepo.com/show/4166/up-arrow.svg";
 
   export let btnClass: string =
     "flex items-center focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 justify-between p-5 w-full font-medium border border-gray-200 dark:border-gray-700 text-left text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800";
@@ -49,11 +52,16 @@
     class={classNames(buttonClass, $$props.class)}
   >
     <slot name="header" />
+    {#if isOpen}
+      <img src={up_arrow} alt="up" class={iconClass} />
+    {:else}
+      <img src={down_arrow} alt="down" class={iconClass} />
+    {/if}
   </button>
 </h2>
 {#if isOpen}
   <div transition:slide={{ duration: 500 }}>
-    <div class={slotClass}>
+    <div class:rounded-b-xl={isLast} class={slotClass}>
       <slot name="body" />
     </div>
   </div>
