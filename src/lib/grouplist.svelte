@@ -229,7 +229,7 @@
 </div>
 
 <div
-  class="w-5/6 mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 my-10 place-items-center"
+  class="w-4/6 mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 my-10 place-items-center"
 >
   {#each showable_groups as group}
     <GroupCard {group} />
