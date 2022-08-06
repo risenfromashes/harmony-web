@@ -1,8 +1,9 @@
 <script>
-  import { AccordionItem } from "flowbite-svelte";
+  import AccordionItem from "../comp/accordion.svelte";
 </script>
 
-//this is using flowbite-svelte
+//this is without using flowbite-svelte
+
 <div class="mx-auto my-40 w-8/12">
   <AccordionItem id="1">
     <h2 slot="header" class="font-Roboto">What is Harmony?</h2>

@@ -1,14 +1,14 @@
 <script lang="ts">
   import { Router, Link, Route } from "svelte-navigator";
   import Nav from "./lib/nav.svelte";
-  import About from "./routes/about.svelte";
+  import About from "./routes/about2.svelte";
   import Feed from "./routes/feed.svelte";
   import Login from "./routes/login.svelte";
   import Register from "./routes/register.svelte";
   import Mygroups from "./routes/mygroups.svelte";
 
   const routes: Map<string, string> = new Map([
-    ["About", "/about"],
+    ["About", "/about2"],
     ["Login", "/login"],
     ["Register", "/register"],
     ["Feed", "/"],
@@ -23,7 +23,7 @@
       <Route path="/">
         <Feed />
       </Route>
-      <Route path="/about">
+      <Route path="/about2">
         <About />
       </Route>
       <Route path="/login">
