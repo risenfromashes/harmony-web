@@ -1,78 +1,106 @@
-<script lang="ts">
-  //declare an array of groups with id name, institution, department, batch and link to group page
+<script>
+  import GroupCard from "./groupcard.svelte";
+  //declare an array of groups with id name, intro, institution, image_link, department, group_link and batch
   //later take this from database
-  export const groups = [
+  let groups = [
     {
       id: 1,
       name: "The Avengers",
+      intro:
+        "One byte lighter we design, one moment speedier we code, one pixel brighter we turn the universe.",
       institution: "BUET",
+      image_link: "https://picsum.photos/200/300",
       department: "CSE",
-      batch: "'20",
-      link: "/group/1",
+      group_link: "",
+      batch: "20",
     },
     {
       id: 2,
-      name: "Rock and Roll",
+      name: "FC Barcelona",
+      intro:
+        "Let's be connected with invisible wires and form a circuit where emotions will flow for eternity!",
       institution: "BUET",
-      department: "MME",
-      batch: "'19",
-      link: "/group/2",
+      image_link: "https://picsum.photos/200/300",
+      department: "EEE",
+      group_link: "",
+      batch: "20",
     },
     {
       id: 3,
-      name: "DU Flarez",
-      institution: "Dhaka University",
-      department: "SWE",
-      batch: "'18",
-      link: "/group/3",
+      name: "Real Madrid C.F.",
+      intro:
+        "This is where we bring machines to life. This is where we repel the darkness of demise.",
+      institution: "BUET",
+      image_link: "https://picsum.photos/200/300",
+      department: "BME",
+      group_link: "",
+      batch: "20",
     },
     {
       id: 4,
-      name: "JU Politicians",
-      institution: "Jahangirnagar University",
-      department: "Political Science",
-      batch: "'17",
-      link: "/group/4",
+      name: "Brighton and H Albion",
+      intro:
+        "Mecha mends mecha moulds mecha mesmerizes, mecha makes every loose end tight, mecha doesnt argue just explains why its right.",
+      institution: "BUET",
+      image_link: "https://picsum.photos/200/300",
+      department: "ME",
+      group_link: "",
+      batch: "20",
     },
     {
       id: 5,
-      name: "NDC",
-      institution: "Notre Dame College",
-      department: "N/A",
-      batch: "'19",
-      link: "/group/5",
+      name: "The Gunners",
+      intro:
+        "Industry generates revolution. Production drives innovation. Here, our forte is optimization!",
+      institution: "BUET",
+      image_link: "https://picsum.photos/200/300",
+      department: "IPE",
+      group_link: "",
+      batch: "20",
     },
     {
       id: 6,
-      name: "Group 6",
+      name: "AC Milan",
+      intro:
+        "One united ChE. Let's dilute our sorrows, compress worries,filter mistakes, evaporate egos to get the crystal of happiness.",
       institution: "BUET",
-      department: "EEE",
-      batch: "'16",
-      link: "/group/6",
+      image_link: "https://picsum.photos/200/300",
+      department: "ChE",
+      group_link: "",
+      batch: "20",
     },
     {
       id: 7,
-      name: "Archi '17",
-      institution: "CUET",
-      department: "Architecture",
-      batch: "'17",
-      link: "/group/7",
+      name: "Juventus F.C.",
+      intro:
+        "Let's be connected with invisible wires and form a circuit where emotions will flow for eternity!",
+      institution: "BUET",
+      image_link: "https://picsum.photos/200/300",
+      department: "EEE",
+      group_link: "",
+      batch: "20",
     },
     {
       id: 8,
-      name: "Newbies",
-      institution: "BRAC University",
-      department: "CSE",
-      batch: "'18",
-      link: "/group/8",
+      name: "Inter Millan",
+      intro:
+        "All the outer dazzling structures,our works with their moiety; Where's zero? also faraway, to show all is our liability.",
+      institution: "BUET",
+      image_link: "https://picsum.photos/200/300",
+      department: "MME",
+      group_link: "",
+      batch: "20",
     },
     {
       id: 9,
-      name: "BUET CSE 19",
+      name: "Moscow F.C.",
+      intro:
+        "Embodied our notion, our concern is as vast as the ocean. Our sagacity is as deep as sea",
       institution: "BUET",
-      department: "CSE",
-      batch: "'19",
-      link: "/group/9",
+      image_link: "https://picsum.photos/200/300",
+      department: "NAME",
+      group_link: "",
+      batch: "20",
     },
   ];
 
@@ -82,21 +110,25 @@
 
   $: {
     if (search_term) {
-      //filter groups based on search term
-      showable_groups = groups.filter(
-        (group) =>
+      // console.log(search_term);
+      //filter groups based on search term, considering name, intro, institution, department, batch
+      showable_groups = groups.filter((group) => {
+        return (
           group.name.toLowerCase().includes(search_term.toLowerCase()) ||
+          group.intro.toLowerCase().includes(search_term.toLowerCase()) ||
           group.institution.toLowerCase().includes(search_term.toLowerCase()) ||
           group.department.toLowerCase().includes(search_term.toLowerCase()) ||
           group.batch.toLowerCase().includes(search_term.toLowerCase())
-      );
+        );
+      });
     } else {
       showable_groups = groups;
     }
   }
 </script>
 
-<div
+//table showing
+<!-- <div
   class="overflow-x-auto relative shadow-md sm:rounded-lg py-10 px-10 w-3/4 mx-auto"
 >
   <div class="pb-4 bg-white dark:bg-gray-900">
@@ -113,7 +145,7 @@
           xmlns="http://www.w3.org/2000/svg"
           ><path
             fill-rule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.820 4.820a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
             clip-rule="evenodd"
           /></svg
         >
@@ -164,4 +196,42 @@
       {/each}
     </tbody>
   </table>
+</div> -->
+
+//card showing
+<div class="pt-5 bg-white dark:bg-gray-900 grid place-items-center">
+  <label for="table-search" class="sr-only">Search</label>
+  <div class="relative mt-1">
+    <div
+      class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+    >
+      <svg
+        class="w-5 h-5 text-gray-500 dark:text-gray-400"
+        aria-hidden="true"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+        ><path
+          fill-rule="evenodd"
+          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.820 4.820a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+          clip-rule="evenodd"
+        /></svg
+      >
+    </div>
+    <input
+      type="text"
+      id="table-search"
+      class="block p-2 pl-10 w-80 text-sm font-Roboto text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="Search for groups"
+      bind:value={search_term}
+    />
+  </div>
+</div>
+
+<div
+  class="w-5/6 mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 my-10 place-items-center"
+>
+  {#each showable_groups as group}
+    <GroupCard {group} />
+  {/each}
 </div>
