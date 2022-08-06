@@ -11,8 +11,15 @@
   };
 
   let qlEditorOptions = {
+    modules: {
+      toolbar: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        ["link", "code-block"],
+      ],
+    },
     placeholder: "What's in you mind, Ashraf?",
-    theme: "snow",
+    // theme: "snow",
   };
 
   let onTextChange = (e: any) => {
@@ -22,7 +29,7 @@
 
 <svelte:head>
   <title>Showing Posts</title>
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 </svelte:head>
 
 <div class="w-full bg-slate-900 flex flex-col justify-start items-center py-10">
@@ -43,13 +50,13 @@
     <button
       type="button"
       class={"w-10/12 h-14 border border-slate-700 rounded-full text-left px-8 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
-        (newPostQlContent.text ? "  text-white" : " text-gray-400")}
+        (newPostQlContent.text.trim() ? "  text-white" : " text-gray-400")}
       on:click={() => {
         showEditor = true;
       }}
     >
-      {newPostQlContent.text
-        ? newPostQlContent.text
+      {newPostQlContent.text.trim()
+        ? newPostQlContent.text.trim()
         : "What's in you mind, Ashraf?"}</button
     >
   </div>
@@ -59,11 +66,11 @@
       class="fixed h-full w-full bg-[#0005] flex justify-center items-center"
     >
       <div
-        class="h-4/6 w-7/12 bg-slate-800 rounded-2xl flex flex-col shadow-xl border border-slate-600 overflow-hidden"
+        class="h-4/6 w-7/12 rounded-2xl bg-white flex flex-col shadow-xl border border-slate-600 overflow-hidden"
         in:scale={{ duration: 300 }}
       >
         <div
-          class="w-full h-1/6 flex items-center justify-between px-10 border-b border-slate-600"
+          class="w-full h-1/6 flex items-center justify-between px-10 bg-slate-800 border-b border-slate-600"
         >
           <p class="font-bold text-3xl">Create Post</p>
 
@@ -83,13 +90,13 @@
         /> -->
 
         <div
-          class="editor"
+          class="editor text-black"
           use:quill={qlEditorOptions}
           on:text-change={onTextChange}
         />
 
         <div
-          class="w-full h-1/6 flex items-center justify-center border-t border-slate-600"
+          class="w-full h-1/6 flex items-center justify-center border-t border-slate-600 bg-slate-800"
         >
           <button
             type="button"
@@ -117,4 +124,7 @@
 </div>
 
 <style>
+  .ql-container {
+    background-color: #ddd !important;
+  }
 </style>
