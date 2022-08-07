@@ -115,7 +115,7 @@
       showable_groups = groups.filter((group) => {
         return (
           group.name.toLowerCase().includes(search_term.toLowerCase()) ||
-          group.intro.toLowerCase().includes(search_term.toLowerCase()) ||
+          // group.intro.toLowerCase().includes(search_term.toLowerCase()) ||
           group.institution.toLowerCase().includes(search_term.toLowerCase()) ||
           group.department.toLowerCase().includes(search_term.toLowerCase()) ||
           group.batch.toLowerCase().includes(search_term.toLowerCase())
@@ -200,7 +200,7 @@
 
 //card showing
 <div class="pt-5 bg-white dark:bg-gray-900 grid place-items-center">
-  <label for="table-search" class="sr-only">Search</label>
+  <label for="group-search" class="sr-only">Search</label>
   <div class="relative mt-1">
     <div
       class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
@@ -227,9 +227,8 @@
     />
   </div>
 </div>
-
 <div
-  class="w-4/6 mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 my-10 place-items-center"
+  class="w-4/6 mx-auto grid auto-rows-fr grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 my-10 place-items-center"
 >
   {#each showable_groups as group}
     <GroupCard {group} />
