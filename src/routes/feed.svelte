@@ -32,9 +32,9 @@
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 </svelte:head>
 
-<div class="w-full bg-slate-900 flex flex-col justify-start items-center py-10">
+<div class="w-full bg-slate-900 flex flex-col justify-start items-center py-2">
   <div
-    class="w-11/12 min-h-[5rem] flex justify-center m-10 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
+    class="w-11/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
     in:scale={{ duration: 300 }}
   >
     <div
