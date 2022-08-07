@@ -6,4 +6,85 @@
 @tailwind components;
 @tailwind utilities;
 
+.ql-container {
+  overflow-y: hidden !important;
+  background-color: #1e293b !important;
+  font-size: 1rem !important;
+  border: none !important;
+}
 
+.ql-toolbar {
+  border: none !important;
+  border-bottom: #475569 solid 1px !important;
+}
+
+.ql-editor {
+  overflow-y: scroll !important;
+  color: #fff;
+}
+
+.ql-editor::-webkit-scrollbar {
+  background-color: transparent;
+  width: 0.6rem;
+}
+
+.ql-editor::-webkit-scrollbar-thumb {
+  background-color: #475569;
+  border-radius: 10px;
+}
+
+.ql-editor.ql-blank::before {
+  color: #bbb !important;
+}
+
+.ql-stroke {
+  stroke: #fff !important;
+}
+
+.ql-picker {
+  color: #fff !important;
+}
+
+.ql-picker-options {
+  background-color: #1e293b !important;
+}
+
+.ql-picker-item:hover {
+  color: #da3e3e !important;
+}
+
+.ql-picker-item.ql-selected {
+  font-weight: 700 !important;
+  color: #da3e3e !important;
+}
+
+.ql-fill {
+  fill: #fff !important;
+}
+
+.ql-active .ql-stroke {
+  stroke: #da3e3e !important;
+}
+
+.ql-active .ql-fill {
+  fill: #da3e3e !important;
+}
+
+.ql-link.ql-active .ql-stroke {
+  stroke: #da3e3e !important;
+}
+
+.ql-link.ql-active .ql-fill {
+  fill: #da3e3e !important;
+}
+
+.ql-picker-label:hover {
+  color: #da3e3e !important;
+}
+
+.ql-picker-label:hover .ql-stroke {
+  stroke: #da3e3e !important;
+}
+
+
+  

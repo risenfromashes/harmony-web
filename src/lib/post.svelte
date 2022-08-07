@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="w-11/12 min-h-[5rem] flex flex-col m-10 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
+  class="w-11/12 min-h-[5rem] flex flex-col m-4 py-3 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
   in:scale={{ duration: 300 }}
 >
   <div class="flex mb-4">
@@ -26,7 +26,8 @@
 
     <div class="p-2">
       <h5 class="font-semibold text-lg mb-2">
-        {poster} <span class="ml-2 font-semibold text-sm text-slate-600">{time}</span>
+        {poster}
+        <span class="ml-2 font-semibold text-sm text-slate-600">{time}</span>
       </h5>
       <div class="flex flex-col flex-1">
         <p>{post}</p>
