@@ -102,6 +102,28 @@
       group_link: "",
       batch: "20",
     },
+    {
+      id: 10,
+      name: "NAME '20",
+      intro:
+        "Embodied our notion, our concern is as vast as the ocean. Our sagacity is as deep as sea",
+      institution: "BUET",
+      image_link: "https://picsum.photos/200/300",
+      department: "NAME",
+      group_link: "",
+      batch: "20",
+    },
+    {
+      id: 11,
+      name: "NAME '20",
+      intro:
+        "Embodied our notion, our concern is as vast as the ocean. Our sagacity is as deep as sea",
+      institution: "BUET",
+      image_link: "https://picsum.photos/200/300",
+      department: "NAME",
+      group_link: "",
+      batch: "20",
+    },
   ];
 
   let showable_groups = [];
@@ -127,7 +149,7 @@
   }
 </script>
 
-//table showing
+<!-- //table showing -->
 <!-- <div
   class="overflow-x-auto relative shadow-md sm:rounded-lg py-10 px-10 w-3/4 mx-auto"
 >
@@ -198,7 +220,7 @@
   </table>
 </div> -->
 
-//card showing
+<!-- //card showing -->
 <div class="pt-5 bg-white dark:bg-gray-900 grid place-items-center">
   <label for="group-search" class="sr-only">Search</label>
   <div class="relative mt-1">
