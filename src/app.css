@@ -50,16 +50,41 @@
 }
 
 .ql-picker-item:hover {
-  color: #ccc !important;
+  color: #da3e3e !important;
 }
 
 .ql-picker-item.ql-selected {
   font-weight: 700 !important;
-  color: #fff !important;
+  color: #da3e3e !important;
 }
 
 .ql-fill {
   fill: #fff !important;
 }
 
+.ql-active .ql-stroke {
+  stroke: #da3e3e !important;
+}
 
+.ql-active .ql-fill {
+  fill: #da3e3e !important;
+}
+
+.ql-link.ql-active .ql-stroke {
+  stroke: #da3e3e !important;
+}
+
+.ql-link.ql-active .ql-fill {
+  fill: #da3e3e !important;
+}
+
+.ql-picker-label:hover {
+  color: #da3e3e !important;
+}
+
+.ql-picker-label:hover .ql-stroke {
+  stroke: #da3e3e !important;
+}
+
+
+  

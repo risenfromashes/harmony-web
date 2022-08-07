@@ -4,7 +4,6 @@
   import Post from "../lib/post.svelte";
 
   let showEditor = false;
-  let showPreview = false;
 
   let newPostQlContent = {
     html: "",
