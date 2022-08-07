@@ -19,7 +19,7 @@
 <Router>
   <div class="w-full h-screen bg-slate-900 text-slate-100">
     <Nav {routes} />
-    <div class="pt-8">
+    <div class="pt-20">
       <Route path="/">
         <Feed />
       </Route>

@@ -3,6 +3,10 @@
   export let routes: Map<string, string>;
 
   let showDrawer = false;
+
+  function changeRoute() {
+    routes = routes;
+  }
 </script>
 
 <nav
@@ -36,11 +40,17 @@
       " md:top-auto md:left-auto md:translate-x-0"}
   >
     {#each [...routes] as [name, path]}
-      <div class="hover:text-rose-400">
+      <div
+        class={"m-3 hover:text-rose-400" +
+          (path === window.location.pathname ? " font-bold" : "")}
+      >
         <Link
-          class="m-3 text-lg underline font-serif"
+          class="text-lg"
           to={path}
-          on:click={() => (showDrawer = !showDrawer)}>{name}</Link
+          on:click={() => {
+            changeRoute();
+            showDrawer = !showDrawer;
+          }}>{name}</Link
         >
       </div>
     {/each}
