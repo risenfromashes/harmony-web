@@ -4,6 +4,7 @@
   import Post from "../lib/post.svelte";
 
   let showEditor = false;
+  let showPreview = false;
 
   let newPostQlContent = {
     html: "",
@@ -66,7 +67,7 @@
       class="fixed h-full w-full bg-[#0005] flex justify-center items-center"
     >
       <div
-        class="h-4/6 w-7/12 rounded-2xl bg-white flex flex-col shadow-xl border border-slate-600 overflow-hidden"
+        class="h-5/6 w-7/12 rounded-2xl flex flex-col shadow-xl border bg-slate-800 border-slate-600 overflow-hidden"
         in:scale={{ duration: 300 }}
       >
         <div
@@ -100,7 +101,7 @@
         >
           <button
             type="button"
-            class="h-4/6 w-11/12 resize-none bg-slate-900 rounded-lg font-semibold text-xl transition-all outline-none hover:grayscale-[40%]"
+            class="py-4 w-3/4 resize-none rounded-lg font-semibold text-xl transition-all outline-none"
             >Send</button
           >
         </div>
@@ -124,7 +125,4 @@
 </div>
 
 <style>
-  .ql-container {
-    background-color: #ddd !important;
-  }
 </style>
