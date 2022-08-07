@@ -5,7 +5,7 @@
   let groups = [
     {
       id: 1,
-      name: "The Avengers",
+      name: "CSE '20",
       intro:
         "One byte lighter we design, one moment speedier we code, one pixel brighter we turn the universe.",
       institution: "BUET",
@@ -16,7 +16,7 @@
     },
     {
       id: 2,
-      name: "FC Barcelona",
+      name: "EEE '20",
       intro:
         "Let's be connected with invisible wires and form a circuit where emotions will flow for eternity!",
       institution: "BUET",
@@ -27,7 +27,7 @@
     },
     {
       id: 3,
-      name: "Real Madrid C.F.",
+      name: "BME '20",
       intro:
         "This is where we bring machines to life. This is where we repel the darkness of demise.",
       institution: "BUET",
@@ -38,7 +38,7 @@
     },
     {
       id: 4,
-      name: "Brighton and H Albion",
+      name: "ME '20",
       intro:
         "Mecha mends mecha moulds mecha mesmerizes, mecha makes every loose end tight, mecha doesnt argue just explains why its right.",
       institution: "BUET",
@@ -49,7 +49,7 @@
     },
     {
       id: 5,
-      name: "The Gunners",
+      name: "IPE '20",
       intro:
         "Industry generates revolution. Production drives innovation. Here, our forte is optimization!",
       institution: "BUET",
@@ -60,7 +60,7 @@
     },
     {
       id: 6,
-      name: "AC Milan",
+      name: "ChE '20",
       intro:
         "One united ChE. Let's dilute our sorrows, compress worries,filter mistakes, evaporate egos to get the crystal of happiness.",
       institution: "BUET",
@@ -71,7 +71,7 @@
     },
     {
       id: 7,
-      name: "Juventus F.C.",
+      name: "EEE '20",
       intro:
         "Let's be connected with invisible wires and form a circuit where emotions will flow for eternity!",
       institution: "BUET",
@@ -82,7 +82,7 @@
     },
     {
       id: 8,
-      name: "Inter Millan",
+      name: "MME '20",
       intro:
         "All the outer dazzling structures,our works with their moiety; Where's zero? also faraway, to show all is our liability.",
       institution: "BUET",
@@ -93,7 +93,7 @@
     },
     {
       id: 9,
-      name: "Moscow F.C.",
+      name: "NAME '20",
       intro:
         "Embodied our notion, our concern is as vast as the ocean. Our sagacity is as deep as sea",
       institution: "BUET",
