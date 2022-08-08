@@ -21,7 +21,7 @@
   }
 </script>
 
-<form class="w-1/3 mx-auto pt-10">
+<form class="w-1/3 mx-auto pt-40">
   <div class="grid gap-6 mb-6 md:grid-cols-2">
     <div>
       <label

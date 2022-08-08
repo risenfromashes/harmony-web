@@ -79,7 +79,9 @@
   </div>
 {/if}
 
-<div class="w-full bg-slate-900 flex flex-col justify-start items-center py-20">
+<div
+  class="w-full bg-slate-900 flex flex-col justify-start items-center pt-20 pb-10"
+>
   <div
     class="w-11/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
     in:scale={{ duration: 300 }}

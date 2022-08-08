@@ -1,5 +1,7 @@
 <script lang="ts">
   import { Link } from "svelte-navigator";
+  import FaIcon from "./faIcon.svelte";
+
   export let routes: Map<string, string>;
 
   let showDrawer = false;
@@ -26,12 +28,10 @@
 
   <button
     type="button"
-    class="p-2 md:hidden flex flex-col items-center justify-evenly z-40"
+    class="md:hidden flex flex-col items-center justify-evenly z-40 text-xl"
     on:click={() => (showDrawer = !showDrawer)}
   >
-    <div class="h-[0.15rem] w-8 bg-white my-1" />
-    <div class="h-[0.15rem] w-8 bg-white my-1" />
-    <div class="h-[0.15rem] w-8 bg-white my-1" />
+    <FaIcon icon="bars" />
   </button>
 
   <div
