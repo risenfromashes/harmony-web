@@ -6,6 +6,7 @@
   import Login from "./routes/login.svelte";
   import Register from "./routes/register.svelte";
   import Mygroups from "./routes/mygroups.svelte";
+  import Myevents from "./routes/myevents.svelte";
 
   const routes: Map<string, string> = new Map([
     ["About", "/about"],
@@ -13,6 +14,7 @@
     ["Register", "/register"],
     ["Feed", "/"],
     ["My Groups", "/mygroups"],
+    ["My Events", "/myevents"],
   ]);
 </script>
 
@@ -34,6 +36,9 @@
       </Route>
       <Route path="/mygroups">
         <Mygroups />
+      </Route>
+      <Route path="/myevents">
+        <Myevents />
       </Route>
     </div>
   </div>
