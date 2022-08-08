@@ -7,7 +7,7 @@
   <title>Login</title>
 </svelte:head>
 
-<div class="container pt-20">
+<div class="container">
   <form class="py-8">
     <div class="input_form">
       <label for="username" class="input_form__label">Username</label>

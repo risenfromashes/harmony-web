@@ -12,9 +12,14 @@
   };
 
   let isOpen = false;
-  const toggle = () => {
+  function toggle() {
+    // console.log("toggle");
     isOpen = !isOpen;
-  };
+  }
+  function onClickOutside() {
+    // console.log("out");
+    isOpen = false;
+  }
 </script>
 
 <!-- <div
@@ -93,7 +98,7 @@
 <div
   class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-3"
 >
-  <div class="flex justify-end px-4 pt-1">
+  <div class="flex justify-end px-4 pt-1 relative">
     <button
       class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
       on:click={toggle}
@@ -114,7 +119,7 @@
     {#if isOpen}
       <div
         class="z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 block"
-        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(281px, 83px);"
+        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(281px, 50px);"
       >
         <ul class="py-1 font-Hahmlet">
           <li>
