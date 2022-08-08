@@ -5,7 +5,7 @@
 
 //this is without using flowbite-svelte
 
-<div class="bg-slate-900 p-10">
+<div class="bg-slate-900 pt-20">
   <div class="mx-auto w-1/2">
     <Accordion>
       <AccordionItem>

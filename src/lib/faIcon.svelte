@@ -3,12 +3,21 @@
 
   export const type: string = "solid";
   export let icon: string;
+  export let iClass: string = "";
+
+  console.log("iClass:", iClass);
 </script>
 
 {#if type === "solid"}
-  <i class="fas fa-{icon}" />
+  <span class={iClass}>
+    <i class="fas fa-{icon}" />
+  </span>
 {:else if type === "regular"}
-  <i class="far fa-{icon}" />
+  <span>
+    <i class="far fa-{icon}" />
+  </span>
 {:else if type === "brands"}
-  <i class="fab fa-{icon}" />
+  <span>
+    <i class="fab fa-{icon}" />
+  </span>
 {/if}

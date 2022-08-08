@@ -2,6 +2,6 @@
   import Grouplist from "../lib/grouplist.svelte";
 </script>
 
-<div class="bg-slate-900 py-5">
+<div class="bg-slate-900 pt-20">
   <Grouplist />
 </div>
