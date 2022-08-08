@@ -282,7 +282,7 @@
 
         <FaIcon
           icon="search"
-          iClass="flex justify-center items-center w-5 h-5 text-gray-500 text-gray-400"
+          className="flex justify-center items-center w-5 h-5 text-gray-500 dark:text-gray-400"
         />
       </div>
       <input
