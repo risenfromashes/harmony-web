@@ -4,7 +4,8 @@
   import Post from "../lib/post.svelte";
   import FaIcon from "../lib/faIcon.svelte";
 
-  let showEditor = false;
+  let showEditor = true;
+  let showGroupDropdown = false;
 
   let newPostQlContent = {
     html: "",
@@ -46,11 +47,49 @@
       on:click|stopPropagation
     >
       <div
-        class="w-full h-1/6 flex items-center justify-between px-10 bg-slate-800 border-b border-slate-600"
+        class="w-full h-1/6 flex items-center justify-between px-10 bg-slate-800 border-b border-slate-600 relative"
       >
-        <p class="font-bold text-3xl">
-          <FaIcon icon="file-pen" />&nbsp;&nbsp;Create Post
-        </p>
+        <div class="flex items-center">
+          <p class="font-bold text-3xl mr-4">
+            <FaIcon icon="file-pen" />&nbsp;&nbsp;Create Post
+          </p>
+
+          <button
+            class="bg-slate-700 px-4 py-2 rounded-lg transition-all hover:bg-slate-600"
+            on:click={() => {
+              showGroupDropdown = !showGroupDropdown;
+            }}
+            >Select group&nbsp;&nbsp;&nbsp;<FaIcon
+              icon="chevron-down"
+            /></button
+          >
+        </div>
+
+        {#if showGroupDropdown}
+          <div
+            class="flex flex-col items-center min-h-[2rem] w-[280px] bg-slate-800 border border-slate-600 rounded-lg z-20 overflow-hidden"
+            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(281px, 83px);"
+          >
+            <button
+              type="button"
+              class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
+            >
+              Architecture Dor Lage
+            </button>
+            <button
+              type="button"
+              class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
+            >
+              CSE-te Nesha Lagse!
+            </button>
+            <button
+              type="button"
+              class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
+            >
+              আকাইম্মার দল!
+            </button>
+          </div>
+        {/if}
 
         <button
           type="button"
