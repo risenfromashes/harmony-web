@@ -12,7 +12,7 @@
 </script>
 
 <nav
-  class="dark:bg-gray-900 flex items-center justify-between w-full py-3 px-2 sm:px-4 fixed z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-800"
+  class="dark:bg-gray-900 flex items-center justify-between w-full py-3 px-4 sm:px-8 fixed z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-800"
 >
   <a href="https://www.harmony-open.com/" class="flex items-center z-40">
     <img
@@ -41,7 +41,7 @@
   >
     {#each [...routes] as [name, path]}
       <div
-        class={"m-3 hover:text-rose-400" +
+        class={"m-3 hover:text-emerald-400" +
           (path === window.location.pathname ? " font-bold" : "")}
       >
         <Link

@@ -2,6 +2,7 @@
   import { scale } from "svelte/transition";
   import { quill } from "svelte-quill";
   import Post from "../lib/post.svelte";
+  import FaIcon from "../lib/faIcon.svelte";
 
   let showEditor = false;
 
@@ -13,7 +14,7 @@
   let qlEditorOptions = {
     modules: {
       toolbar: [
-        [{ header: [1, 2, 3, false] }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
         ["bold", "italic", "underline", "strike"],
         ["link", "code-block"],
       ],
@@ -35,22 +36,31 @@
 {#if showEditor}
   <div
     class="fixed h-full w-full bg-[#0005] flex justify-center items-center z-20"
+    on:click={() => {
+      showEditor = false;
+    }}
   >
     <div
       class="h-5/6 w-7/12 rounded-2xl flex flex-col shadow-xl border bg-slate-800 border-slate-600 overflow-hidden"
       in:scale={{ duration: 300 }}
+      on:click|stopPropagation
     >
       <div
         class="w-full h-1/6 flex items-center justify-between px-10 bg-slate-800 border-b border-slate-600"
       >
-        <p class="font-bold text-3xl">Create Post</p>
+        <p class="font-bold text-3xl">
+          <FaIcon icon="file-pen" />&nbsp;&nbsp;Create Post
+        </p>
 
         <button
           type="button"
-          class="flex justify-center items-center px-4 py-2"
+          class="flex justify-center items-center mx-4 my-2 hover:text-rose-400"
           on:click={() => {
             showEditor = false;
-          }}><p class="font-bold text-3xl h-full w-full">&times;</p></button
+          }}
+          ><p class="font-bold text-3xl h-full w-full transition-all">
+            <FaIcon icon="times" />
+          </p></button
         >
       </div>
 
@@ -61,7 +71,7 @@
         /> -->
 
       <div
-        class="editor text-black"
+        class="editor"
         use:quill={qlEditorOptions}
         on:text-change={onTextChange}
       />
@@ -71,8 +81,8 @@
       >
         <button
           type="button"
-          class="py-4 w-3/4 resize-none rounded-lg font-semibold text-xl transition-all outline-none"
-          >Send</button
+          class="resize-none rounded-lg font-semibold text-xl transition-all outline-none hover:text-emerald-400"
+          ><FaIcon icon="paper-plane" />&nbsp;&nbsp;Send</button
         >
       </div>
     </div>

@@ -6,6 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.editor {
+  position: relative !important;
+}
+
 .ql-container {
   overflow-y: hidden !important;
   background-color: #1e293b !important;
@@ -50,12 +54,11 @@
 }
 
 .ql-picker-item:hover {
-  color: #da3e3e !important;
+  color: rgb(52 211 153) !important;
 }
 
 .ql-picker-item.ql-selected {
-  font-weight: 700 !important;
-  color: #da3e3e !important;
+  color: rgb(52 211 153) !important;
 }
 
 .ql-fill {
@@ -63,28 +66,35 @@
 }
 
 .ql-active .ql-stroke {
-  stroke: #da3e3e !important;
+  stroke: rgb(52 211 153) !important;
 }
 
 .ql-active .ql-fill {
-  fill: #da3e3e !important;
+  fill: rgb(52 211 153) !important;
 }
 
 .ql-link.ql-active .ql-stroke {
-  stroke: #da3e3e !important;
+  stroke: rgb(52 211 153) !important;
 }
 
 .ql-link.ql-active .ql-fill {
-  fill: #da3e3e !important;
+  fill: rgb(52 211 153) !important;
+}
+
+.ql-picker-label.ql-active {
+  color: rgb(52 211 153) !important;
 }
 
 .ql-picker-label:hover {
-  color: #da3e3e !important;
+  color: rgb(52 211 153) !important;
 }
 
 .ql-picker-label:hover .ql-stroke {
-  stroke: #da3e3e !important;
+  stroke: rgb(52 211 153) !important;
 }
 
-
+.ql-tooltip {
+  position: absolute !important;
+  background-color: #1e293b !important;
+}
   
