@@ -12,13 +12,20 @@
   };
 
   let isOpen = false;
-  function toggle() {
-    // console.log("toggle");
+  let justOpened = false;
+  function toggle(e: MouseEvent) {
+    console.log("toggle");
     isOpen = !isOpen;
+    if (isOpen) {
+      justOpened = true;
+    }
   }
   function onClickOutside() {
-    // console.log("out");
-    isOpen = false;
+    if (justOpened) {
+      justOpened = false;
+    } else {
+      isOpen = false;
+    }
   }
 </script>
 
@@ -95,6 +102,7 @@
   </div>
 </div> -->
 
+<svelte:window on:click|stopPropagation={onClickOutside} />
 <div
   class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-3"
 >
@@ -119,7 +127,8 @@
     {#if isOpen}
       <div
         class="z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 block"
-        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(281px, 50px);"
+        style="position: absolute; top: 3rem; right: -2rem;"
+        on:click|stopPropagation={() => {}}
       >
         <ul class="py-1 font-Hahmlet">
           <li>
