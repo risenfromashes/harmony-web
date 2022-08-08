@@ -13,6 +13,7 @@
   };
 
   $: {
+    console.clear();
     console.log(newPostQlContent);
   }
 
