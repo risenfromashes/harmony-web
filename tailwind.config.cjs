@@ -6,9 +6,8 @@ module.exports = {
       colors: {},
       fontFamily: {
         Hahmlet: ["Hahmlet", "serif"],
-        Rampart: ["Rampart One", "cursive"],
-        Rubik: ["Rubik", "sans-serif"],
         Roboto: ["Roboto Slab", "serif"],
+        Noto: ["Noto Serif", "serif"],
       },
     },
   },

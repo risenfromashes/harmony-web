@@ -7,16 +7,13 @@
   let password = "";
   let other_pass = "";
 
-  let color = "green";
-  let matched_message = "Passwords match";
+  let matched = true;
 
   $: {
     if (password === other_pass) {
-      matched_message = "Passwords match";
-      color = "green";
+      matched = true;
     } else {
-      matched_message = "Passwords do not match";
-      color = "red";
+      matched = false;
     }
   }
 </script>
@@ -144,9 +141,17 @@
     />
   </div>
   <!-- if matched then show text in green, else in red -->
-  <p class="mt-2 text-sm text-{color}-600 dark:text-{color}-500 mb-2">
-    <span class="font-medium font-Roboto">{matched_message}</span>
-  </p>
+  {#if password != "" && other_pass != ""}
+    {#if matched}
+      <p class="mt-2 text-sm text-green-600 dark:text-green-500 mb-2">
+        <span class="font-medium font-Roboto">Passwords match</span>
+      </p>
+    {:else}
+      <p class="mt-2 text-sm text-red-600 dark:text-red-500 mb-2">
+        <span class="font-medium font-Roboto">Passwords do not match</span>
+      </p>
+    {/if}
+  {/if}
   <div class="flex items-start mb-6">
     <div class="flex items-center h-5">
       <input
