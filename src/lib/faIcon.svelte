@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "https://kit.fontawesome.com/5189c9619d.js";
+  import "https://kit.fontawesome.com/923fc2e44a.js";
 
   export const type: string = "solid";
   export let icon: string;
