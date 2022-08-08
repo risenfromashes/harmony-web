@@ -4,13 +4,17 @@
   import Post from "../lib/post.svelte";
   import FaIcon from "../lib/faIcon.svelte";
 
-  let showEditor = true;
+  let showEditor = false;
   let showGroupDropdown = false;
 
   let newPostQlContent = {
     html: "",
     text: "",
   };
+
+  $: {
+    console.log(newPostQlContent);
+  }
 
   let qlEditorOptions = {
     modules: {
