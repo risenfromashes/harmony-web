@@ -1,12 +1,18 @@
 <script lang="ts">
   import { Link } from "svelte-navigator";
+  import FaIcon from "./faIcon.svelte";
+
   export let routes: Map<string, string>;
 
   let showDrawer = false;
+
+  function changeRoute() {
+    routes = routes;
+  }
 </script>
 
 <nav
-  class="dark:bg-gray-900 flex items-center justify-between w-full py-3 px-2 sm:px-4 fixed z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-800"
+  class="dark:bg-gray-900 flex items-center justify-between w-full py-3 px-4 sm:px-8 fixed z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-800"
 >
   <a href="https://www.harmony-open.com/" class="flex items-center z-40">
     <img
@@ -22,12 +28,10 @@
 
   <button
     type="button"
-    class="p-2 md:hidden flex flex-col items-center justify-evenly z-40"
+    class="md:hidden flex flex-col items-center justify-evenly z-40 text-xl"
     on:click={() => (showDrawer = !showDrawer)}
   >
-    <div class="h-[0.15rem] w-8 bg-white my-1" />
-    <div class="h-[0.15rem] w-8 bg-white my-1" />
-    <div class="h-[0.15rem] w-8 bg-white my-1" />
+    <FaIcon icon="bars" />
   </button>
 
   <div
@@ -36,11 +40,17 @@
       " md:top-auto md:left-auto md:translate-x-0"}
   >
     {#each [...routes] as [name, path]}
-      <div class="hover:text-rose-400">
+      <div
+        class={"m-3 hover:text-emerald-400" +
+          (path === window.location.pathname ? " font-bold" : "")}
+      >
         <Link
-          class="m-3 text-lg underline font-serif"
+          class="text-lg"
           to={path}
-          on:click={() => (showDrawer = !showDrawer)}>{name}</Link
+          on:click={() => {
+            changeRoute();
+            showDrawer = !showDrawer;
+          }}>{name}</Link
         >
       </div>
     {/each}
