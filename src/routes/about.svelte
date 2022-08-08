@@ -75,7 +75,7 @@
             and
             <a
               class="text-blue-600 dark:text-blue-500 hover:underline font-Roboto"
-              href="https://github.com/TheCodeHeist">Riasat</a
+              href="https://github.com/TheCodeHeist">Riyasat</a
             >.
           </p>
         </div>
