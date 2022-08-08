@@ -30,9 +30,13 @@
 </script>
 
 <li class="mb-10 ml-6">
-  <FaIcon type="regular" icon="calendar-check" />
+  <span
+    class="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900"
+  >
+    <FaIcon type="regular" icon="calendar-check" />
+  </span>
   <h3
-    class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white mx-5 font-Noto"
+    class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white font-Noto"
   >
     {event.title}
     {#if today}

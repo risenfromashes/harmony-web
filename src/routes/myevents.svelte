@@ -96,9 +96,8 @@
 </script>
 
 <div class="flex place-content-center">
-  <ol class="relative border-l border-gray-200 dark:border-gray-700 pt-20 px-5">
+  <ol class="relative border-l border-gray-200 dark:border-gray-700">
     {#each events as e}
-      <li class="mb-10 ml-6" />
       <EventItem event={e} {current_time} />
     {/each}
   </ol>
