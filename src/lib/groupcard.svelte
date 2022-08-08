@@ -164,12 +164,12 @@
       alt="Group Photo"
     />
     <h5
-      class="mb-1 text-xl font-medium text-gray-900 dark:text-white font-Roboto"
+      class="mb-1 text-xl font-medium text-gray-900 dark:text-white font-JosefinSans"
     >
       {group.name}
     </h5>
     <span
-      class="text-sm text-gray-500 dark:text-gray-400 text-clip overflow-hidden font-Noto whitespace-normal"
+      class="text-sm text-gray-500 dark:text-gray-400 text-clip overflow-hidden font-OpenSans whitespace-normal"
       >{group.intro}</span
     >
   </div>

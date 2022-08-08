@@ -6,7 +6,10 @@ module.exports = {
       colors: {},
       fontFamily: {
         Hahmlet: ["Hahmlet", "serif"],
-        Roboto: ["Roboto Slab", "serif"],
+        JosefinSans: ["Josefin Sans", "sans-serif"],
+        Oxygen: ["Oxygen", "sans-serif"],
+        Roboto: ['Roboto', "sans-serif"],
+        RobotoSlab: ["Roboto Slab", "serif"],
         Noto: ["Noto Serif", "serif"],
         OpenSans: ["Open Sans", "sans-serif"],
         Raleway: ["Raleway", "sans-serif"],

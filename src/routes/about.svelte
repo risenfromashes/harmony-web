@@ -12,21 +12,21 @@
   <div class="mx-auto w-1/2">
     <Accordion>
       <AccordionItem>
-        <h2 slot="header" class="font-Roboto">What is Harmony?</h2>
+        <h2 slot="header" class="font-OpenSans">What is Harmony?</h2>
         <div slot="body">
-          <p class="mb-2 text-gray-500 dark:text-gray-400 font-Roboto" />
-          <p class="mb-2 text-gray-500 dark:text-gray-400 font-Roboto">
+          <p class="mb-2 text-gray-500 dark:text-gray-400 font-OpenSans" />
+          <p class="mb-2 text-gray-500 dark:text-gray-400 font-OpenSans">
             Harmony is a social network for students to collaborate each other.
             It is a place where students can share their knowledge and
             experience and also can discuss the topics that they are interested
             in. We expect Harmony to be the hub of the students’ academic
             enthusiasm and excellence.
           </p>
-          <p class="text-gray-500 dark:text-gray-400 font-Roboto">
+          <p class="text-gray-500 dark:text-gray-400 font-OpenSans">
             Check out this guide to learn how to <a
               href="https://drive.google.com/drive/folders/1JjmoLaQltdQoTI3y33XEOU66H4zU1Gbm?usp=sharing"
               target="_blank"
-              class="text-blue-600 dark:text-blue-500 hover:underline font-Roboto"
+              class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
               >get started</a
             > and join a collaborative environment as good as Harmony.
           </p>
@@ -34,18 +34,18 @@
       </AccordionItem>
 
       <AccordionItem>
-        <h2 slot="header" class="font-Roboto">Who can join Harmony?</h2>
+        <h2 slot="header" class="font-OpenSans">Who can join Harmony?</h2>
         <div slot="body">
-          <p class="mb-2 text-gray-500 dark:text-gray-400 font-Roboto" />
-          <p class="mb-2 text-gray-500 dark:text-gray-400 font-Roboto">
+          <p class="mb-2 text-gray-500 dark:text-gray-400 font-OpenSans" />
+          <p class="mb-2 text-gray-500 dark:text-gray-400 font-OpenSans">
             For now, Harmony is going to be confined to BUET students. We want
             to benchmark it as much as possible before making it more open.
           </p>
-          <p class="text-gray-500 dark:text-gray-400 font-Roboto">
+          <p class="text-gray-500 dark:text-gray-400 font-OpenSans">
             Don't get disheartened. We are soon going to embrace all together.
             Meanwhile, study hard and ace your exams. Check out the <a
               href="https://github.com/risenfromashes/harmony-web"
-              class="text-blue-600 dark:text-blue-500 hover:underline font-Roboto"
+              class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
               >source code</a
             > of Harmony here.
           </p>
@@ -53,31 +53,31 @@
       </AccordionItem>
 
       <AccordionItem>
-        <h2 slot="header" class="font-Roboto">
+        <h2 slot="header" class="font-OpenSans">
           What is the difference between Harmony and Moodle?
         </h2>
         <div slot="body">
-          <p class="mb-2 text-gray-500 dark:text-gray-400 font-Roboto" />
-          <p class="mb-2 text-gray-500 dark:text-gray-400 font-Roboto">
+          <p class="mb-2 text-gray-500 dark:text-gray-400 font-OpenSans" />
+          <p class="mb-2 text-gray-500 dark:text-gray-400 font-OpenSans">
             Harmony is mainly for collaboration among students, whereas Moodle
             is for teachers to conduct the academic activities. So, you have
             probably guessed it already, on the platform Harmony, there will not
             be any teachers present.
           </p>
-          <p class="text-gray-500 dark:text-gray-400 font-Roboto">
+          <p class="text-gray-500 dark:text-gray-400 font-OpenSans">
             To know more about Harmony and its cool features, contact Harmony
             developers <a
               href="https://www.facebook.com/ashrafur.khan.37"
-              class="text-blue-600 dark:text-blue-500 hover:underline font-Roboto"
+              class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
               >Ashraf</a
             >,
             <a
-              class="text-blue-600 dark:text-blue-500 hover:underline font-Roboto"
+              class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
               href="https://www.facebook.com/sadathossain01/">Sadat</a
             >
             and
             <a
-              class="text-blue-600 dark:text-blue-500 hover:underline font-Roboto"
+              class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
               href="https://github.com/TheCodeHeist">Riyasat</a
             >.
           </p>
@@ -85,20 +85,20 @@
       </AccordionItem>
 
       <AccordionItem>
-        <h2 slot="header" class="font-Roboto">
+        <h2 slot="header" class="font-OpenSans">
           Then what is the difference between Harmony and Facebook?
         </h2>
         <div slot="body">
-          <p class="mb-2 text-gray-500 dark:text-gray-400 font-Roboto" />
-          <p class="mb-2 text-gray-500 dark:text-gray-400 font-Roboto">
+          <p class="mb-2 text-gray-500 dark:text-gray-400 font-OpenSans" />
+          <p class="mb-2 text-gray-500 dark:text-gray-400 font-OpenSans">
             Well Facebook is detrimental for study whereas Harmony is the exact
             opposite. It will create a study-friendly virtual environment for
             you.
           </p>
-          <p class="text-gray-500 dark:text-gray-400 font-Roboto">
+          <p class="text-gray-500 dark:text-gray-400 font-OpenSans">
             Ask <a
               href="https://www.facebook.com/mustafa.siam.11651"
-              class="text-blue-600 dark:text-blue-500 hover:underline font-Roboto"
+              class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
               >Siam</a
             > to know about how Harmony helped him ace L2T1.
           </p>

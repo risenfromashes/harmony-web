@@ -175,7 +175,7 @@
       <input
         type="text"
         id="table-search"
-        class="block p-2 pl-10 w-80 text-sm font-Roboto text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="block p-2 pl-10 w-80 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Search for groups"
         bind:value={search_term}
       />
@@ -186,11 +186,11 @@
       class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
     >
       <tr>
-        <th scope="col" class="py-3 px-6 font-Roboto"> Group Name </th>
-        <th scope="col" class="py-3 px-6 font-Roboto"> Institution </th>
-        <th scope="col" class="py-3 px-6 font-Roboto"> Department </th>
-        <th scope="col" class="py-3 px-6 font-Roboto"> Batch </th>
-        <th scope="col" class="py-3 px-6 font-Roboto"> Link </th>
+        <th scope="col" class="py-3 px-6 font-OpenSans"> Group Name </th>
+        <th scope="col" class="py-3 px-6 font-OpenSans"> Institution </th>
+        <th scope="col" class="py-3 px-6 font-OpenSans"> Department </th>
+        <th scope="col" class="py-3 px-6 font-OpenSans"> Batch </th>
+        <th scope="col" class="py-3 px-6 font-OpenSans"> Link </th>
       </tr>
     </thead>
     <tbody>
@@ -200,17 +200,17 @@
         >
           <th
             scope="row"
-            class="py-4 px-6 font-medium font-Roboto text-gray-900 whitespace-nowrap dark:text-white"
+            class="py-4 px-6 font-medium font-OpenSans text-gray-900 whitespace-nowrap dark:text-white"
           >
             {group.name}
           </th>
-          <td class="py-4  px-6 font-Roboto"> {group.institution} </td>
-          <td class="py-4 px-6 font-Roboto"> {group.department} </td>
-          <td class="py-4 px-6 font-Roboto"> {group.batch} </td>
-          <td class="py-4 px-6 font-Roboto">
+          <td class="py-4  px-6 font-OpenSans"> {group.institution} </td>
+          <td class="py-4 px-6 font-OpenSans"> {group.department} </td>
+          <td class="py-4 px-6 font-OpenSans"> {group.batch} </td>
+          <td class="py-4 px-6 font-OpenSans">
             <a
               href={group.link}
-              class="font-medium font-Roboto text-blue-600 dark:text-blue-500 hover:underline"
+              class="font-medium font-OpenSans text-blue-600 dark:text-blue-500 hover:underline"
               >Go</a
             >
           </td>
@@ -243,7 +243,7 @@
     <input
       type="text"
       id="table-search"
-      class="block p-2 pl-10 w-80 text-sm font-Roboto text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      class="block p-2 pl-10 w-80 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="Search for groups"
       bind:value={search_term}
     />
@@ -281,14 +281,14 @@
       <input
         type="text"
         id="table-search"
-        class="block p-2 pl-10 w-80 text-sm font-Roboto text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="block p-2 pl-10 w-80 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Search for groups"
         bind:value={search_term}
       />
     </div>
   </div>
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 m-3 w-4/6 mx-auto auto-rows-fr"
+    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 m-3 w-4/6 mx-auto auto-rows-fr place-items-center"
   >
     {#each showable_groups as group}
       <GroupCard {group} />

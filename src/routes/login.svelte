@@ -89,7 +89,7 @@
     color: #fff;
     font-size: 5rem;
     letter-spacing: 1px;
-    font-family: Roboto, Georgia, "Times New Roman", Times, serif;
+    font-family: sans-serif, Georgia, Times, serif;
   }
 
   a:disabled,
