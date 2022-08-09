@@ -1,0 +1,100 @@
+#editor {
+  position: relative !important;
+}
+
+.ql-container {
+  overflow-y: hidden !important;
+  background-color: #1e293b !important;
+  font-size: 1rem !important;
+  border: none !important;
+  height: 92% !important;
+}
+
+.ql-toolbar {
+  border: none !important;
+  border-bottom: #475569 solid 1px !important;
+  height: 8%;
+}
+
+.ql-editor {
+  overflow-y: scroll !important;
+  color: #fff;
+}
+
+.ql-editor::-webkit-scrollbar {
+  background-color: transparent;
+  width: 0.6rem;
+}
+
+.ql-editor::-webkit-scrollbar-thumb {
+  background-color: #475569;
+  border-radius: 10px;
+}
+
+.ql-editor.ql-blank::before {
+  color: #bbb !important;
+}
+
+.ql-stroke {
+  stroke: #fff !important;
+}
+
+.ql-picker {
+  color: #fff !important;
+}
+
+.ql-picker-options {
+  background-color: #1e293b !important;
+}
+
+.ql-picker-item:hover {
+  color: rgb(52 211 153) !important;
+}
+
+.ql-picker-item.ql-selected {
+  color: rgb(52 211 153) !important;
+}
+
+.ql-fill {
+  fill: #fff !important;
+}
+
+.ql-active .ql-stroke {
+  stroke: rgb(52 211 153) !important;
+}
+
+.ql-active .ql-fill {
+  fill: rgb(52 211 153) !important;
+}
+
+.ql-link.ql-active .ql-stroke {
+  stroke: rgb(52 211 153) !important;
+}
+
+.ql-link.ql-active .ql-fill {
+  fill: rgb(52 211 153) !important;
+}
+
+.ql-picker-label.ql-active {
+  color: rgb(52 211 153) !important;
+}
+
+.ql-picker-label:hover {
+  color: rgb(52 211 153) !important;
+}
+
+.ql-picker-label:hover .ql-stroke {
+  stroke: rgb(52 211 153) !important;
+}
+
+.ql-tooltip {
+  position: absolute !important;
+  background-color: #1e293b !important;
+}
+
+.ql-code-block-container {
+  background-color: #111125 !important;
+  font-family: monospace;
+  padding: 0.8rem !important;
+  border-radius: 0.5rem !important;
+}

@@ -1,55 +1,43 @@
 <script lang="ts">
   import { scale } from "svelte/transition";
-  import { quill } from "svelte-quill";
   import Post from "../lib/post.svelte";
   import FaIcon from "../lib/faIcon.svelte";
+  import Quill from "../lib/quill.svelte";
+  import {
+    qlDeltaToHtml,
+    type QlDelta,
+  } from "../lib/utilities/qlDeltaProcessing";
 
   let showEditor = false;
   let showGroupDropdown = false;
 
-  let newPostQlContent = {
-    html: "",
+  let newPostContent = {
+    delta: {} as QlDelta,
     text: "",
   };
 
   $: {
     console.clear();
-    console.log(newPostQlContent);
+    console.log(newPostContent.delta);
+    console.log(qlDeltaToHtml(newPostContent.delta));
   }
 
-  let qlEditorOptions = {
-    modules: {
-      toolbar: [
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        ["bold", "italic", "underline", "strike"],
-        ["link", "code-block"],
-      ],
-    },
-    placeholder: "What's in you mind, Ashraf?",
-    // theme: "snow",
-  };
-
   let onTextChange = (e: any) => {
-    newPostQlContent = e.detail;
+    newPostContent = e.detail;
   };
 </script>
 
 <svelte:head>
   <title>Showing Posts</title>
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 </svelte:head>
 
 {#if showEditor}
   <div
     class="fixed h-full w-full bg-[#0005] flex justify-center items-center z-20"
-    on:click={() => {
-      showEditor = false;
-    }}
   >
     <div
       class="h-5/6 w-7/12 rounded-2xl flex flex-col shadow-xl border bg-slate-800 border-slate-600 overflow-hidden"
       in:scale={{ duration: 300 }}
-      on:click|stopPropagation
     >
       <div
         class="w-full h-1/6 flex items-center justify-between px-10 bg-slate-800 border-b border-slate-600 relative"
@@ -109,16 +97,12 @@
       </div>
 
       <!-- <textarea
-          class="h-4/6 w-full px-6 py-8 resize-none bg-slate-700 focus:outline-none"
-          placeholder="What's in you mind, Ashraf?"
-          bind:value={newPostContent}
-        /> -->
+        class="h-4/6 w-full px-6 py-8 resize-none bg-slate-700 focus:outline-none"
+        placeholder="What's in you mind, Ashraf?"
+        bind:value={newPostContent}
+      /> -->
 
-      <div
-        class="editor"
-        use:quill={qlEditorOptions}
-        on:text-change={onTextChange}
-      />
+      <Quill className="h-4/6 w-full" on:textChange={onTextChange} />
 
       <div
         class="w-full h-1/6 flex items-center justify-center border-t border-slate-600 bg-slate-800"
@@ -153,6 +137,18 @@
     <button
       type="button"
       class={"w-10/12 h-14 border border-slate-700 rounded-full text-left px-8 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
+        (newPostContent.text.trim() ? "  text-white" : " text-gray-400")}
+      on:click={() => {
+        showEditor = true;
+      }}
+    >
+      {newPostContent.text.trim()
+        ? newPostContent.text.trim()
+        : "What's in you mind, Ashraf?"}</button
+    >
+    <!-- <button
+      type="button"
+      class={"w-10/12 h-14 border border-slate-700 rounded-full text-left px-8 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
         (newPostQlContent.text.trim() ? "  text-white" : " text-gray-400")}
       on:click={() => {
         showEditor = true;
@@ -161,7 +157,7 @@
       {newPostQlContent.text.trim()
         ? newPostQlContent.text.trim()
         : "What's in you mind, Ashraf?"}</button
-    >
+    > -->
   </div>
 
   <Post poster={"Siam"} post={"what the hell this is?"} />
