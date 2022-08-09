@@ -14,7 +14,7 @@
   let isOpen = false;
   let justOpened = false;
   function toggle(e: MouseEvent) {
-    console.log("toggle");
+    // console.log("toggle");
     isOpen = !isOpen;
     if (isOpen) {
       justOpened = true;
