@@ -4,12 +4,6 @@
 
   export let open: boolean = false;
   export let transition_axis: string = "y";
-  export let btn_class: string =
-    "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800";
-  export let btn_text = "";
-  export let title = "";
-  export let title_class =
-    "inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400";
 
   onMount(() => {
     if (open) {
@@ -77,21 +71,6 @@
   }
 </script>
 
-<!-- drawer init and show -->
-<svelte:window on:click|stopPropagation={() => (open = false)} />
-<div class="text-center p-10">
-  <button
-    class={btn_class}
-    type="button"
-    data-drawer-target="drawer-contact"
-    data-drawer-show="drawer-contact"
-    aria-controls="drawer-contact"
-    on:click|stopPropagation={toggle}
-  >
-    {btn_text}
-  </button>
-</div>
-
 <!-- drawer component -->
 {#if open}
   <div
@@ -102,21 +81,8 @@
     aria-labelledby="drawer-contact-label"
     aria-modal="true"
     role="dialog"
+    on:click|stopPropagation={() => {}}
   >
-    <h5 id="drawer-label" class={title_class}>
-      <svg
-        class="w-5 h-5 mr-2"
-        aria-hidden="true"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-        ><path
-          fill-rule="evenodd"
-          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-          clip-rule="evenodd"
-        /></svg
-      >{title}
-    </h5>
     <button
       type="button"
       data-drawer-dismiss="drawer-contact"
