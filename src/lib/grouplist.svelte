@@ -9,7 +9,7 @@
       intro:
         "One byte lighter we design, one moment speedier we code, one pixel brighter we turn the universe.",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "CSE",
       group_link: "",
       batch: "20",
@@ -20,7 +20,7 @@
       intro:
         "Let's be connected with invisible wires and form a circuit where emotions will flow for eternity!",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "EEE",
       group_link: "",
       batch: "20",
@@ -31,7 +31,7 @@
       intro:
         "This is where we bring machines to life. This is where we repel the darkness of demise.",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "BME",
       group_link: "",
       batch: "20",
@@ -42,7 +42,7 @@
       intro:
         "Mecha mends mecha moulds mecha mesmerizes, mecha makes every loose end tight, mecha doesnt argue just explains why its right.",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "ME",
       group_link: "",
       batch: "20",
@@ -53,7 +53,7 @@
       intro:
         "Industry generates revolution. Production drives innovation. Here, our forte is optimization!",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "IPE",
       group_link: "",
       batch: "20",
@@ -64,7 +64,7 @@
       intro:
         "One united ChE. Let's dilute our sorrows, compress worries,filter mistakes, evaporate egos to get the crystal of happiness.",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "ChE",
       group_link: "",
       batch: "20",
@@ -75,7 +75,7 @@
       intro:
         "Let's be connected with invisible wires and form a circuit where emotions will flow for eternity!",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "EEE",
       group_link: "",
       batch: "20",
@@ -86,7 +86,7 @@
       intro:
         "All the outer dazzling structures,our works with their moiety; Where's zero? also faraway, to show all is our liability.",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "MME",
       group_link: "",
       batch: "20",
@@ -97,7 +97,7 @@
       intro:
         "Embodied our notion, our concern is as vast as the ocean. Our sagacity is as deep as sea",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "NAME",
       group_link: "",
       batch: "20",
@@ -108,7 +108,7 @@
       intro:
         "Embodied our notion, our concern is as vast as the ocean. Our sagacity is as deep as sea",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "NAME",
       group_link: "",
       batch: "20",
@@ -119,13 +119,15 @@
       intro:
         "Embodied our notion, our concern is as vast as the ocean. Our sagacity is as deep as sea",
       institution: "BUET",
-      image_link: "https://picsum.photos/200/300",
+      image_link: "",
       department: "NAME",
       group_link: "",
       batch: "20",
     },
   ];
-
+  groups.forEach((group) => {
+    group.image_link = "https://source.unsplash.com/random/" + group.id;
+  });
   let showable_groups = [];
 
   let search_term = "";
