@@ -1,9 +1,8 @@
 <script>
   import { scale } from "svelte/transition";
-  export let poster = "sadat";
-  export let time = "30-07-2022 10:51PM"; //when it was posted
-  export let post =
-    "Hello world, how are you? My name is Sadat and I want to introduce myself.";
+  export let poster = "";
+  export let time = ""; //when it was posted
+  export let post = "";
   let showComments = false;
 
   $: showCommentStatement = showComments ? "Hide Comments" : "Show Comments";
@@ -31,32 +30,6 @@
       </h5>
       <div class="flex flex-col flex-1">
         <p>{post}</p>
-        <p>
-          Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit
-          enim labore culpa sint ad nisi Lorem pariatur mollit ex esse
-          exercitation amet. Nisi animcupidatat excepteur officia. Reprehenderit
-          nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor
-          minim nulla est proident. Nostrud officia pariatur ut officia. Sit
-          irure elit esse ea nulla sunt ex occaecat reprehenderit commodo
-          officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa
-          proident adipisicing id nulla nisi laboris ex in Lorem sunt duis
-          officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis
-          sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea
-          consectetur et est culpa et culpa duis.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit
-          enim labore culpa sint ad nisi Lorem pariatur mollit ex esse
-          exercitation amet. Nisi animcupidatat excepteur officia. Reprehenderit
-          nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor
-          minim nulla est proident. Nostrud officia pariatur ut officia. Sit
-          irure elit esse ea nulla sunt ex occaecat reprehenderit commodo
-          officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa
-          proident adipisicing id nulla nisi laboris ex in Lorem sunt duis
-          officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis
-          sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea
-          consectetur et est culpa et culpa duis.
-        </p>
       </div>
     </div>
   </div>

@@ -1,24 +1,67 @@
 <script>
-  let first_name = "";
-  let middle_name = "";
-  let last_name = "";
-  let dob = "";
-  let username = "";
-  let password = "";
+  let reg = {
+    user_name: "",
+    password: "",
+    first_name: "",
+    middle_name: "",
+    last_name: "",
+    dob: "",
+  };
+
   let other_pass = "";
 
   let matched = true;
 
   $: {
-    if (password === other_pass) {
+    if (reg.password === other_pass) {
       matched = true;
     } else {
       matched = false;
     }
   }
+
+  let warning = false;
+  let warning_text = "";
+
+  const submit = async () => {
+    if (!matched) {
+      return;
+    }
+
+    reg.user_name = reg.user_name.trim();
+    reg.password = reg.password.trim();
+    reg.first_name = reg.first_name.trim();
+    reg.middle_name = reg.middle_name.trim();
+    reg.last_name = reg.last_name.trim();
+
+    if (reg.user_name.length == 0 || reg.password.length == 0) {
+      warning = true;
+      warning_text = "Username or password cannot be empty";
+      return;
+    }
+
+    try {
+      let res = await fetch("/register", {
+        method: "POST",
+        body: JSON.stringify(reg),
+      });
+      const body = await res.json();
+
+      if (res.ok) {
+        warning = false;
+        window.location.pathname = "/login";
+      } else {
+        warning = true;
+        warning_text = body.reason;
+      }
+    } catch (e) {
+      warning = true;
+      warning_text = `Error: ${e}`;
+    }
+  };
 </script>
 
-<form class="w-1/3 mx-auto pt-40">
+<form class="w-1/3 mx-auto pt-40" on:submit|preventDefault={submit}>
   <div class="grid gap-6 mb-6 md:grid-cols-2">
     <div>
       <label
@@ -30,7 +73,7 @@
         type="text"
         id="first_name"
         class="bg-gray-50 font-OpenSans border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        bind:value={first_name}
+        bind:value={reg.first_name}
         placeholder="First Name"
         required
       />
@@ -45,7 +88,7 @@
         type="text"
         id="middle_name"
         class="bg-gray-50 font-OpenSans border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        bind:value={middle_name}
+        bind:value={reg.middle_name}
         placeholder="Middle Name"
       />
     </div>
@@ -60,7 +103,7 @@
         id="last_name"
         class="bg-gray-50 font-OpenSans border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Last Name"
-        bind:value={last_name}
+        bind:value={reg.last_name}
         required
       />
     </div>
@@ -76,7 +119,7 @@
         class="bg-gray-50 font-OpenSans border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Date of Birth"
         pattern="DD-MM-YYYY"
-        bind:value={dob}
+        bind:value={reg.dob}
         required
       />
     </div>
@@ -91,7 +134,7 @@
         id="username"
         class="bg-gray-50 font-OpenSans border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Username"
-        bind:value={username}
+        bind:value={reg.user_name}
         required
       />
     </div>
@@ -121,7 +164,7 @@
       id="password"
       class="bg-gray-50 font-OpenSans border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="•••••••••"
-      bind:value={password}
+      bind:value={reg.password}
       required
     />
   </div>
@@ -141,7 +184,7 @@
     />
   </div>
   <!-- if matched then show text in green, else in red -->
-  {#if password != "" && other_pass != ""}
+  {#if reg.password != "" && reg.other_pass != ""}
     {#if matched}
       <p class="mt-2 text-sm text-green-600 dark:text-green-500 mb-2">
         <span class="font-medium font-OpenSans">Passwords match</span>
@@ -173,4 +216,13 @@
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium font-OpenSans rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
     >Submit</button
   >
+  {#if warning}
+    <div
+      class="mb-6 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+      role="alert"
+    >
+      <span class="font-medium">Login Unsuccessful!</span>
+      {warning_text}
+    </div>
+  {/if}
 </form>
