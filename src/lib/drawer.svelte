@@ -4,6 +4,11 @@
 
   export let open: boolean = false;
   export let transition_axis: string = "y";
+  let drawer_class: string =
+    "fixed z-40 h-screen p-5 overflow-y-auto bg-white w-80 dark:bg-gray-800 transition-transform transform-none";
+
+  if (transition_axis == "x") drawer_class += " left-0 top-0";
+  else if (transition_axis == "-x") drawer_class += " right-0 top-0";
 
   onMount(() => {
     if (open) {
@@ -17,7 +22,7 @@
 
   function slide(
     node,
-    { delay = 0, duration = 350, easing = cubicOut, axis = transition_axis }
+    { delay = 0, duration = 500, easing = cubicOut, axis = transition_axis }
   ) {
     const style = getComputedStyle(node);
     const opacity = +style.opacity;
@@ -71,13 +76,11 @@
   }
 </script>
 
-<svelte:window on:click|stopPropagation={() => (open = false)} />
-
 <!-- drawer component -->
 {#if open}
   <div
     id="drawer-contact"
-    class="fixed z-40 h-screen p-5 overflow-y-auto bg-white w-80 dark:bg-gray-800 transition-transform left-0 top-0 transform-none"
+    class={drawer_class}
     transition:slide={{ axis: transition_axis }}
     tabindex="-1"
     aria-labelledby="drawer-contact-label"

@@ -7,6 +7,8 @@
 
 <!-- //this is without using flowbite-svelte -->
 
+<svelte:window on:click|stopPropagation={() => (draweropen = false)} />
+
 <div class="bg-slate-900 p-10 my-5">
   <p class="font-Raleway md:text-5xl sm:text-lg grid place-items-center py-10">
     Frequently Asked Questions
