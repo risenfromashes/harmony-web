@@ -7,7 +7,7 @@
   <title>Login</title>
 </svelte:head>
 
-<div class="container pt-20">
+<div class="container">
   <form class="py-8">
     <div class="input_form">
       <label for="username" class="input_form__label">Username</label>
@@ -89,7 +89,7 @@
     color: #fff;
     font-size: 5rem;
     letter-spacing: 1px;
-    font-family: Roboto, Georgia, "Times New Roman", Times, serif;
+    font-family: sans-serif, Georgia, Times, serif;
   }
 
   a:disabled,

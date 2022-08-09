@@ -12,9 +12,21 @@
   };
 
   let isOpen = false;
-  const toggle = () => {
+  let justOpened = false;
+  function toggle(e: MouseEvent) {
+    // console.log("toggle");
     isOpen = !isOpen;
-  };
+    if (isOpen) {
+      justOpened = true;
+    }
+  }
+  function onClickOutside() {
+    if (justOpened) {
+      justOpened = false;
+    } else {
+      isOpen = false;
+    }
+  }
 </script>
 
 <!-- <div
@@ -90,6 +102,7 @@
   </div>
 </div> -->
 
+<svelte:window on:click|stopPropagation={onClickOutside} />
 <div
   class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-3"
 >
@@ -114,7 +127,8 @@
     {#if isOpen}
       <div
         class="z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 block"
-        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(281px, 83px);"
+        style="position: absolute; top: 3rem; right: -2rem;"
+        on:click|stopPropagation={() => {}}
       >
         <ul class="py-1 font-Hahmlet">
           <li>
@@ -150,12 +164,12 @@
       alt="Group Photo"
     />
     <h5
-      class="mb-1 text-xl font-medium text-gray-900 dark:text-white font-Roboto"
+      class="mb-1 text-xl font-medium text-gray-900 dark:text-white font-JosefinSans"
     >
       {group.name}
     </h5>
     <span
-      class="text-sm text-gray-500 dark:text-gray-400 text-clip overflow-hidden font-Noto whitespace-normal"
+      class="text-sm text-gray-500 dark:text-gray-400 text-clip overflow-hidden font-OpenSans whitespace-normal"
       >{group.intro}</span
     >
   </div>
