@@ -23,8 +23,7 @@
   };
 
   let urgent: boolean;
-  console.log(current_time);
-  console.log(event.end_time);
+
   if (
     event.end_time.getTime() - current_time.getTime() <=
     1000 * 60 * 60 * 24 * 2
@@ -37,18 +36,10 @@
   function remainingDays(date: Date) {
     let diff = date.getTime() - current_time.getTime();
     let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    console.log(days);
     return days;
   }
   let daysLeft = remainingDays(event.end_time);
 
-  function getDateTime(date: Date) {
-    return (
-      `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}` +
-      " " +
-      `${date.getHours()}:${date.getMinutes()}`
-    );
-  }
   //write a function that will take a JavaScript Date and will return something in the format like 11 August, 11:59 PM, converting time to AM, PM
   function getTime(date: Date) {
     let hours = date.getHours();
@@ -63,11 +54,30 @@
     return strTime;
   }
   function getDateTimeString(date: Date) {
-    return `${date.getDate()} ${month[date.getMonth()]}` + ", " + getTime(date);
+    let day = date.getDate();
+    let suff = "";
+    if (day >= 10 && day < 20) suff = "th";
+    else if (day % 10 == 1) {
+      suff = "st";
+    } else if (day % 10 == 2) {
+      suff = "nd";
+    } else if (day % 10 == 3) {
+      suff = "rd";
+    } else {
+      suff = "th";
+    }
+    return (
+      `${date.getDate()}` +
+      suff +
+      " " +
+      `${month[date.getMonth()]}` +
+      ", " +
+      getTime(date)
+    );
   }
 </script>
 
-<li class="mb-10 ml-6">
+<li class="mb-10 ml-6 dark:hover:bg-gray-800 rounded-lg p-3">
   <span
     class="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900"
   >

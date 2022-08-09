@@ -144,6 +144,7 @@
       description: "The final and grand evaluation of the Database Project.",
     },
   ];
+
   //sort the events based on end time, and then start time
   events.sort((a, b) => {
     if (a.end_time > b.end_time) {
@@ -160,12 +161,87 @@
       }
     }
   });
+
+  let showable_events = events;
+
+  //write a function to convert a string (YYYY-MM-DD) to a Date object
+  function stringToDate(date_string, h, m) {
+    let date_array = date_string.split("-");
+    return new Date(date_array[0], date_array[1] - 1, date_array[2], h, m);
+  }
+
+  function search() {
+    if (start_date != "" && end_date != "") {
+      //filter events based on whether they are in the range of start_date and end_date
+      // console.log(start_date, stringToDate(start_date, 0, 0));
+      // console.log(end_date, stringToDate(end_date, 23, 59));
+      showable_events = events.filter((event) => {
+        return (
+          event.end_time >= stringToDate(start_date, 0, 0) &&
+          event.end_time <= stringToDate(end_date, 23, 59)
+        );
+      });
+    } else showable_events = events;
+  }
+
+  let start_date = "";
+  let end_date = "";
+
+  $: if (start_date) console.log(start_date);
 </script>
 
+<svelte:head>
+  <script src="https://unpkg.com/flowbite@1.5.1/dist/datepicker.js"></script>
+</svelte:head>
+
 <div class="bg-slate-900 pt-20 pb-10 pl-20 pr-20 mt-5">
+  <div class="flex items-center pb-10 gap-5">
+    <div class="flex items-center">
+      <div class="relative">
+        <div
+          class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+        />
+        <input
+          name="start"
+          type="date"
+          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-Roboto"
+          bind:value={start_date}
+          placeholder="Select date start"
+        />
+      </div>
+      <span class="mx-4 text-gray-500">to</span>
+      <div class="relative">
+        <div
+          class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+        />
+        <input
+          name="end"
+          type="date"
+          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-Roboto"
+          bind:value={end_date}
+          placeholder="Select date end"
+        />
+      </div>
+    </div>
+    <button
+      type="button"
+      class="text-white bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-1/10"
+      on:click={search}>Search</button
+    >
+    <button
+      type="button"
+      class="text-white bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-1/10"
+      on:click={() => {
+        start_date = "";
+        end_date = "";
+        showable_events = events;
+      }}>Reset</button
+    >
+  </div>
+
   <div class="flex place-content-left">
     <ol class="relative border-l border-gray-200 dark:border-gray-700">
-      {#each events as e}
+      {#each showable_events as e}
         <EventItem event={e} {current_time} />
       {/each}
     </ol>
