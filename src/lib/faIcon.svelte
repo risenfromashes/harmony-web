@@ -7,9 +7,15 @@
 </script>
 
 {#if type === "solid"}
-  <i class="fas fa-{icon + ' ' + className}" />
+  <span class={className}>
+    <i class="fas fa-{icon}" />
+  </span>
 {:else if type === "regular"}
-  <i class="far fa-{icon + ' ' + className}" />
+  <span>
+    <i class="far fa-{icon}" />
+  </span>
 {:else if type === "brands"}
-  <i class="fab fa-{icon + ' ' + className}" />
+  <span>
+    <i class="fab fa-{icon}" />
+  </span>
 {/if}
