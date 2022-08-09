@@ -7,8 +7,13 @@
 
 <!-- //this is without using flowbite-svelte -->
 
-
 <svelte:window on:click|stopPropagation={() => (draweropen = false)} />
+
+<!-- 
+            <a
+              class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
+              href="https://github.com/TheCodeHeist">Riyasat</a
+            > -->
 
 <div class="bg-slate-900 p-10 my-5">
   <p class="font-Raleway md:text-5xl sm:text-lg grid place-items-center py-10">
@@ -75,15 +80,11 @@
               href="https://www.facebook.com/ashrafur.khan.37"
               class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
               >Ashraf</a
-            >,
-            <a
-              class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
-              href="https://www.facebook.com/sadathossain01/">Sadat</a
             >
             and
             <a
               class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
-              href="https://github.com/TheCodeHeist">Riyasat</a
+              href="https://www.facebook.com/sadathossain01/">Sadat</a
             >.
           </p>
         </div>
