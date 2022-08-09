@@ -71,6 +71,8 @@
   }
 </script>
 
+<svelte:window on:click|stopPropagation={() => (open = false)} />
+
 <!-- drawer component -->
 {#if open}
   <div
