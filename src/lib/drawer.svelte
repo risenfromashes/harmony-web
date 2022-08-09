@@ -106,7 +106,6 @@
       >
       <span class="sr-only">Close menu</span>
     </button>
-
     <slot name="body" />
   </div>
 {/if}
