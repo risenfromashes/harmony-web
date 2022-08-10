@@ -42,8 +42,7 @@
 {:then}
   <!-- card showing v2 -->
   <div class="py-10">
-    <!-- <div class="pb-4 bg-white dark:bg-gray-900 grid place-items-center"> -->
-    <div class="pb-4 bg-white dark:bg-slate-900 grid place-items-center">
+    <div class="pb-4 bg-white dark:bg-gray-900 grid place-items-center">
       <label for="table-search" class="sr-only">Search</label>
       <div class="relative mt-1">
         <div
