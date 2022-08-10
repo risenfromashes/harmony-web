@@ -2,41 +2,106 @@
   import Grouplist from "../lib/grouplist.svelte";
   import Drawer from "../lib/drawer.svelte";
   import FaIcon from "../lib/faIcon.svelte";
+  import { fade } from "svelte/transition";
 
   let draweropen: boolean = false;
   let name: string = "";
-  let department: string = "";
-  let institution: string = "";
   let intro: string = "";
   const maxlength = 140;
 
-  //declare an array of 20 users with id and different names
-  // const users = [
-  //   { id: 1, name: "John Doe" },
-  //   { id: 2, name: "Jane Doe" },
-  //   { id: 3, name: "Jack Doe" },
-  //   { id: 4, name: "Jill Doe" },
-  //   { id: 5, name: "Joe Doe" },
-  //   { id: 6, name: "Jenny Doe" },
-  //   { id: 7, name: "Juan Doe" },
-  //   { id: 8, name: "Jenny Doe" },
-  //   { id: 9, name: "Juan Doe" },
-  //   { id: 10, name: "Jenny Doe" },
-  //   { id: 11, name: "Juan Doe" },
-  //   { id: 12, name: "Jenny Doe" },
-  //   { id: 13, name: "Juan Doe" },
-  //   { id: 14, name: "Jenny Doe" },
-  //   { id: 15, name: "Juan Doe" },
-  //   { id: 16, name: "Jenny Doe" },
-  //   { id: 17, name: "Juan Doe" },
-  //   { id: 18, name: "Jenny Doe" },
-  //   { id: 19, name: "Juan Doe" },
-  //   { id: 20, name: "Jenny Doe" },
-  // ];
+  let filteredUsers = [];
+  let searchInput;
+  let search_term = "";
 
-  function add_group() {
+  // declare an array of 20 users with id and different names
+  // later bring here all the users from the database
+  let users = [
+    { id: 1, name: "sadat999", added: false },
+    { id: 2, name: "risenfromashes", added: false },
+    { id: 3, name: "pumpa", added: false },
+    { id: 4, name: "siam11651", added: false },
+    { id: 5, name: "mahabhu", added: false },
+    { id: 6, name: "imanik", added: false },
+    { id: 7, name: "ishrak26", added: false },
+    { id: 8, name: "mahirlabibdihan", added: false },
+    { id: 9, name: "shattik420", added: false },
+    { id: 10, name: "msh", added: false },
+    { id: 11, name: "brainiac77", added: false },
+    { id: 12, name: "thecodeheist", added: false },
+    { id: 13, name: "recklessraccoon", added: false },
+    { id: 14, name: "mijan_rmn", added: false },
+    { id: 15, name: "nahinkhan", added: false },
+    { id: 16, name: "nafi10", added: false },
+    { id: 17, name: "monke", added: false },
+    { id: 18, name: "saffatjabin", added: false },
+    { id: 19, name: "nabid", added: false },
+    { id: 20, name: "aniksaha", added: false },
+  ];
+
+  $: added_users = [];
+
+  function add_user(user) {
+    if (added_users.indexOf(user) != -1) return;
+    added_users.push(user);
+    //set this user's added to true
+    users.forEach((u) => {
+      if (u.id === user.id) {
+        u.added = true;
+      }
+    });
+    added_users = added_users;
+    search_term = "";
+  }
+
+  function remove_user(user) {
+    //delete entry user from added_users
+    added_users.splice(added_users.indexOf(user), 1);
+    //set this user's added to false
+    users.forEach((u) => {
+      if (u.id === user.id) {
+        u.added = false;
+      }
+    });
+    added_users = added_users;
+    search_term = "";
+  }
+
+  function create_group() {
     //write stuffs here...
     // reload the group list maybe
+  }
+
+  $: if (search_term === "") {
+    filteredUsers = [];
+  }
+
+  //write a function to make the matching part of str bold
+  const makeMatchBold = (str) => {
+    let match = search_term.toLowerCase();
+    let matchIndex = str.toLowerCase().indexOf(match);
+    if (matchIndex === -1) {
+      return str;
+    }
+    const ret: string =
+      str.substring(0, matchIndex) +
+      "<b>" +
+      str.substring(matchIndex, matchIndex + match.length) +
+      "</b>" +
+      str.substring(matchIndex + match.length);
+    return ret;
+  };
+
+  $: {
+    if (search_term) {
+      filteredUsers = users.filter((user) => {
+        return (
+          user.name.length >= search_term.length &&
+          user.name.toLowerCase().substr(0, search_term.length) ===
+            search_term.toLowerCase() &&
+          !user.added
+        );
+      });
+    }
   }
 </script>
 
@@ -46,17 +111,16 @@
   <Grouplist />
   <!-- drawer init and show -->
   <button
-    class="absolute top-20 left-20 mt-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg lg:ml-40 ml-10 text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+    class="h-14 w-14 fixed bottom-12 right-12 z-10 shadow-xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full lg:ml-40 ml-10 text-sm mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
     type="button"
     data-drawer-target="drawer-form"
     data-drawer-show="drawer-form"
     aria-controls="drawer-form"
     on:click|stopPropagation={() => (draweropen = !draweropen)}
   >
-    <FaIcon type="regular" icon="plus" />
-    Create New Group
+    <FaIcon type="regular" icon="plus" className="text-xl" />
   </button>
-  <Drawer transition_axis="-x" open={draweropen}>
+  <Drawer transition_axis="-x" bind:open={draweropen}>
     <!-- drawer component -->
     <div slot="body">
       <h5
@@ -94,36 +158,6 @@
         </div>
         <div class="mb-6">
           <label
-            for="institution"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Institution</label
-          >
-          <input
-            type="text"
-            id="institution"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Institution"
-            required
-            bind:value={institution}
-          />
-        </div>
-        <div class="mb-6">
-          <label
-            for="department"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Department</label
-          >
-          <input
-            type="text"
-            id="department"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Department"
-            required
-            bind:value={department}
-          />
-        </div>
-        <div class="mb-6">
-          <label
             for="intro"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
             >Intro ({maxlength - intro.length} characters remaining)</label
@@ -137,27 +171,73 @@
             bind:value={intro}
           />
         </div>
-        <div class="relative mb-6">
-          <div
-            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+
+        <form>
+          <div class="my-2">
+            {#each added_users as u}
+              <span
+                id="badge-dismiss-default"
+                class="inline-flex items-center py-1 px-2 mr-2 my-1 text-sm font-medium text-green-800 bg-green-100 rounded dark:bg-green-200 dark:text-green-800 font-OpenSans"
+                out:fade
+              >
+                {u.name}
+                <button
+                  type="button"
+                  class="rounded-lg inline-flex items-center p-0.5 ml-1 text-sm text-green-400 bg-transparent hover:bg-green-200 hover:text-green-900 dark:hover:bg-green-300 dark:hover:text-green-900"
+                  data-dismiss-target="#badge-dismiss-default"
+                  aria-label="Remove"
+                  on:click={() => remove_user(u)}
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="w-3 h-3"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                      fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    /></svg
+                  >
+                  <span class="sr-only">Remove badge</span>
+                </button>
+              </span>
+            {/each}
+          </div>
+          <input
+            type="text"
+            id="search-input"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Search users to add"
+            required
+            bind:value={search_term}
+            bind:this={searchInput}
           />
-        </div>
+        </form>
+
+        {#if filteredUsers.length > 0}
+          <ul id="autocomplete-items-list" class="rounded-lg bg-slate-600 mt-1">
+            {#each filteredUsers as user, i}
+              <button
+                type="button"
+                class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left rounded-lg font-OpenSans"
+                on:click|stopPropagation={() => {
+                  add_user(user);
+                }}
+              >
+                {@html makeMatchBold(user.name)}
+              </button>
+            {/each}
+          </ul>
+        {/if}
+
         <button
           type="submit"
-          class="text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          on:click={add_group}
-          ><svg
-            class="w-5 h-5 mr-2"
-            aria-hidden="true"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-            ><path
-              fill-rule="evenodd"
-              d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-              clip-rule="evenodd"
-            /></svg
-          > Create group</button
+          class="my-5 text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          on:click={create_group}
+        >
+          Create group</button
         >
       </form>
     </div>
