@@ -14,7 +14,7 @@
 <nav
   class="dark:bg-gray-900 flex items-center justify-between w-full py-3 px-4 sm:px-8 fixed z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-800"
 >
-  <a href="https://www.harmony-open.com/" class="flex items-center z-40">
+  <a href="https://www.harmony-open.com/" class="flex items-center z-50">
     <img
       src="https://flowbite.com/docs/images/logo.svg"
       class="mr-3 h-6 sm:h-9"
@@ -28,14 +28,14 @@
 
   <button
     type="button"
-    class="md:hidden flex flex-col items-center justify-evenly z-40 text-xl"
+    class="md:hidden flex flex-col items-center justify-evenly z-50 text-xl"
     on:click={() => (showDrawer = !showDrawer)}
   >
     <FaIcon icon="bars" />
   </button>
 
   <div
-    class={"absolute top-0 left-0 flex-col z-20 bg-gray-900 w-full h-screen items-center justify-center flex md:relative md:flex-row md:h-auto md:w-auto transition-all " +
+    class={"absolute top-0 left-0 flex-col z-40 bg-gray-900 w-full h-screen items-center justify-center flex md:relative md:flex-row md:h-auto md:w-auto transition-all " +
       (showDrawer ? "translate-x-0" : "translate-x-full") +
       " md:top-auto md:left-auto md:translate-x-0"}
   >

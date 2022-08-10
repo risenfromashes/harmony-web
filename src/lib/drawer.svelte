@@ -5,7 +5,7 @@
   export let open: boolean = false;
   export let transition_axis: string = "y";
   let drawer_class: string =
-    "fixed z-40 h-screen p-5 overflow-y-auto bg-white w-80 dark:bg-gray-800 transition-transform transform-none";
+    "fixed z-20 h-screen p-5 overflow-y-auto bg-white w-80 dark:bg-gray-800 transition-transform transform-none";
 
   if (transition_axis == "x") drawer_class += " left-0 top-0";
   else if (transition_axis == "-x") drawer_class += " right-0 top-0";
