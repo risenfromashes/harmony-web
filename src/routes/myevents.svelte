@@ -272,7 +272,7 @@
     </ol>
   </div>
 
-  <Drawer transition_axis="-x" open={draweropen}>
+  <Drawer transition_axis="-x" bind:open={draweropen}>
     <!-- drawer component -->
     <div slot="body">
       <h5
