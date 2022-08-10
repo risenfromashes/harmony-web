@@ -5,6 +5,7 @@
   let warning_text = "";
 
   import { login } from "../lib/stores/login";
+  import { navigate } from "svelte-navigator";
 
   const submit = async () => {
     username = username.trim();
@@ -24,8 +25,8 @@
 
       if (res.ok) {
         warning = false;
-        $login = { auth: true, user_id: body.user_id };
-        window.location.pathname = "/";
+        login.user_id = body.id;
+        navigate(`/`);
       } else {
         warning = true;
         warning_text = body.reason;

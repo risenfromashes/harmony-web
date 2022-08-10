@@ -1,8 +1,14 @@
 import { writable } from "svelte/store";
 
-export interface Login{
-    auth: boolean,
-    user_id: String;
-};
+class Login {
+  public get user_id(): string {
+    let rt = window.localStorage.getItem("user_id");
+    return rt != null ? rt : "-1";
+  }
 
-export let login = writable<Login>({auth: false, user_id: "-1"});
+  public set user_id(id: string) {
+    window.localStorage.setItem("user_id", id);
+  }
+}
+
+export let login = new Login();

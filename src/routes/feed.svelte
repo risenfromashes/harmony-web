@@ -1,30 +1,88 @@
 <script lang="ts">
   import { scale } from "svelte/transition";
-  import Post from "../lib/post.svelte";
+  import PostItem from "../lib/post.svelte";
   import FaIcon from "../lib/faIcon.svelte";
   import Quill from "../lib/quill.svelte";
+  import { type Group, get_groups } from "../lib/data/groups";
+  import { type Post, get_posts } from "../lib/data/posts";
+  import { navigate } from "svelte-navigator";
 
-  import {
-    qlDeltaToHtml,
-    type QlDelta,
-  } from "../lib/utilities/qlDeltaProcessing";
+  // import { type QlDelta } from "../lib/utilities/qlDeltaProcessing";
+  import About from "./about.svelte";
+  import { login } from "../lib/stores/login";
 
   let showEditor = false;
   let showGroupDropdown = false;
 
   let newPostContent = {
-    delta: {} as QlDelta,
+    delta: {},
     text: "",
   };
 
-  $: {
-    console.clear();
-    console.log(newPostContent.delta);
-    console.log(qlDeltaToHtml(newPostContent.delta));
-  }
+  let groups: Array<Group> = [];
+  let posts: Array<Post> = [];
+  let selected_group: Group = null;
+
+  let load_groups = (async () => {
+    try {
+      groups = await get_groups();
+      selected_group = groups[0];
+    } catch (e) {
+      navigate("/login");
+    }
+  })();
+
+  let load_posts = (async () => {
+    try {
+      posts = await get_posts();
+    } catch (e) {
+      navigate("/login");
+      console.log(e);
+    }
+  })();
+
+  const submit_post = async () => {
+    // TODO: show error alerts
+    try {
+      if (selected_group == null) {
+        return;
+      }
+      if (login.user_id === "-1") {
+        navigate("/");
+      }
+
+      let post = {
+        user_id: login.user_id,
+        group_id: selected_group.id.toString(),
+        text: newPostContent.text.toString(),
+      };
+
+      console.log({ post });
+
+      let res = await fetch("/post", {
+        method: "POST",
+        body: JSON.stringify(post),
+      });
+
+      if (res.ok) {
+        showEditor = false;
+        navigate("/");
+      } else {
+        console.log(res);
+      }
+    } catch (e) {}
+  };
+
+  // $: {
+  //   // console.clear();
+  //   console.log(newPostContent.text);
+  // }
 
   let onTextChange = (e: any) => {
-    newPostContent = e.detail;
+    console.log(e.detail);
+    if (showEditor) {
+      newPostContent = e.detail;
+    }
   };
 </script>
 
@@ -64,24 +122,23 @@
             class="flex flex-col items-center min-h-[2rem] w-[280px] bg-slate-800 border border-slate-600 rounded-lg z-20 overflow-hidden"
             style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(281px, 83px);"
           >
-            <button
-              type="button"
-              class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
-            >
-              Architecture Dor Lage
-            </button>
-            <button
-              type="button"
-              class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
-            >
-              CSE-te Nesha Lagse!
-            </button>
-            <button
-              type="button"
-              class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
-            >
-              আকাইম্মার দল!
-            </button>
+            {#await load_groups}
+              <p>Loading...</p>
+            {:then}
+              {#each groups as group}
+                <button
+                  type="button"
+                  class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
+                  on:click={() => {
+                    selected_group = group;
+                  }}
+                >
+                  {group.name}
+                </button>
+              {/each}
+            {:catch e}
+              <p>{e}</p>
+            {/await}
           </div>
         {/if}
 
@@ -111,6 +168,7 @@
         <button
           type="button"
           class="resize-none rounded-lg font-semibold text-xl transition-all outline-none hover:text-emerald-400"
+          on:click={submit_post}
           ><FaIcon icon="paper-plane" />&nbsp;&nbsp;Send</button
         >
       </div>
@@ -145,8 +203,8 @@
     >
       {newPostContent.text.trim()
         ? newPostContent.text.trim()
-        : "What's in you mind, Ashraf?"}</button
-    >
+        : "What's in you mind?"}
+    </button>
     <!-- <button
       type="button"
       class={"w-10/12 h-14 border border-slate-700 rounded-full text-left px-8 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
@@ -161,19 +219,13 @@
     > -->
   </div>
 
-  <Post poster={"Siam"} post={"what the hell this is?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
-  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  {#await load_posts}
+    <p>Loading...</p>
+  {:then}
+    {#each posts as post}
+      <PostItem poster={post.poster_name} post={post.text} />
+    {/each}
+  {/await}
 </div>
 
 <style>

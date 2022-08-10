@@ -104,7 +104,7 @@
 
 <svelte:window on:click|stopPropagation={onClickOutside} />
 <div
-  class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-3"
+  class="max-w-sm w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-3"
 >
   <div class="flex justify-end px-4 pt-1 relative">
     <button
