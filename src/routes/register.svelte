@@ -184,7 +184,7 @@
     />
   </div>
   <!-- if matched then show text in green, else in red -->
-  {#if reg.password != "" && reg.other_pass != ""}
+  {#if reg.password != "" && other_pass != ""}
     {#if matched}
       <p class="mt-2 text-sm text-green-600 dark:text-green-500 mb-2">
         <span class="font-medium font-OpenSans">Passwords match</span>

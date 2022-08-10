@@ -8,7 +8,6 @@
   import { navigate } from "svelte-navigator";
 
   // import { type QlDelta } from "../lib/utilities/qlDeltaProcessing";
-  import About from "./about.svelte";
   import { login } from "../lib/stores/login";
 
   let showEditor = false;

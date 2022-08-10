@@ -20,7 +20,7 @@ export const get_groups = async () => {
         id: group.group_id,
         name: group.group_name,
         intro: group.intro,
-        image_link: "https://source.unsplash.com/random/",
+        image_link: "https://source.unsplash.com/random/" + group.group_id,
         group_link: "",
       });
     }
