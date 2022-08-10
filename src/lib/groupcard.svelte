@@ -104,8 +104,9 @@
 
 <svelte:window on:click|stopPropagation={onClickOutside} />
 <div
-  class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-3 h-full"
+  class="max-w-sm w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-3 h-full"
 >
+  <!-- 2 1 member -->
   <div class="flex justify-end px-4 pt-1 relative">
     <button
       class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"

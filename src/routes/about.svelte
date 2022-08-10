@@ -38,7 +38,7 @@
               target="_blank"
               class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
               >get started</a
-            > and join a collaborative environment as good as Harmony.
+            > and join a collaborative environment as good as Harmon••••y.
           </p>
         </div>
       </AccordionItem>
@@ -122,13 +122,15 @@
       data-drawer-target="drawer-contact"
       data-drawer-show="drawer-contact"
       aria-controls="drawer-contact"
-      on:click|stopPropagation={() => (draweropen = !draweropen)}
+      on:click|stopPropagation={() => {
+        draweropen = !draweropen;
+      }}
     >
       Have More Questions?
     </button>
   </div>
 
-  <Drawer transition_axis="x" open={draweropen}>
+  <Drawer transition_axis="x" bind:open={draweropen}>
     <!-- drawer component -->
     <div slot="body">
       <h5
