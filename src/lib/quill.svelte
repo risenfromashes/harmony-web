@@ -12,7 +12,7 @@
         ["link", "code-block"],
       ],
     },
-    placeholder: "What's in you mind, Ashraf?",
+    placeholder: "What's in you mind?",
     theme: "snow",
   };
 

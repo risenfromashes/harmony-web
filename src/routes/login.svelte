@@ -1,6 +1,41 @@
 <script lang="ts">
   let username = "";
   let password = "";
+  let warning = false;
+  let warning_text = "";
+
+  import { login } from "../lib/stores/login";
+  import { navigate } from "svelte-navigator";
+
+  const submit = async () => {
+    username = username.trim();
+    password = password.trim();
+    if (username.length === 0 || password.length === 0) {
+      warning = true;
+      warning_text = "User name or password cannot be empty";
+      return;
+    }
+    try {
+      let req = { user_name: username, password: password };
+      let res = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify(req),
+      });
+      const body = await res.json();
+
+      if (res.ok) {
+        warning = false;
+        login.user_id = body.id;
+        navigate(`/`);
+      } else {
+        warning = true;
+        warning_text = body.reason;
+      }
+    } catch (e) {
+      warning = true;
+      warning_text = `Error: ${e}`;
+    }
+  };
 </script>
 
 <svelte:head>
@@ -29,9 +64,9 @@
       />
     </div>
     <div class="mx-auto py-8">
-      <a
+      <div
         type="button"
-        href="/login"
+        on:click={submit}
         class="text-white font-Roboto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2 px-4 mr-3 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         Log in
@@ -47,9 +82,9 @@
             clip-rule="evenodd"
           /></svg
         >
-      </a>
+      </div>
 
-      <a
+      <div
         type="button"
         href="/register"
         class="text-white font-Roboto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-10"
@@ -65,9 +100,18 @@
           /></svg
         >
         Register
-      </a>
+      </div>
     </div>
   </form>
+  {#if warning}
+    <div
+      class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+      role="alert"
+    >
+      <span class="font-medium">Login Unsuccessful!</span>
+      {warning_text}
+    </div>
+  {/if}
 </div>
 
 <style>
