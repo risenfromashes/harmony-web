@@ -104,7 +104,7 @@
 
 <svelte:window on:click|stopPropagation={onClickOutside} />
 <div
-  class="max-w-sm w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-3"
+  class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-3 h-full"
 >
   <div class="flex justify-end px-4 pt-1 relative">
     <button
@@ -156,7 +156,7 @@
       </div>
     {/if}
   </div>
-  <div class="flex flex-col items-center px-5 pb-5">
+  <div class="flex flex-col items-center px-5 pb-0">
     <!-- svelte-ignore a11y-img-redundant-alt -->
     <img
       class="mb-3 w-24 h-24 rounded-full shadow-lg"
