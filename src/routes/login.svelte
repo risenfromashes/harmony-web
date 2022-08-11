@@ -46,17 +46,25 @@
   <div class="container">
     <form class="py-8">
       <div class="input_form">
-        <label for="username" class="input_form__label">Username</label>
+        <label
+          for="username"
+          class="block mb-2 font-OpenSans text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Username</label
+        >
         <input
           type="text"
           bind:value={username}
           placeholder="Username"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-5 font-Roboto"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-5 font-OpenSans"
         />
       </div>
 
       <div class="input_form">
-        <label for="password" class="input_form__label">Password</label>
+        <label
+          for="password"
+          class="block mb-2 font-OpenSans text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Password</label
+        >
         <input
           type="password"
           bind:value={password}
@@ -68,7 +76,7 @@
         <div
           type="button"
           on:click={submit}
-          class="text-white font-Roboto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2 px-4 mr-3 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2 px-4 mr-3 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Log in
           <svg
@@ -88,7 +96,7 @@
         <div
           type="button"
           href="/register"
-          class="text-white font-Roboto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-10"
+          class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-10"
         >
           <svg
             aria-hidden="true"
@@ -131,13 +139,6 @@
     margin-top: 32px;
   }
 
-  .input_form__label {
-    color: #fff;
-    font-size: 5rem;
-    letter-spacing: 1px;
-    font-family: sans-serif, Georgia, Times, serif;
-  }
-
   a:disabled,
   button:disabled {
     pointer-events: none;
@@ -153,10 +154,6 @@
     .container {
       width: 52%;
     }
-
-    .input_form__label {
-      font-size: 0.9rem;
-    }
   }
 
   @media screen and (min-width: 910px) {
@@ -168,12 +165,6 @@
   @media screen and (min-width: 1080px) {
     .container {
       width: 37%;
-    }
-  }
-
-  @media screen and (min-width: 1200px) {
-    .input_form__label {
-      font-size: calc(0.8rem + 1px);
     }
   }
 
