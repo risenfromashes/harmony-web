@@ -265,7 +265,7 @@
   </div>
 
   <div class="flex place-content-left">
-    <ol class="relative border-l border-gray-200 dark:border-gray-700">
+    <ol class="relative border-l border-gray-200 dark:border-gray-700 w-full">
       {#each showable_events as e}
         <EventItem event={e} {current_time} />
       {/each}
