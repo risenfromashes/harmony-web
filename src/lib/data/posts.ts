@@ -31,7 +31,6 @@ export const get_posts = async () => {
     if (res.status === 401) {
       throw new Error("Unauthorized");
     } else {
-      // what the fuck happend?
       console.log("unexpected status: " + res.status);
       console.log({ res });
       throw new Error("Unexpected status");
