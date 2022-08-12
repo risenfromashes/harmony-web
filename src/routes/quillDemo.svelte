@@ -14,5 +14,5 @@
 
 <div class="w-screen h-screen pt-20 grid grid-cols-2">
   <Quill className="h-full w-full border" on:textChange={onTextChange} />
-  <div class="h-full w-full border" bind:this={displayContainer} />
+  <div class="h-full w-full border p-4" bind:this={displayContainer} />
 </div>

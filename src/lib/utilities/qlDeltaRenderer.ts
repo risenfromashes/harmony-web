@@ -2,6 +2,8 @@ export interface QlDelta {
   ops: Array<QlDeltaOp>;
 }
 
+declare let hljs: any;
+
 interface QlImage {
   link: string;
 }
@@ -20,6 +22,8 @@ interface QlAttribute {
   "code-block"?: string;
   math?: string;
   link?: string;
+  script?: string;
+  align?: string;
 }
 
 class QlRenderer {
@@ -28,164 +32,140 @@ class QlRenderer {
   private currentLine: Array<Node> = new Array<Node>();
   private currentCodeBlock?: HTMLElement = undefined;
 
-  checkCodeBlock(op: QlDeltaOp) {
+  createCodeBlock() {
+    let pre = document.createElement("pre");
+    let code = document.createElement("code");
+    pre.classList.add("code-block-container");
+    pre.appendChild(code);
+    this.parent.appendChild(pre);
+    this.currentCodeBlock = code;
+  }
+
+  checkCodeBlock(op: QlDeltaOp): boolean {
     if (op.attributes) {
       if (op.attributes["code-block"]) {
-        if (!this.hasCodeBlock()) {
-          console.log("entering code block");
+        if (this.currentCodeBlock == undefined) {
           // create new code block
-          let c = document.createElement("code");
-          let pre = document.createElement("pre");
-          this.parent.appendChild(pre);
-          pre.appendChild(c);
-          this.currentCodeBlock = c;
+          this.createCodeBlock();
         }
-      } else if (this.hasCodeBlock()) {
-        // there are attributes but not code-block
-        this.resetCodeBlock();
+        // is a code block
+        return true;
       }
     }
-  }
-
-  createTextNode(str: string) {
-    return document.createTextNode(str);
-  }
-
-  hasCodeBlock(): boolean {
-    return this.currentCodeBlock != undefined;
+    this.resetCodeBlock();
+    return false;
   }
 
   resetCodeBlock() {
-    console.log("leaving code block");
     this.currentCodeBlock = undefined;
+  }
+
+  nestDown(x: Node, tag: string): HTMLElement {
+    let t = document.createElement(tag);
+    t.appendChild(x);
+    return t;
   }
 
   handleLine(op: QlDeltaOp, line: string): Node {
     let x: Node;
-    if (line.trim().length == 0) {
-      x = document.createElement("br");
-    } else {
-      let text = this.createTextNode(line);
-      x = text;
-      if (op.attributes) {
-        if (op.attributes.bold) {
-          let b = document.createElement("strong");
-          b.appendChild(x);
-          x = b;
+    let text = document.createTextNode(line);
+    x = text;
+    if (op.attributes) {
+      if (op.attributes.script) {
+        if (op.attributes.script == "sub") {
+          x = this.nestDown(x, "sub");
+        } else if (op.attributes.script == "super") {
+          x = this.nestDown(x, "sup");
         }
-        if (op.attributes.italic) {
-          let em = document.createElement("em");
-          em.appendChild(x);
-          x = em;
-        }
-        if (op.attributes.strike) {
-          let s = document.createElement("s");
-          s.appendChild(x);
-          x = s;
-        }
-        if (op.attributes.underline) {
-          let u = document.createElement("u");
-          u.appendChild(x);
-          x = u;
-        }
-        if (op.attributes.link) {
-          let a = document.createElement("a");
-          // try to validate url?
-          a.setAttribute("href", op.attributes.link);
-          a.appendChild(x);
-          x = a;
-        }
+      }
+      if (op.attributes.bold) {
+        x = this.nestDown(x, "strong");
+      }
+      if (op.attributes.italic) {
+        x = this.nestDown(x, "em");
+      }
+      if (op.attributes.strike) {
+        x = this.nestDown(x, "s");
+      }
+      if (op.attributes.underline) {
+        x = this.nestDown(x, "u");
+      }
+      if (op.attributes.link) {
+        let a = this.nestDown(x, "a");
+        // try to validate url?
+        a.setAttribute("href", op.attributes.link);
+        a.className =
+          "underline text-blue-600 hover:text-blue-800 visited:text-purple-600";
+        x = a;
       }
     }
 
     return x;
   }
 
-  isNewLines(str: string): boolean {
-    for (let i = 0; i < str.length; i++) {
-      if (str.charAt(i) != "\n") {
-        return false;
-      }
-    }
-    return true;
-  }
-
   addToLine(op: QlDeltaOp, str: string) {
     this.currentLine.push(this.handleLine(op, str));
   }
 
-  addCode(str: string) {
-    this.currentLine.push(this.createTextNode(str));
-  }
-
-  endCodeLine(str: string) {
+  endCodeBlockLine() {
     let p = this.currentCodeBlock;
-    if (p) {
-      let t = this.createTextNode(str);
-      p.append(...this.currentLine, t);
-      this.currentLine = [];
-    }
+    p.append(...this.currentLine);
+    p.textContent += "\n";
+    this.currentLine = [];
   }
 
-  endLine(tag: string = "p") {
+  endLine(op: QlDeltaOp) {
+    if (this.checkCodeBlock(op)) {
+      this.endCodeBlockLine();
+      return;
+    }
+
+    let tag: string = "p";
+
     let p = document.createElement(tag);
+    if (op.attributes) {
+      // check for line formats if not code
+      if (op.attributes.header) {
+        if (typeof op.attributes.header == "number") {
+          p.classList.add(`text-${4 - op.attributes.header + 1}xl`);
+        }
+      }
+      if (op.attributes.align) {
+        if (op.attributes.align == "justify") {
+          p.classList.add("text-justify");
+        }
+        if (op.attributes.align == "right") {
+          p.classList.add("text-right");
+        }
+        if (op.attributes.align == "center") {
+          p.classList.add("text-center");
+        }
+      }
+    }
+
     if (this.currentLine.length == 0) {
       p.append(document.createElement("br"));
     }
+
     p.append(...this.currentLine);
-    this.currentLine = [];
     this.parent.appendChild(p);
-  }
-
-  handleNewLines(op: QlDeltaOp, insert: string) {
-    // empty newline indicates format for current line [affecting previous elements]
-    // fallback to p
-    let tag: string = "p";
-    if (op.attributes) {
-      // attributes may dictate the type of tag
-      if (op.attributes.header) {
-        tag = "h1";
-      }
-      if (op.attributes["code-block"]) {
-        return this.endCodeLine(insert);
-      }
-    }
-
-    this.endLine(tag);
-
-    // handle the rest of the new lines
-    for (let i = 1; i < insert.length; i++) {
-      this.endLine();
-    }
+    this.currentLine = [];
   }
 
   handleString(op: QlDeltaOp, insert: string) {
-    console.log("string: " + insert);
-    this.checkCodeBlock(op);
-
-    if (this.hasCodeBlock()) {
-      // if we are sure that it is still a code block, then just append to it
-      this.endCodeLine(insert);
-    } else if (this.isNewLines(insert)) {
-      // there are two reasons why newlines should be handled seperately
-      // 1. they describe line formatting
-      // 2. inside a code block, a \n is just a \n,
-      //    whereas normally it would converted to <p> <br><p>
-      this.handleNewLines(op, insert);
-    } else {
-      // if there are multiple lines we need to split them into seperate <p> tags
-      let lines: Array<string> = insert.split("\n");
-      if (lines[lines.length - 1].length == 0) {
-        lines.pop();
-      }
-      // add first line, normally, on any subsequent line, endline and then add new line
-      let i = 0;
+    // if there are multiple lines we need to split them into seperate <p> tags
+    let lines: Array<string> = insert.split("\n");
+    // add first line, normally, on any subsequent line, endline and then add new line
+    let i = 0;
+    if (lines[i].length > 0) {
       this.addToLine(op, lines[i]);
-      while (++i < lines.length) {
-        // we are assuming beginning of code block won't contain \n
-        this.endLine();
-        // we can safely assume that there were no line formats associated with them
-        // so we directly add them to the DOM
+    }
+    while (++i < lines.length) {
+      // we are assuming beginning of code block won't contain \n
+      this.endLine(op);
+      // we can safely assume that there were no line formats associated with them
+      // so we directly add them to the DOM
+      if (lines[i].length > 0) {
         this.addToLine(op, lines[i]);
       }
     }
@@ -202,12 +182,6 @@ class QlRenderer {
     for (let op of delta.ops) {
       this.handleOp(op);
     }
-    if (this.currentLine.length > 0) {
-      this.endLine();
-    }
-    if (this.hasCodeBlock()) {
-      this.resetCodeBlock();
-    }
   }
 
   constructor(parent: Element) {
@@ -219,10 +193,12 @@ export const renderDelta = (root: HTMLElement, qlDeltaContent: QlDelta) => {
   while (root.firstChild) {
     root.removeChild(root.firstChild);
   }
-  console.log({ qlDeltaContent });
   try {
     let renderer = new QlRenderer(root);
     renderer.render(qlDeltaContent);
+    if (hljs) {
+      hljs.highlightAll();
+    }
   } catch (e: any) {
     let pre = document.createElement("pre");
     let code = document.createElement("code");
