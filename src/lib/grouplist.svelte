@@ -3,7 +3,7 @@
   import FaIcon from "./faIcon.svelte";
   import { login } from "../lib/stores/login";
   import { navigate } from "svelte-navigator";
-  import { type Group, get_groups } from "../lib/data/groups";
+  import { type Group, get_groups } from "./data/group";
 
   let groups: Array<Group> = [];
 

@@ -14,15 +14,16 @@ export const get_groups = async () => {
   if (res.ok) {
     console.log("received groups");
     let body = await res.json();
-    let groups = [];
+    let groups: Group[] = [];
     for (let group of body) {
-      groups.push({
+      let g = {
         id: group.group_id,
         name: group.group_name,
         intro: group.intro,
         image_link: `https://source.unsplash.com/random/${group.group_id}`,
         group_link: "",
-      });
+      };
+      groups.push(g);
     }
     return groups;
   } else {
