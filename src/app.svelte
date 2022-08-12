@@ -7,6 +7,7 @@
   import Register from "./routes/register.svelte";
   import Mygroups from "./routes/mygroups.svelte";
   import Myevents from "./routes/myevents.svelte";
+  import Chats from "./routes/chats.svelte";
   import QuillDemo from "./routes/quillDemo.svelte";
 
   const routes: Map<string, string> = new Map([
@@ -16,6 +17,7 @@
     ["Feed", "/"],
     ["My Groups", "/mygroups"],
     ["My Events", "/myevents"],
+    ["Chats", "/chats"],
     ["Quill", "/quill"],
   ]);
 </script>
@@ -42,6 +44,8 @@
       <Route path="/myevents">
         <Myevents />
       </Route>
+      <Route path="/chats">
+        <Chats />
       <Route path="/quill">
         <QuillDemo />
       </Route>
