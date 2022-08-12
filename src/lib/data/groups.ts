@@ -14,22 +14,22 @@ export const get_groups = async () => {
   if (res.ok) {
     console.log("received groups");
     let body = await res.json();
-    let groups = [];
+    let groups: Group[] = [];
     for (let group of body) {
-      groups.push({
+      let g = {
         id: group.group_id,
         name: group.group_name,
         intro: group.intro,
         image_link: `https://source.unsplash.com/random/${group.group_id}`,
         group_link: "",
-      });
+      };
+      groups.push(g);
     }
     return groups;
   } else {
     if (res.status === 401) {
       throw new Error("Unauthorized");
     } else {
-      // what the fuck happend?
       console.log("unexpected status: " + res.status);
       console.log({ res });
       throw new Error("Unexpected status");

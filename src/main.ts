@@ -1,5 +1,6 @@
 import "./app.css";
-import "./quillBased.css";
+import "./styles/quillBased.css";
+import "./styles/github-dark.css";
 import App from "./app.svelte";
 
 const app = new App({

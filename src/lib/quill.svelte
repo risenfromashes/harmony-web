@@ -7,9 +7,11 @@
   const qlEditorOptions = {
     modules: {
       toolbar: [
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        [{ header: [1, 2, 3, false] }],
         ["bold", "italic", "underline", "strike"],
         ["link", "code-block"],
+        [{ script: "sub" }, { script: "super" }],
+        [{ align: [false, "right", "center", "justify"] }],
       ],
     },
     placeholder: "What's in you mind?",
