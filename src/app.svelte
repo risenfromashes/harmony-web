@@ -46,6 +46,7 @@
       </Route>
       <Route path="/chats">
         <Chats />
+      </Route>
       <Route path="/quill">
         <QuillDemo />
       </Route>
