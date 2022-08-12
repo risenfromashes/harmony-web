@@ -38,7 +38,7 @@
               target="_blank"
               class="text-blue-600 dark:text-blue-500 hover:underline font-OpenSans"
               >get started</a
-            > and join a collaborative environment as good as Harmon••••y.
+            > and join a collaborative environment as good as Harmony.
           </p>
         </div>
       </AccordionItem>
