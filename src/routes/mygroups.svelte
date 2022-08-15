@@ -177,7 +177,7 @@
             {#each added_users as u}
               <span
                 id="badge-dismiss-default"
-                class="inline-flex items-center py-1 px-2 mr-2 my-1 text-sm font-medium text-green-800 bg-green-100 rounded dark:bg-green-200 dark:text-green-800 font-OpenSans"
+                class="inline-flex items-center py-1 px-2 mr-2 my-1 text-sm font-medium text-green-800 bg-green-100 rounded-full dark:bg-green-200 dark:text-green-800 font-OpenSans"
                 out:fade
               >
                 {u.name}

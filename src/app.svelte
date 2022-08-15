@@ -9,6 +9,7 @@
   import Myevents from "./routes/myevents.svelte";
   import Chats from "./routes/chats.svelte";
   import QuillDemo from "./routes/quillDemo.svelte";
+  import Mypolls from "./routes/mypolls.svelte";
 
   const routes: Map<string, string> = new Map([
     ["About", "/about"],
@@ -19,6 +20,7 @@
     ["My Events", "/myevents"],
     ["Chats", "/chats"],
     ["Quill", "/quill"],
+    ["Polls", "/polls"],
   ]);
 </script>
 
@@ -49,6 +51,9 @@
       </Route>
       <Route path="/quill">
         <QuillDemo />
+      </Route>
+      <Route path="/polls">
+        <Mypolls />
       </Route>
     </div>
   </div>
