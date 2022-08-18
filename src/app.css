@@ -1,9 +1,21 @@
 /* Write your global styles here, in PostCSS syntax */
 
-
-@import url('https://fonts.googleapis.com/css2?family=Hahmlet&family=Josefin+Sans:wght@400;500&family=Noto+Serif&family=Open+Sans:wght@500&family=Oxygen:wght@300&family=Raleway&family=Roboto+Slab:wght@500&family=Roboto:wght@300&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Hahmlet&family=Josefin+Sans:wght@400;500&family=Noto+Serif&family=Open+Sans:wght@500&family=Oxygen:wght@300&family=Raleway&family=Roboto+Slab:wght@500&family=Roboto:wght@300&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*::-webkit-scrollbar {
+  background-color: transparent;
+  width: 0.6rem;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #475569;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #1e293b;
+}
