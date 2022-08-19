@@ -9,7 +9,7 @@ export interface Post {
   group_id: string;
 }
 
-export const get_posts = async () => {
+export const getPosts = async () => {
   const res = await fetch(`/posts/${login.user_id}`);
 
   if (res.ok) {

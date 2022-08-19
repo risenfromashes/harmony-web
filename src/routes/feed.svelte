@@ -3,8 +3,8 @@
   import PostItem from "../lib/post.svelte";
   import FaIcon from "../lib/faIcon.svelte";
   import Quill from "../lib/quill.svelte";
-  import { type Group, get_groups } from "../lib/data/groups";
-  import { type Post, get_posts } from "../lib/data/posts";
+  import { type Group, getGroups, loadGroups } from "../lib/data/groups";
+  import { type Post, getPosts } from "../lib/data/posts";
   import { navigate } from "svelte-navigator";
 
   // import { type QlDelta } from "../lib/utilities/qlDeltaProcessing";
@@ -22,18 +22,11 @@
   let posts: Array<Post> = [];
   let selected_group: Group = null;
 
-  let load_groups = (async () => {
-    try {
-      groups = await get_groups();
-      selected_group = groups[0];
-    } catch (e) {
-      navigate("/login");
-    }
-  })();
+  let load_groups = loadGroups();
 
   let load_posts = (async () => {
     try {
-      posts = await get_posts();
+      posts = await getPosts();
     } catch (e) {
       navigate("/login");
       console.log(e);

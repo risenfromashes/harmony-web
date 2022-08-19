@@ -24,7 +24,7 @@
     </div>
 
     <div class="p-2">
-      <h5 class="font-semibold text-lg mb-2">
+      <h5 class="font-semibold text-lg mb-1">
         {poster}
         <span class="ml-2 font-semibold text-sm text-slate-600">{time}</span>
       </h5>
