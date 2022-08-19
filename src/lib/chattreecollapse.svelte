@@ -1,18 +1,20 @@
 <script lang="ts">
-  import { Link } from "svelte-navigator";
+  import { Link, useParams } from "svelte-navigator";
   import { slide } from "svelte/transition";
-  import type { Guild } from "./data/chats";
   import { useLocation } from "svelte-navigator";
   import FaIcon from "./faIcon.svelte";
-  import { get } from "svelte/store";
-
-  const location = useLocation();
-
-  $: query = new URLSearchParams($location.search);
-
-  export let guild: Guild;
+  import type { Subject, Group } from "./data/groups";
+  import { current_subject, current_group } from "./stores/groups";
+  import TreeEntry from "./treeentry.svelte";
+  import { onDestroy } from "svelte";
 
   let isOpen = false;
+
+  export let group: Group;
+
+  onDestroy(() => {
+    isOpen = false;
+  });
 
   const toggleCollapse = () => {
     isOpen = !isOpen;
@@ -32,23 +34,13 @@
     {/if}
 
     <FaIcon className="text-white ml-4" icon="school" />
-    <p class="ml-3 font-semibold">{guild.name}</p>
+    <p class="ml-3 font-semibold">{group.name}</p>
   </div>
 
   {#if isOpen}
-    <div class="w-full" transition:slide={{ duration: 200 }}>
-      {#each guild.channels as channel}
-        <Link to="/chats?g={channel.guild_id}&c={channel.channel_id}">
-          <div
-            class={"w-full h-12 flex items-center pl-8 hover:bg-slate-700" +
-              (query.get("c") === channel.channel_id ? " bg-slate-700" : "")}
-          >
-            <FaIcon className="text-white" icon="flask" />
-            <p class="ml-4">
-              {channel.name}
-            </p>
-          </div>
-        </Link>
+    <div class="w-full" transition:slide|local={{ duration: 200 }}>
+      {#each group.subjects as subject}
+        <TreeEntry {group} {subject} />
       {/each}
     </div>
   {/if}

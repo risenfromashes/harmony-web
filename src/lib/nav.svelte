@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Link } from "svelte-navigator";
+  import { Link, navigate } from "svelte-navigator";
   import FaIcon from "./faIcon.svelte";
 
   export let routes: Map<string, string>;
@@ -50,6 +50,7 @@
           on:click={() => {
             changeRoute();
             showDrawer = !showDrawer;
+            navigate(path);
           }}>{name}</Link
         >
       </div>

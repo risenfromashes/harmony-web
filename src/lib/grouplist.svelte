@@ -3,17 +3,10 @@
   import FaIcon from "./faIcon.svelte";
   import { login } from "../lib/stores/login";
   import { navigate } from "svelte-navigator";
-  import { type Group, get_groups } from "./data/groups";
+  import { type Group, getGroups, loadGroups } from "./data/groups";
+  import { groups } from "./stores/groups";
 
-  let groups: Array<Group> = [];
-
-  let load_groups = (async () => {
-    try {
-      groups = await get_groups();
-    } catch (e) {
-      navigate("/login");
-    }
-  })();
+  let load_groups = loadGroups();
 
   let showable_groups = [];
 
@@ -23,7 +16,7 @@
     if (search_term) {
       // console.log(search_term);
       //filter groups based on search term, considering name, intro, institution, department, batch
-      showable_groups = groups.filter((group) => {
+      showable_groups = $groups.filter((group) => {
         return group.name.toLowerCase().includes(search_term.toLowerCase());
         // ||
         // group.intro.toLowerCase().includes(search_term.toLowerCase()) ||
@@ -32,7 +25,7 @@
         // group.batch.toLowerCase().includes(search_term.toLowerCase())
       });
     } else {
-      showable_groups = groups;
+      showable_groups = $groups;
     }
   }
 </script>
