@@ -1,11 +1,16 @@
 <script lang="ts">
   import { navigate, useLocation } from "svelte-navigator";
   import Chat from "./chat.svelte";
-  import { getGroupMessages, type Message } from "./data/messages";
+  import {
+    getGroupMessages,
+    postGroupMessage,
+    type Message,
+  } from "./data/messages";
   import FaIcon from "./faIcon.svelte";
   import { login } from "./stores/login";
   import { current_group, current_subject } from "./stores/groups";
   import About from "../routes/about.svelte";
+  import { group_outros } from "svelte/internal";
 
   const location = useLocation();
 
@@ -21,6 +26,17 @@
         console.log(e.message);
       }
     }
+  };
+
+  let editText: string;
+
+  let handlePost = async () => {
+    let mid = postGroupMessage({
+      content: editText,
+      group_id: $current_group.id,
+      subject_id: $current_subject.id,
+    });
+    console.log(mid);
   };
 
   let loadPromise: Promise<void>;
@@ -52,11 +68,13 @@
     <textarea
       class="resize-none w-5/6 max-h-[4rem] overflow-y-scroll bg-slate-800 px-4 py-3 rounded-lg mr-4 overflow-x-hidden"
       placeholder="Type your message here... (Markdown supported)"
+      bind:value={editText}
     />
 
     <button
       type="button"
       class="flex bg-slate-800 px-6 py-4 rounded-lg transition-all hover:bg-slate-700"
+      on:click={handlePost}
     >
       <FaIcon icon="paper-plane" />
       <p class="ml-3">Send</p>
