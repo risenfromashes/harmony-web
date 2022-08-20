@@ -12,8 +12,25 @@
   });
 
   $: progress.set(percent);
+
+  let color = "";
+
+  $: {
+    if ($progress === 100) {
+      color = "bg-emerald-400";
+    } else if ($progress >= 50) {
+      color = "bg-blue-400";
+    } else if ($progress > 10) {
+      color = "bg-yellow-400";
+    } else {
+      color = "bg-red-400";
+    }
+  }
 </script>
 
-<div class=" w-full h-6 bg-gray-200 rounded dark:bg-gray-700">
-  <div class=" h-6 bg-yellow-400 rounded" style="width: {$progress}%" />
+<div class="w-full h-6 bg-gray-200 rounded dark:bg-gray-700">
+  <div
+    class="h-6 rounded {color} transition-colors"
+    style="width: {$progress}%"
+  />
 </div>
