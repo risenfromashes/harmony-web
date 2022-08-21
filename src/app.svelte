@@ -3,6 +3,7 @@
   import Nav from "./lib/nav.svelte";
   import About from "./routes/about.svelte";
   import Feed from "./routes/feed.svelte";
+  import EditProfile from "./routes/editprofile.svelte";
   import Login from "./routes/login.svelte";
   import Register from "./routes/register.svelte";
   import Mygroups from "./routes/mygroups.svelte";
@@ -16,6 +17,7 @@
     ["About", "/about"],
     ["Login", "/login"],
     ["Register", "/register"],
+    ["Edit Profile", "/editprofile"],
     ["Feed", "/"],
     ["My Groups", "/mygroups"],
     ["My Events", "/myevents"],
@@ -41,6 +43,9 @@
       </Route>
       <Route path="/register">
         <Register />
+      </Route>
+      <Route path="/editprofile">
+        <EditProfile />
       </Route>
       <Route path="/mygroups">
         <Mygroups />
