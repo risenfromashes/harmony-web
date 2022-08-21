@@ -18,7 +18,7 @@
           image_links: [],
           upvote: 69,
           author: "Siam",
-          upvoted: false,
+          voted: 0,
         },
         {
           answerid: "2",
@@ -29,7 +29,7 @@
           image_links: [],
           upvote: 420,
           author: "Lord Ashraf",
-          upvoted: false,
+          voted: 0,
         },
       ],
     },

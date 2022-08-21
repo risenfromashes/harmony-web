@@ -6,21 +6,27 @@
   export let ans: Answer;
 
   let isexpanded: boolean = false;
+  let upclass = "hover:text-green-400";
+  let downclass = "hover:text-red-400";
+  $: {
+    if (ans.voted == 1) upclass = "text-green-400";
+    else if (ans.voted == -1) downclass = "text-red-400";
+  }
 </script>
 
 <div class="py-3 pl-1 bg-gray-700 rounded-lg my-5 pr-3 font-Oxygen flex">
   <div class="px-1 flex-none basis-16">
     <div class="grid grid-cols-1 mx-auto">
       <button
-        class="hover:text-green-400"
+        class={upclass}
         type="button"
         data-drawer-target="drawer-form"
         data-drawer-show="drawer-form"
         aria-controls="drawer-form"
         on:click={() => {
-          if (!ans.upvoted) {
+          if (ans.voted == 0) {
             ans.upvote++;
-            ans.upvoted = true;
+            ans.voted = 1;
           }
         }}
       >
@@ -30,15 +36,15 @@
         {ans.upvote}
       </div>
       <button
-        class="hover:text-red-400"
+        class={downclass}
         type="button"
         data-drawer-target="drawer-form"
         data-drawer-show="drawer-form"
         aria-controls="drawer-form"
         on:click={() => {
-          if (!ans.upvoted) {
+          if (ans.voted == 0) {
             ans.upvote--;
-            ans.upvoted = true;
+            ans.voted = -1;
           }
         }}
       >

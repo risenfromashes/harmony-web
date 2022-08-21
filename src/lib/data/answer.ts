@@ -6,6 +6,6 @@ export interface Answer {
     image_links: Array<string>;
     upvote: number;
     author: string;
-    upvoted: boolean;//if the current user has upvoted already
+    voted: number;//1 for upvoted, -1 for downvoted, 0 for not voted
 }
 
