@@ -3,12 +3,18 @@
   import PostItem from "../lib/post.svelte";
   import FaIcon from "../lib/faIcon.svelte";
   import Quill from "../lib/quill.svelte";
-  import { type Group, getGroups, loadGroups } from "../lib/data/groups";
-  import { type Post, getPosts } from "../lib/data/posts";
+  import {
+    type Group,
+    getGroups,
+    loadGroups,
+    loadGroupsDev,
+  } from "../lib/data/groups";
+  import { type Post, getPosts, getPostsDev } from "../lib/data/posts";
   import { navigate } from "svelte-navigator";
 
   // import { type QlDelta } from "../lib/utilities/qlDeltaProcessing";
   import { login } from "../lib/stores/login";
+  import { formatRelative } from "date-fns";
 
   let showEditor = false;
   let showGroupDropdown = false;
@@ -22,11 +28,11 @@
   let posts: Array<Post> = [];
   let selected_group: Group = null;
 
-  let load_groups = loadGroups();
+  let load_groups = loadGroupsDev();
 
   let load_posts = (async () => {
     try {
-      posts = await getPosts();
+      posts = await getPostsDev();
     } catch (e) {
       navigate("/login");
       console.log(e);
@@ -216,7 +222,11 @@
     <p>Loading...</p>
   {:then}
     {#each posts as post}
-      <PostItem poster={post.poster_name} post={post.text} />
+      <PostItem
+        poster={post.poster_name}
+        post={post.text}
+        time={formatRelative(new Date(post.time), new Date()).replace("t", "T")}
+      />
     {/each}
   {/await}
 </div>

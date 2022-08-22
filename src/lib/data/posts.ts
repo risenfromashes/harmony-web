@@ -38,3 +38,31 @@ export const getPosts = async () => {
     }
   }
 };
+
+export const getPostsDev = async () => {
+  console.log("fetching posts");
+  let posts: Array<Post> = [
+    {
+      id: "1",
+      text: "This is a test post",
+      time: new Date(),
+      poster_id: "1",
+      poster_name: "John Doe",
+      group_id: "1",
+    },
+    {
+      id: "2",
+      text: "This is another test post",
+      time: new Date(),
+      poster_id: "1",
+      poster_name: "John Doe",
+      group_id: "1",
+    },
+  ];
+
+  const res = await new Promise((resolve) =>
+    setTimeout(() => resolve(posts), 1000)
+  );
+
+  return res;
+};

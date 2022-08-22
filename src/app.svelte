@@ -10,7 +10,6 @@
   import Chats from "./routes/chats.svelte";
   import QuillDemo from "./routes/quillDemo.svelte";
   import Mypolls from "./routes/mypolls.svelte";
-  import Chat from "./lib/chat.svelte";
 
   const routes: Map<string, string> = new Map([
     ["About", "/about"],
@@ -28,8 +27,7 @@
 <div class="w-full h-screen bg-slate-900 text-slate-100">
   <Router>
     <Nav {routes} />
-  </Router>
-  <Router>
+
     <Route path="/" component={Feed} />
     <Route path="/about" component={About} />
     <Route path="/login" component={Login} />

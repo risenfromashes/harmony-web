@@ -67,3 +67,7 @@ export let loadGroups = async () => {
     navigate("/login");
   }
 };
+
+export let loadGroupsDev = async () => {
+  return null;
+};
