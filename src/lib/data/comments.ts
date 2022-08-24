@@ -5,4 +5,5 @@ export interface CommentReply {
   commenter_id: string;
   commenter_name: string;
   post_id: string;
+  subcomments?: CommentReply[];
 }

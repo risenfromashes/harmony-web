@@ -1,8 +1,9 @@
 <script lang="ts">
   import { scale, slide, fly } from "svelte/transition";
-  import type { CommentReply } from "./data/comments";
   import { formatRelative } from "date-fns";
+  import type { CommentReply } from "./data/comments";
   import FaIcon from "./faIcon.svelte";
+  import Comment from "./comment.svelte";
   export let poster = "";
   export let time = ""; //when it was posted
   export let post = "";
@@ -19,6 +20,16 @@
       commenter_id: "1",
       commenter_name: "John Doe",
       post_id: "1",
+      subcomments: [
+        {
+          id: "1",
+          text: "This is a subcomment!",
+          time: new Date(),
+          commenter_id: "1",
+          commenter_name: "John Doe",
+          post_id: "1",
+        },
+      ],
     },
     {
       id: "2",
@@ -54,7 +65,7 @@
 </script>
 
 <div
-  class="w-11/12 min-h-[5rem] flex flex-col m-4 py-3 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
+  class="w-8/12 min-h-[5rem] flex flex-col m-4 py-3 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
   in:scale={{ duration: 300 }}
 >
   <div class="flex mb-4">
@@ -92,7 +103,7 @@
 
 {#if showComments}
   <div
-    class="w-11/12 flex flex-col py-3 px-6 rounded-lg bg-slate-800 shadow-xl flex-shrink-0 relative overflow-hidden"
+    class="w-8/12 flex flex-col py-3 px-6 rounded-lg bg-slate-800 shadow-xl flex-shrink-0 relative overflow-hidden"
     transition:slide={{ duration: 300 }}
   >
     <p class="font-semibold text-xl p-3">Comments</p>
@@ -100,38 +111,7 @@
     <div>
       {#if comments.length > 0}
         {#each comments as comment}
-          <div
-            class="w-11/12 min-h-[5rem] flex flex-col mb-2 p-2 rounded-xl bg-slate-800 flex-shrink-0"
-            in:fly={{ duration: 400, x: -100, delay: 200 }}
-          >
-            <div class="flex mb-4">
-              <div
-                class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-4 flex-shrink-0"
-              >
-                <img
-                  src="https://www.gravatar.com/avatar/{comment.commenter_name
-                    .length}?s=47&d=robohash"
-                  alt={comment.commenter_name}
-                  class="object-cover w-full h-full"
-                />
-              </div>
-
-              <div class="p-2">
-                <h5 class="font-semibold text-lg mb-2">
-                  {comment.commenter_name}
-                  <span class="ml-2 font-semibold text-sm text-slate-600"
-                    >{formatRelative(
-                      new Date(comment.time),
-                      new Date()
-                    ).replace("t", "T")}</span
-                  >
-                </h5>
-                <div class="flex flex-col flex-1">
-                  <p>{comment.text}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Comment {comment} />
         {/each}
       {:else}
         <p class="text-md px-3 py-4 text-gray-500 font-medium">

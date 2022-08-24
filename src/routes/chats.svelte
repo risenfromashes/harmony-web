@@ -4,7 +4,7 @@
 
   import { useLocation } from "svelte-navigator";
   import type { Guild } from "../lib/data/chats";
-  import { loadGroups } from "../lib/data/groups";
+  import { loadGroups, loadGroupsDev } from "../lib/data/groups";
   import { groups } from "../lib/stores/groups";
 
   const location = useLocation();
