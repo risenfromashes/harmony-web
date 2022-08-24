@@ -1,4 +1,3 @@
-import { createEventDispatcher } from "svelte";
 import { createGroupMessageDispatch } from "./messageevent";
 
 export function createSource(user_id: string) {
@@ -7,8 +6,7 @@ export function createSource(user_id: string) {
     console.log("Event source openned");
   };
 
-  const dispatcher = createEventDispatcher();
-  createGroupMessageDispatch(evs, dispatcher);
+  createGroupMessageDispatch(evs);
 
   return evs;
 }
