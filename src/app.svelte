@@ -25,19 +25,37 @@
   ]);
 </script>
 
-<div class="w-full h-screen bg-slate-900 text-slate-100">
-  <Router>
+<Router>
+  <div class="w-full h-screen bg-slate-900 text-slate-100">
     <Nav {routes} />
-  </Router>
-  <Router>
-    <Route path="/" component={Feed} />
-    <Route path="/about" component={About} />
-    <Route path="/login" component={Login} />
-    <Route path="/register" component={Register} />
-    <Route path="/mygroups" component={Mygroups} />
-    <Route path="/myevents" component={Myevents} />
-    <Route path="/chats" component={Chats} />
-    <Route path="/quill" component={QuillDemo} />
-    <Route path="/polls" component={Mypolls} />
-  </Router>
-</div>
+    <div class="">
+      <Route path="/">
+        <Feed />
+      </Route>
+      <Route path="/about">
+        <About />
+      </Route>
+      <Route path="/login">
+        <Login />
+      </Route>
+      <Route path="/register">
+        <Register />
+      </Route>
+      <Route path="/mygroups">
+        <Mygroups />
+      </Route>
+      <Route path="/myevents">
+        <Myevents />
+      </Route>
+      <Route path="/chats">
+        <Chats />
+      </Route>
+      <Route path="/quill">
+        <QuillDemo />
+      </Route>
+      <Route path="/polls">
+        <Mypolls />
+      </Route>
+    </div>
+  </div>
+</Router>
