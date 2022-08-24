@@ -82,7 +82,7 @@
   <div
     id="drawer-contact"
     class={drawer_class}
-    transition:slide={{ axis: transition_axis }}
+    transition:slide|local={{ axis: transition_axis }}
     tabindex="-1"
     aria-labelledby="drawer-contact-label"
     aria-modal="true"

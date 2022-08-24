@@ -56,7 +56,7 @@
 </h2>
 
 {#if open}
-  <div transition:slide>
+  <div transition:slide|local>
     <div class={body_class}>
       <slot name="body" />
     </div>
