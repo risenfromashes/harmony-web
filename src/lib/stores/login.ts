@@ -28,8 +28,8 @@ class Login {
   }
 
   public set user_id(id: string) {
-    this.updateEventSource(id);
     window.localStorage.setItem("user_id", id);
+    this.updateEventSource(id);
     this.id = id;
   }
 }
