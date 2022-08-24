@@ -60,7 +60,7 @@
       {ans.short_answer}
     </div>
     {#if isexpanded}
-      <div transition:slide>
+      <div transition:slide|local>
         {ans.answer_text}
       </div>
     {/if}

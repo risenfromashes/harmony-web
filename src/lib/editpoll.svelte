@@ -76,7 +76,7 @@
     tabindex="-1"
     aria-hidden="true"
     class="overflow-y-scroll overflow-x-hidden fixed z-50 w-full md:inset-0 h-modal md:h-full flex justify-center items-center"
-    transition:fade
+    transition:fade|local
   >
     <div class="relative p-4 w-full max-w-md max-h-screen h-full md:h-auto">
       <!-- Modal content -->
@@ -124,7 +124,7 @@
               <div
                 animate:flip
                 class="bg-gray-600 rounded-lg p-2"
-                transition:fade
+                transition:fade|local
               >
                 <div class="flex justify-end">
                   <label
