@@ -2,10 +2,11 @@ import type { Answer } from "./answer";
 
 
 export interface Question {
-    questionid: string;
+    question_id: number;
     answers: Array<Answer>;
-    question_type: string;//TF or whatever
-    question_year: string;
-    statement: string;
+    // Probably the following two are not needed, but keeping them anyway for now
+    question_group: string;//TF or whatever
+    question_set: string;
+    question_body: string;
 }
 
