@@ -28,7 +28,7 @@
   ]);
 </script>
 
-<Router>
+<Router> 
   <div class="w-full h-screen bg-slate-900 text-slate-100">
     <Nav {routes} />
     <div class="">
@@ -62,7 +62,10 @@
       <Route path="/polls">
         <Mypolls />
       </Route>
-      <Route path="/archive/*"><Archive /></Route>
+      <Route path="/archive/*">
+         <Archive />
+      </Route>
     </div>
   </div>
 </Router>
+
