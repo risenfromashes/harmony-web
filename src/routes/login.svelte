@@ -42,10 +42,12 @@
   <title>Login</title>
 </svelte:head>
 
-<div class="bg-slate-900">
-  <div class="container">
-    <form class="py-8">
-      <div class="input_form">
+<div class="bg-slate-900 h-screen">
+  <div
+    class="mx-auto w-11/12 sm:w-2/3 md:w-1/2 lg:w-2/5 xl:w-4/12 2xl:w-1/4 px-5 h-5/6 grid place-content-center sm:py-10 lg:py-20"
+  >
+    <form class="w-full">
+      <div>
         <label
           for="username"
           class="block mb-2 font-OpenSans text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -59,7 +61,7 @@
         />
       </div>
 
-      <div class="input_form">
+      <div class="mt-4">
         <label
           for="password"
           class="block mb-2 font-OpenSans text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -72,16 +74,16 @@
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-5 font-OpenSans"
         />
       </div>
-      <div class="mx-auto py-8">
+      <div class="pt-8 flex justify-between px-20 sm:px-10 lg:px-20">
         <div
           type="button"
           on:click={submit}
-          class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2 px-4 mr-3 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mr-5 py-2.5 px-4 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer align-middle"
         >
           Log in
           <svg
             aria-hidden="true"
-            class="ml-3 -mr-3 w-5 h-7"
+            class="ml-3 -mr-3 w-5 h-5"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +98,7 @@
         <div
           type="button"
           href="/register"
-          class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-10"
+          class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-5 hover:cursor-pointer align-middle"
         >
           <svg
             aria-hidden="true"
@@ -123,78 +125,3 @@
     {/if}
   </div>
 </div>
-
-<style>
-  .container {
-    width: 88%;
-    margin: 10px auto;
-    padding-top: 100px;
-  }
-
-  form {
-    width: 100%;
-  }
-
-  .input_form {
-    margin-top: 32px;
-  }
-
-  a:disabled,
-  button:disabled {
-    pointer-events: none;
-  }
-
-  @media screen and (min-width: 600px) {
-    .container {
-      width: 67%;
-    }
-  }
-
-  @media screen and (min-width: 760px) {
-    .container {
-      width: 52%;
-    }
-  }
-
-  @media screen and (min-width: 910px) {
-    .container {
-      width: 41%;
-    }
-  }
-
-  @media screen and (min-width: 1080px) {
-    .container {
-      width: 37%;
-    }
-  }
-
-  @media screen and (min-width: 1240px) {
-    .container {
-      width: 33%;
-    }
-  }
-
-  @media screen and (min-width: 1390px) {
-    .container {
-      width: 28%;
-    }
-  }
-
-  @media screen and (min-width: 1601px) {
-    .container {
-      width: 25%;
-    }
-  }
-
-  @media screen and (min-width: 1751px) {
-    .container {
-      width: 23%;
-    }
-  }
-
-  @media screen and (min-width: 1860px) {
-    .container {
-      width: 20%;
-    }
-  }
-</style>
