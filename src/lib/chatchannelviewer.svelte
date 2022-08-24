@@ -10,11 +10,12 @@
   import { login } from "./stores/login";
   import { current_group, current_subject } from "./stores/groups";
   import About from "../routes/about.svelte";
-  import { group_outros } from "svelte/internal";
+  import { onMount, onDestroy, afterUpdate } from "svelte";
+  import { notifyTarget } from "./events/notifytarget";
 
   const location = useLocation();
 
-  let messages: Message[] = [];
+  let chatScroll: HTMLDivElement;
 
   const loadGroupMessages = async (gid: string, sid: string) => {
     try {
@@ -27,6 +28,22 @@
       }
     }
   };
+
+  afterUpdate(() => {
+    if (chatScroll) {
+      chatScroll.scrollTo(0, chatScroll.scrollHeight);
+    }
+  });
+
+  onMount(() => {
+    notifyTarget.addEventListener("group-message", handleNewMessage);
+  });
+
+  onDestroy(() => {
+    notifyTarget.removeEventListener("group-message", handleNewMessage);
+  });
+
+  let messages: Message[] = [];
 
   let editText: string;
 
@@ -45,14 +62,25 @@
       loadPromise = loadGroupMessages($current_group.id, $current_subject.id);
     }
   }
+
+  const handleNewMessage = (e) => {
+    console.log("Got group message event...");
+    let msg: Message = e.detail;
+    messages = [...messages, msg];
+  };
+
+  let scrollProgress = 1.0;
 </script>
 
 <div class="h-full w-10/12">
   <!-- Chat Viewer -->
-  <div class="h-5/6 w-full px-10 py-8 border-b border-slate-700">
-    {#await loadPromise}
-      <p class="mx-auto mt-2">Loading...</p>
-    {:then}
+  {#await loadPromise}
+    <p class="mx-auto mt-2">Loading...</p>
+  {:then}
+    <div
+      bind:this={chatScroll}
+      class="h-5/6 w-full px-10 py-8 border-b border-slate-700 overflow-y-scroll"
+    >
       {#each messages as message}
         <Chat
           poster={message.sender_name}
@@ -60,8 +88,8 @@
           time={message.time.toDateString()}
         />
       {/each}
-    {/await}
-  </div>
+    </div>
+  {/await}
 
   <!-- Chatbox -->
   <div class="h-1/6 w-full flex justify-center items-center">
