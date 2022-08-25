@@ -64,6 +64,7 @@
   </div>
   <!-- if you use auto-rows-fr, then opening one option will cause all others to expand (but not showing option), because all rows have to be of same width -->
   <!-- but then again, if you do not use it, then voted or unvoted options will be of different widths, leading to mismatched version -->
+  <!-- so, as solution I chose to insert a dummy div tag with equal height as the button, hackerman!!! -->
   <div class="grid">
     {#each poll.options as option (Number(option.optionid))}
       <div
