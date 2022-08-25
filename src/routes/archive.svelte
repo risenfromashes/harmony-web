@@ -180,7 +180,7 @@
   }
 </script>
 
-<div class="bg-slate-900 pt-20">
+<div class="bg-slate-900 pt-20 mx-5">
   <Router>
     <div class="bg-slate-900 pt-5 pl-10 pr-3 my-5">
       <Route>
