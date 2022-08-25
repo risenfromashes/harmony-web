@@ -15,6 +15,7 @@
   // import { type QlDelta } from "../lib/utilities/qlDeltaProcessing";
   import { login } from "../lib/stores/login";
   import { formatRelative } from "date-fns";
+  import Loader from "../lib/loader.svelte";
 
   let showEditor = false;
   let showGroupDropdown = false;
@@ -121,7 +122,7 @@
             style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(281px, 83px);"
           >
             {#await load_groups}
-              <p>Loading...</p>
+              <div>Loading...</div>
             {:then}
               {#each groups as group}
                 <button
@@ -219,7 +220,7 @@
   </div>
 
   {#await load_posts}
-    <p>Loading...</p>
+    <Loader />
   {:then}
     {#each posts as post}
       <PostItem
