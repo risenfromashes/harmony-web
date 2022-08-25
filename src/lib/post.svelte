@@ -225,13 +225,13 @@
       >
         <input
           type="text"
-          placeholder="Type a reply comment..."
+          placeholder="Type a post comment..."
           class="w-11/12 h-12 px-4 bg-slate-900 rounded-lg outline-none"
         />
 
         <button
           type="button"
-          class="font-semibold text-gray-400 h-12 px-4 transition-all outline-none hover:text-emerald-400"
+          class="font-semibold text-gray-400 h-12 w-20 ml-4 transition-all outline-none hover:text-emerald-400"
         >
           <FaIcon icon="paper-plane" />&nbsp;&nbsp;Reply
         </button>
