@@ -28,11 +28,11 @@
   let posts: Array<Post> = [];
   let selected_group: Group = null;
 
-  let load_groups = loadGroups();
+  let load_groups = loadGroupsDev();
 
   let load_posts = (async () => {
     try {
-      posts = await getPosts();
+      posts = await getPostsDev();
     } catch (e) {
       navigate("/login");
       console.log(e);

@@ -15,7 +15,7 @@
   let comments: Array<CommentReply> = [
     {
       id: "1",
-      text: "This is the first comment!",
+      text: "This is the first comment! This is the second comment!",
       time: new Date(),
       commenter_id: "1",
       commenter_name: "John Doe",
@@ -28,6 +28,104 @@
           commenter_id: "1",
           commenter_name: "John Doe",
           post_id: "1",
+          subcomments: [
+            {
+              id: "1",
+              text: "This is a subcomment!",
+              time: new Date(),
+              commenter_id: "1",
+              commenter_name: "John Doe",
+              post_id: "1",
+              subcomments: [
+                {
+                  id: "1",
+                  text: "This is a subcomment!",
+                  time: new Date(),
+                  commenter_id: "1",
+                  commenter_name: "John Doe",
+                  post_id: "1",
+                  subcomments: [
+                    {
+                      id: "1",
+                      text: "This is a subcomment!",
+                      time: new Date(),
+                      commenter_id: "1",
+                      commenter_name: "John Doe",
+                      post_id: "1",
+                      subcomments: [
+                        {
+                          id: "1",
+                          text: "This is a subcomment!",
+                          time: new Date(),
+                          commenter_id: "1",
+                          commenter_name: "John Doe",
+                          post_id: "1",
+                          subcomments: [
+                            {
+                              id: "1",
+                              text: "This is a subcomment!",
+                              time: new Date(),
+                              commenter_id: "1",
+                              commenter_name: "John Doe",
+                              post_id: "1",
+                              subcomments: [
+                                {
+                                  id: "1",
+                                  text: "This is a subcomment!",
+                                  time: new Date(),
+                                  commenter_id: "1",
+                                  commenter_name: "John Doe",
+                                  post_id: "1",
+                                  subcomments: [
+                                    {
+                                      id: "1",
+                                      text: "This is a subcomment!",
+                                      time: new Date(),
+                                      commenter_id: "1",
+                                      commenter_name: "John Doe",
+                                      post_id: "1",
+                                      subcomments: [],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  id: "2",
+                  text: "This is a subcomment!",
+                  time: new Date(),
+                  commenter_id: "1",
+                  commenter_name: "John Doe",
+                  post_id: "1",
+                  subcomments: [],
+                },
+              ],
+            },
+            {
+              id: "1",
+              text: "This is a subcomment!",
+              time: new Date(),
+              commenter_id: "1",
+              commenter_name: "John Doe",
+              post_id: "1",
+              subcomments: [],
+            },
+            {
+              id: "1",
+              text: "This is a subcomment!",
+              time: new Date(),
+              commenter_id: "1",
+              commenter_name: "John Doe",
+              post_id: "1",
+              subcomments: [],
+            },
+          ],
         },
       ],
     },
@@ -38,6 +136,7 @@
       commenter_id: "2",
       commenter_name: "Derek Butcher",
       post_id: "1",
+      subcomments: [],
     },
     {
       id: "3",
@@ -46,6 +145,7 @@
       commenter_id: "3",
       commenter_name: "Mary Jane Watson",
       post_id: "1",
+      subcomments: [],
     },
     {
       id: "4",
@@ -54,6 +154,7 @@
       commenter_id: "4",
       commenter_name: "Peter Parker",
       post_id: "1",
+      subcomments: [],
     },
   ];
 
@@ -104,7 +205,7 @@
 {#if showComments}
   <div
     class="w-8/12 flex flex-col py-3 px-6 rounded-lg bg-slate-800 shadow-xl flex-shrink-0 relative overflow-hidden"
-    transition:slide={{ duration: 300 }}
+    transition:slide|local={{ duration: 300 }}
   >
     <p class="font-semibold text-xl p-3">Comments</p>
 
@@ -120,7 +221,7 @@
       {/if}
 
       <div
-        class="w-full min-h-[5rem] flex justify-evenly item-center mb-2 p-2 rounded-xl bg-slate-800 flex-shrink-0"
+        class="w-full min-h-[5rem] flex justify-evenly item-center mt-4 p-2 rounded-xl bg-slate-800 flex-shrink-0"
       >
         <input
           type="text"
