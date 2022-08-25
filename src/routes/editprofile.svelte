@@ -134,7 +134,7 @@
             bind:this={image}
             src=""
             alt="Preview"
-            class="w-full rounded-lg"
+            class="rounded-full h-96 w-96 mx-auto overflow-hidden"
           />
         {:else}
           <span class="mx-auto">Image Preview</span>

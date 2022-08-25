@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import { scale } from "svelte/transition";
   export let poster = "";
   export let time = ""; //when it was posted
-  export let post = "";
+  export let post: string = "";
   // let showComments = false;
 
   // $: showCommentStatement = showComments ? "Hide Comments" : "Show Comments";
@@ -29,7 +29,11 @@
         <span class="ml-2 font-semibold text-sm text-slate-600">{time}</span>
       </h5>
       <div class="flex flex-col flex-1">
-        <p>{post}</p>
+        {#each post.split("\n") as line}
+          <p>
+            {line}
+          </p>
+        {/each}
       </div>
     </div>
   </div>
