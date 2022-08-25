@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Question } from "src/lib/data/question";
+  import type { Question } from "../lib/data/question";
   import { Router, Route, Link, useParams } from "svelte-navigator";
   import type { QuestionGroup } from "../lib/data/question_group";
   import SingleFolderView from "../lib/singlefolderview.svelte";
   import ShowQuestion from "../lib/showquestion.svelte";
-  import ArchiveBreadcrumb from "../lib/archive_breadcrumb.svelte";
+  import ArchiveBreadcrumb from "../lib/archivebreadcrumb.svelte";
 
   let question_groups: Array<QuestionGroup> = [
     {
