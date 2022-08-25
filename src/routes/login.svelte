@@ -34,6 +34,7 @@
     } catch (e) {
       warning = true;
       warning_text = `Error: ${e}`;
+      console.log(e);
     }
   };
 </script>
@@ -79,6 +80,7 @@
           type="button"
           on:click={submit}
           class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mr-5 py-2.5 px-4 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer align-middle"
+
         >
           Log in
           <svg
