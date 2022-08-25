@@ -145,16 +145,17 @@
       commenter_id: "3",
       commenter_name: "Mary Jane Watson",
       post_id: "1",
-      subcomments: [],
-    },
-    {
-      id: "4",
-      text: "Uhhh~!! I'm sorry, Mary!",
-      time: new Date(),
-      commenter_id: "4",
-      commenter_name: "Peter Parker",
-      post_id: "1",
-      subcomments: [],
+      subcomments: [
+        {
+          id: "4",
+          text: "Uhhh~!! I'm sorry, Mary!",
+          time: new Date(),
+          commenter_id: "4",
+          commenter_name: "Peter Parker",
+          post_id: "1",
+          subcomments: [],
+        },
+      ],
     },
   ];
 
@@ -197,7 +198,8 @@
       class="font-semibold text-gray-400 transition-all hover:text-gray-200"
       on:click={toggleComments}
     >
-      {commentsCount} Comments
+      {commentsCount}
+      {comments.length > 1 ? "Comments" : "Comment"}
     </button>
   </div>
 </div>

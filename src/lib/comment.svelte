@@ -19,9 +19,8 @@
 </script>
 
 <div
-  class="flex flex-1 flex-col pl-4 pt-2 bg-slate-800 flex-shrink-0 cursor-pointer"
+  class="flex flex-1 flex-col pl-4 pt-2 bg-slate-800 flex-shrink-0"
   in:fly={{ duration: 400, x: 100, delay: 200 }}
-  on:click|stopPropagation={toggleSubComments}
 >
   <div class="flex w-full">
     <div
@@ -47,15 +46,29 @@
           >
         </p>
 
-        <button
-          type="button"
-          class="h-6 w-6 flex items-center justify-center {showReplyChatbox
-            ? 'text-slate-400'
-            : 'text-slate-500 hover:text-slate-400'}"
-          on:click|stopPropagation={toggleReplyChatbox}
-        >
-          <FaIcon icon="reply" />
-        </button>
+        <div class="flex items-center">
+          <!-- Reply -->
+          {#if comment.subcomments.length > 0}
+            <button
+              type="button"
+              class="font-semibold text-gray-400 transition-all hover:text-gray-200 mr-4"
+              on:click={toggleSubComments}
+            >
+              {comment.subcomments.length}
+              {comment.subcomments.length > 1 ? "Replies" : "Reply"}
+            </button>
+          {/if}
+
+          <button
+            type="button"
+            class="h-6 w-6 flex items-center justify-center {showReplyChatbox
+              ? 'text-slate-400'
+              : 'text-slate-500 hover:text-slate-400'}"
+            on:click={toggleReplyChatbox}
+          >
+            <FaIcon icon="reply" />
+          </button>
+        </div>
       </div>
 
       <div class="flex flex-col flex-1">
@@ -64,6 +77,7 @@
     </div>
   </div>
 
+  <!-- Subcomments drawer -->
   {#if showSubcomments}
     <div
       class="ml-6 flex flex-col border-l border-slate-600"
