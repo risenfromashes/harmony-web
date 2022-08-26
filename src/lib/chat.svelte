@@ -3,7 +3,7 @@
   import { scale } from "svelte/transition";
   export let poster = "";
   export let time = ""; //when it was posted
-  export let dp: string = null;
+  export let dp: string | null = null;
   export let post: string = "";
 
   if (dp == null) {
