@@ -10,11 +10,13 @@ class CurrentUser {
     this.id = uid;
     if (this.id == undefined) {
       this.id = "-1";
+    } else {
+      this.updateEventSource(this.id);
     }
   }
 
   public get loggedIn(): boolean {
-    return this.id && this.id != "-1";
+    return this.id != "-1";
   }
 
   public async fetchInfo() {
@@ -50,7 +52,7 @@ class CurrentUser {
 
   private updateEventSource(id: string) {
     this.closeEventSource();
-    if (id && id != "-1") {
+    if (id != "-1") {
       this.event_source = createSource(id);
     }
   }
