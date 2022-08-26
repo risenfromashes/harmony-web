@@ -7,7 +7,7 @@
     type Message,
   } from "./data/messages";
   import FaIcon from "./faIcon.svelte";
-  import { login } from "./stores/login";
+  import { current_user } from "./stores/user";
   import { current_group, current_subject } from "./stores/groups";
   import About from "../routes/about.svelte";
   import { onMount, onDestroy, afterUpdate } from "svelte";
@@ -95,6 +95,7 @@
           poster={message.sender_name}
           post={message.content}
           time={message.time.toDateString()}
+          dp={message.sender_dp}
         />
       {/each}
     </div>

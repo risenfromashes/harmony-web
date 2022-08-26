@@ -1,10 +1,11 @@
 import { navigate } from "svelte-navigator";
-import { login } from "../stores/login";
+import { current_user } from "../stores/user";
 
 export interface Message {
   id: string;
   sender_id: string;
   sender_name: string;
+  sender_dp: string;
   content: string;
   time: Date;
 }
@@ -27,7 +28,7 @@ export const getGroupMessages = async (
   subject_id: string
 ) => {
   const res = await fetch(
-    `/group-messages/${login.user_id}/${group_id}/${subject_id}`
+    `/group-messages/${current_user.user_id}/${group_id}/${subject_id}`
   );
 
   if (res.ok) {
@@ -42,6 +43,7 @@ export const getGroupMessages = async (
         id: m.message_id,
         sender_id: m.sender_id,
         sender_name: m.sender_name,
+        sender_dp: m.sender_dp,
         content: m.content,
         time: new Date(m.time),
       };
@@ -61,7 +63,7 @@ export const getGroupMessages = async (
 
 export const postGroupMessage = async (msg: SendMessage) => {
   const body: SendMessageBody = {
-    user_id: login.user_id,
+    user_id: current_user.user_id,
     group_id: msg.group_id,
     subject_id: msg.subject_id,
     content: msg.content,

@@ -2,7 +2,7 @@
   import { navigate, useParams } from "svelte-navigator";
   import { onMount } from "svelte";
 
-  import ChatTreeCollapse from "./chattreecollapse.svelte";
+  import TreeCollapse from "./treecollapse.svelte";
   import type { Group } from "./data/groups";
 
   export let groups: Group[];
@@ -11,6 +11,6 @@
 <div class="h-full w-2/12 bg-slate-800">
   <!-- Tree -->
   {#each groups as group}
-    <ChatTreeCollapse {group} />
+    <TreeCollapse {group} />
   {/each}
 </div>

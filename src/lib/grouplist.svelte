@@ -1,7 +1,7 @@
 <script lang="ts">
   import GroupCard from "./groupcard.svelte";
   import FaIcon from "./faIcon.svelte";
-  import { login } from "../lib/stores/login";
+  import { current_user } from "./stores/user";
   import { navigate } from "svelte-navigator";
   import { type Group, getGroups, loadGroups } from "./data/groups";
   import { groups } from "./stores/groups";

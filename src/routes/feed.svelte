@@ -10,12 +10,14 @@
     loadGroupsDev,
   } from "../lib/data/groups";
   import { type Post, getPosts, getPostsDev } from "../lib/data/posts";
+  import { groups } from "../lib/stores/groups";
   import { navigate } from "svelte-navigator";
 
   // import { type QlDelta } from "../lib/utilities/qlDeltaProcessing";
-  import { login } from "../lib/stores/login";
+  import { current_user } from "../lib/stores/user";
   import { formatRelative } from "date-fns";
   import Loader from "../lib/loader.svelte";
+  import Tree from "../lib/tree.svelte";
 
   let showEditor = false;
   let showGroupDropdown = false;
@@ -25,11 +27,11 @@
     text: "",
   };
 
-  let groups: Array<Group> = [];
   let posts: Array<Post> = [];
   let selected_group: Group = null;
 
   let load_groups = loadGroupsDev();
+  loadGroups();
 
   let load_posts = (async () => {
     try {
@@ -46,12 +48,12 @@
       if (selected_group == null) {
         return;
       }
-      if (login.user_id === "-1") {
+      if (!current_user.loggedIn) {
         navigate("/");
       }
 
       let post = {
-        user_id: login.user_id,
+        user_id: current_user.user_id,
         group_id: selected_group.id.toString(),
         text: newPostContent.text.toString(),
       };
@@ -176,36 +178,39 @@
   </div>
 {/if}
 
-<div
-  class="w-full bg-slate-900 flex flex-col justify-start items-center pt-20 pb-10"
->
+<div class="pt-20 w-full h-screen flex overflow-hidden">
+  <Tree groups={$groups} />
   <div
-    class="w-8/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
-    in:scale={{ duration: 300 }}
+    class="w-full bg-slate-900 flex flex-col justify-start items-center overflow-y-scroll"
   >
     <div
-      class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-6 flex-shrink-0"
+      class="w-8/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
+      in:scale|local={{ duration: 300 }}
     >
-      <img
-        src="https://www.gravatar.com/avatar/{'Ashraf'.length}?s=47&d=robohash"
-        alt={"current user"}
-        class="object-cover w-full h-full"
-      />
-    </div>
+      <div
+        class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-6 flex-shrink-0"
+      >
+        <img
+          src="https://www.gravatar.com/avatar/{'Ashraf'
+            .length}?s=47&d=robohash"
+          alt={"current user"}
+          class="object-cover w-full h-full"
+        />
+      </div>
 
-    <button
-      type="button"
-      class={"bg-slate-900 flex flex-1 items-center border border-slate-700 rounded-lg text-left px-4 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
-        (newPostContent.text.trim() ? "  text-white" : " text-gray-400")}
-      on:click={() => {
-        showEditor = true;
-      }}
-    >
-      {newPostContent.text.trim()
-        ? newPostContent.text.trim()
-        : "What's in you mind?"}
-    </button>
-    <!-- <button
+      <button
+        type="button"
+        class={"bg-slate-900 flex flex-1 items-center border border-slate-700 rounded-lg text-left px-4 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
+          (newPostContent.text.trim() ? "  text-white" : " text-gray-400")}
+        on:click={() => {
+          showEditor = true;
+        }}
+      >
+        {newPostContent.text.trim()
+          ? newPostContent.text.trim()
+          : "What's in you mind?"}
+      </button>
+      <!-- <button
       type="button"
       class={"w-10/12 h-14 border border-slate-700 rounded-full text-left px-8 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
         (newPostQlContent.text.trim() ? "  text-white" : " text-gray-400")}
@@ -217,19 +222,23 @@
         ? newPostQlContent.text.trim()
         : "What's in you mind, Ashraf?"}</button
     > -->
-  </div>
+    </div>
 
-  {#await load_posts}
-    <Loader />
-  {:then}
-    {#each posts as post}
-      <PostItem
-        poster={post.poster_name}
-        post={post.text}
-        time={formatRelative(new Date(post.time), new Date()).replace("t", "T")}
-      />
-    {/each}
-  {/await}
+    {#await load_posts}
+      <Loader />
+    {:then}
+      {#each posts as post}
+        <PostItem
+          poster={post.poster_name}
+          post={post.text}
+          time={formatRelative(new Date(post.time), new Date()).replace(
+            "t",
+            "T"
+          )}
+        />
+      {/each}
+    {/await}
+  </div>
 </div>
 
 <style>
