@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Question } from "../lib/data/question";
   import { Router, Route, Link, useParams } from "svelte-navigator";
-  import type { QuestionGroup } from "../lib/data/question_group";
+  import type { QuestionGroup } from "../lib/data/questiongroup";
   import SingleFolderView from "../lib/singlefolderview.svelte";
   import ShowQuestion from "../lib/showquestion.svelte";
   import ArchiveBreadcrumb from "../lib/archivebreadcrumb.svelte";
