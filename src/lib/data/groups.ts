@@ -1,6 +1,8 @@
 import { current_user } from "../stores/user";
 import { current_group, current_subject, groups } from "../stores/groups";
 import { navigate } from "svelte-navigator";
+import type { UserHandle } from "./user";
+import { createGroupMessageDispatch } from "../events/messageevent";
 
 export interface Subject {
   id: string;
@@ -70,4 +72,30 @@ export let loadGroups = async () => {
 
 export let loadGroupsDev = async () => {
   return null;
+};
+
+export let addGroup = async (
+  creator: string,
+  name: string,
+  intro: string,
+  members: UserHandle[]
+) => {
+  if (creator == "-1") return;
+  let res = await fetch("/add-group", {
+    method: "POST",
+    body: JSON.stringify({
+      creator_id: creator,
+      name: name,
+      intro: intro,
+      members: `{${members.map((m) => m.id).join(",")}}`,
+    }),
+  });
+
+  if (res.ok) {
+    await loadGroups();
+  } else if (res.status == 401) {
+    navigate("/login");
+  } else {
+    throw new Error(res.statusText);
+  }
 };

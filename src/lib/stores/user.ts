@@ -58,6 +58,9 @@ class CurrentUser {
   }
 
   public get user_id(): string {
+    if (this.id == "-1") {
+      throw new Error("Unauthorised");
+    }
     return this.id;
   }
 
