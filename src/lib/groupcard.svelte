@@ -1,15 +1,8 @@
 <script lang="ts">
+  import { current_group, current_subject } from "./stores/groups";
+  import type { Group } from "./data/groups";
   //declare an object with name, intro, institution, image_link, department, group_link and batch
-  export let group = {
-    id: 1,
-    name: "",
-    intro: "",
-    institution: "",
-    image_link: "",
-    department: "",
-    group_link: "",
-    batch: "",
-  };
+  export let group: Group;
 
   let isOpen = false;
   let justOpened = false;
@@ -60,9 +53,12 @@
         <ul class="py-1 font-Hahmlet">
           <li>
             <a
-              href="#"
+              href="home/chats"
               class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-              >Group Chat</a
+              on:click={() => {
+                $current_group = group;
+                $current_subject = group.subjects[0];
+              }}>Group Chat</a
             >
           </li>
           <li>
