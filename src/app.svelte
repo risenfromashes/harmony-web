@@ -12,28 +12,24 @@
   import QuillDemo from "./routes/quillDemo.svelte";
   import Mypolls from "./routes/mypolls.svelte";
   import Archive from "./routes/archive.svelte";
+  import Home from "./routes/home.svelte";
 
   const routes: Map<string, string> = new Map([
     ["About", "/about"],
     ["Login", "/login"],
     ["Register", "/register"],
     ["Edit Profile", "/editprofile"],
-    ["Feed", "/"],
+    ["Home", "/home"],
     ["My Groups", "/mygroups"],
-    ["My Events", "/myevents"],
-    ["Chats", "/chats"],
-    ["Quill", "/quill"],
-    ["Polls", "/polls"],
-    ["Archive", "/archive"],
   ]);
 </script>
 
-<Router> 
+<Router>
   <div class="w-full h-screen bg-slate-900 text-slate-100">
     <Nav {routes} />
     <div class="">
       <Route path="/">
-        <Feed />
+        <Home />
       </Route>
       <Route path="/about">
         <About />
@@ -50,20 +46,8 @@
       <Route path="/mygroups">
         <Mygroups />
       </Route>
-      <Route path="/myevents">
-        <Myevents />
-      </Route>
-      <Route path="/chats">
-        <Chats />
-      </Route>
-      <Route path="/quill">
-        <QuillDemo />
-      </Route>
-      <Route path="/polls">
-        <Mypolls />
-      </Route>
-      <Route path="/archive/*">
-         <Archive />
+      <Route path="/home/*">
+        <Home />
       </Route>
     </div>
   </div>

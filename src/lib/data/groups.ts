@@ -1,4 +1,4 @@
-import { login } from "../stores/login";
+import { current_user } from "../stores/user";
 import { current_group, current_subject, groups } from "../stores/groups";
 import { navigate } from "svelte-navigator";
 
@@ -17,7 +17,7 @@ export interface Group {
 }
 
 export const getGroups = async () => {
-  const res = await fetch(`/groups/${login.user_id}`);
+  const res = await fetch(`/groups/${current_user.user_id}`);
 
   groups.update(() => []);
   current_group.update(() => undefined);

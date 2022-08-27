@@ -57,11 +57,11 @@
       class="hover:cursor-pointer bg-gray-900 rounded-lg px-4 mt-3 mb-5 py-3"
       on:click={() => (isexpanded = !isexpanded)}
     >
-      {ans.short_answer}
+      {ans.answer_title}
     </div>
     {#if isexpanded}
       <div transition:slide|local>
-        {ans.answer_text}
+        {ans.answer_body}
       </div>
     {/if}
     <div class="flex justify-end align-bottom">

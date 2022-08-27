@@ -7,7 +7,7 @@
     type Message,
   } from "./data/messages";
   import FaIcon from "./faIcon.svelte";
-  import { login } from "./stores/login";
+  import { current_user } from "./stores/user";
   import { current_group, current_subject } from "./stores/groups";
   import About from "../routes/about.svelte";
   import { onMount, onDestroy, afterUpdate } from "svelte";
@@ -48,12 +48,17 @@
   let editText: string;
 
   let handlePost = async () => {
-    let mid = postGroupMessage({
-      content: editText,
-      group_id: $current_group.id,
-      subject_id: $current_subject.id,
-    });
-    console.log(mid);
+    try {
+      let mid = await postGroupMessage({
+        content: editText,
+        group_id: $current_group.id,
+        subject_id: $current_subject.id,
+      });
+      editText = "";
+    } catch (e) {
+      //TODO: show alert
+      console.log(e);
+    }
   };
 
   let loadPromise: Promise<void>;
@@ -69,10 +74,14 @@
     messages = [...messages, msg];
   };
 
-  let scrollProgress = 1.0;
+  const keyDown = (e: KeyboardEvent) => {
+    if (e.key === "Enter" && !e.ctrlKey && !e.shiftKey) {
+      handlePost();
+    }
+  };
 </script>
 
-<div class="h-full w-10/12">
+<div class="h-full w-full">
   <!-- Chat Viewer -->
   {#await loadPromise}
     <p class="mx-auto mt-2">Loading...</p>
@@ -86,6 +95,7 @@
           poster={message.sender_name}
           post={message.content}
           time={message.time.toDateString()}
+          dp={message.sender_dp}
         />
       {/each}
     </div>
@@ -97,8 +107,8 @@
       class="resize-none w-5/6 max-h-[4rem] overflow-y-scroll bg-slate-800 px-4 py-3 rounded-lg mr-4 overflow-x-hidden"
       placeholder="Type your message here... (Markdown supported)"
       bind:value={editText}
+      on:keydown={keyDown}
     />
-
     <button
       type="button"
       class="flex bg-slate-800 px-6 py-4 rounded-lg transition-all hover:bg-slate-700"

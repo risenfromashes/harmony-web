@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { QuestionGroup } from "../lib/data/question_group";
+  import type { QuestionGroup } from "./data/questiongroup";
   import { useNavigate, useParams, Link } from "svelte-navigator";
 
   let question_groups: Array<QuestionGroup> = [

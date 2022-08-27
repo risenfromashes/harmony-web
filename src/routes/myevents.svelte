@@ -195,7 +195,7 @@
 
 <svelte:window on:click|stopPropagation={() => (draweropen = false)} />
 
-<div class="bg-slate-900 pt-20 pb-10 pl-20 pr-20 mt-5">
+<div class="bg-slate-900 py-5 pl-10 min-h-screen">
   <div class="flex items-center pb-10 gap-5">
     <div class="flex items-center">
       <div class="relative">

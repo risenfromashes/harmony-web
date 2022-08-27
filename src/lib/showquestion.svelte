@@ -1,11 +1,10 @@
 <script lang="ts">
   import type { Question } from "./data/question";
-  import type { Answer } from "./data/answer";
   import ShowAnswer from "./showanswer.svelte";
   import { slide } from "svelte/transition";
 
   let isanswerexpanded: boolean = false;
-  export let question;
+  export let question: Question;
 </script>
 
 <div class="py-3 bg-gray-800 rounded-lg my-5 pl-7 pr-3 font-Oxygen">
@@ -15,10 +14,10 @@
       isanswerexpanded = !isanswerexpanded;
     }}
   >
-    {question.statement}
+    {question.question_body}
   </div>
   {#if isanswerexpanded}
-    <div class="ml-4 mr-3" transition:slide>
+    <div class="ml-4 mr-3" transition:slide|local>
       {#each question.answers as ans}
         <ShowAnswer {ans} />
       {/each}

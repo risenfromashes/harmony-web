@@ -10,10 +10,11 @@
     loadGroupsDev,
   } from "../lib/data/groups";
   import { type Post, getPosts, getPostsDev } from "../lib/data/posts";
+  import { groups } from "../lib/stores/groups";
   import { navigate } from "svelte-navigator";
 
   // import { type QlDelta } from "../lib/utilities/qlDeltaProcessing";
-  import { login } from "../lib/stores/login";
+  import { current_user } from "../lib/stores/user";
   import { formatRelative } from "date-fns";
   import Loader from "../lib/loader.svelte";
 
@@ -25,11 +26,11 @@
     text: "",
   };
 
-  let groups: Array<Group> = [];
   let posts: Array<Post> = [];
   let selected_group: Group = null;
 
   let load_groups = loadGroupsDev();
+  loadGroups();
 
   let load_posts = (async () => {
     try {
@@ -46,12 +47,12 @@
       if (selected_group == null) {
         return;
       }
-      if (login.user_id === "-1") {
+      if (!current_user.loggedIn) {
         navigate("/");
       }
 
       let post = {
-        user_id: login.user_id,
+        user_id: current_user.user_id,
         group_id: selected_group.id.toString(),
         text: newPostContent.text.toString(),
       };
@@ -71,11 +72,6 @@
       }
     } catch (e) {}
   };
-
-  // $: {
-  //   // console.clear();
-  //   console.log(newPostContent.text);
-  // }
 
   let onTextChange = (e: any) => {
     console.log(e.detail);
@@ -124,7 +120,7 @@
             {#await load_groups}
               <div>Loading...</div>
             {:then}
-              {#each groups as group}
+              {#each $groups as group}
                 <button
                   type="button"
                   class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
@@ -177,11 +173,11 @@
 {/if}
 
 <div
-  class="w-full bg-slate-900 flex flex-col justify-start items-center pt-20 pb-10"
+  class="w-full bg-slate-900 flex flex-col justify-start items-center py-5 min-h-screen"
 >
   <div
     class="w-8/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
-    in:scale={{ duration: 300 }}
+    in:scale|local={{ duration: 300 }}
   >
     <div
       class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-6 flex-shrink-0"
@@ -231,6 +227,3 @@
     {/each}
   {/await}
 </div>
-
-<style>
-</style>

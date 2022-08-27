@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Chattree from "../lib/chattree.svelte";
+  import Chattree from "../lib/tree.svelte";
   import Chatchannelviewer from "../lib/chatchannelviewer.svelte";
 
   import { useLocation } from "svelte-navigator";
@@ -7,15 +7,10 @@
   import { loadGroups, loadGroupsDev } from "../lib/data/groups";
   import { groups } from "../lib/stores/groups";
 
-  const location = useLocation();
-
   loadGroups();
 </script>
 
-<div class="pt-20 w-full h-screen flex overflow-hidden">
-  <!-- Tree -->
-  <Chattree groups={$groups} />
-
+<div class="pt-5 w-full h-full flex overflow-hidden">
   <!-- Chat -->
   <Chatchannelviewer />
 </div>
