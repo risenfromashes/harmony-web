@@ -51,6 +51,7 @@ export const getGroups = async () => {
         current_subject.update(() => new_groups[0].subjects[0]);
       }
     }
+    console.log("here");
   } else {
     if (res.status === 401) {
       throw new Error("Unauthorized");

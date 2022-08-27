@@ -15,12 +15,12 @@
   import Home from "./routes/home.svelte";
 
   const routes: Map<string, string> = new Map([
-    ["About", "/about"],
-    ["Login", "/login"],
-    ["Register", "/register"],
-    ["Edit Profile", "/editprofile"],
     ["Home", "/home"],
     ["My Groups", "/mygroups"],
+    ["Edit Profile", "/editprofile"],
+    ["Login", "/login"],
+    ["Register", "/register"],
+    ["About", "/about"],
   ]);
 </script>
 

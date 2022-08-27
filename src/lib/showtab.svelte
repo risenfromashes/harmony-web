@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { selected_tab_id } from "./stores/tab";
-  export let id: number = undefined;
-  export let name: string = "";
+  import { selected_tab, type Tab } from "./stores/tab";
+  export let tab: Tab;
+
   let style: string = "";
   $: {
-    if ($selected_tab_id && $selected_tab_id === id)
+    if ($selected_tab && $selected_tab === tab)
       style =
         "inline-block p-4 rounded-t-lg border-b-2 border-transparent text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500 text-base";
     else
@@ -22,7 +22,6 @@
   aria-controls="profile"
   aria-selected="false"
   on:click={() => {
-    $selected_tab_id = id;
-    console.log(name);
-  }}>{name}</button
+    $selected_tab = tab;
+  }}>{tab.name}</button
 >

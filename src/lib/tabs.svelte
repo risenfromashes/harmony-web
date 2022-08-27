@@ -2,14 +2,7 @@
   import id from "date-fns/locale/id";
   import { Router, Link, Route } from "svelte-navigator";
   import ShowTab from "../lib/showtab.svelte";
-
-  let tabs = [
-    { id: 1, name: "Feed", icon: "", link: "/home/feed" },
-    { id: 2, name: "Polls", icon: "", link: "/home/polls" },
-    { id: 3, name: "Events", icon: "", link: "/home/events" },
-    { id: 4, name: "Archive", icon: "", link: "/home/archive" },
-    { id: 5, name: "Chats", icon: "", link: "/home/chats" },
-  ];
+  import { tabs } from "./stores/tab";
 </script>
 
 <div class="mb-2 border-b border-gray-200 dark:border-gray-700 w-full">
@@ -22,7 +15,7 @@
     {#each tabs as tab}
       <li class="mr-2" role="presentation">
         <Link to={tab.link}>
-          <ShowTab id={tab.id} name={tab.name} />
+          <ShowTab {tab} />
         </Link>
       </li>
     {/each}
