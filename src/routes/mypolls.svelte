@@ -238,8 +238,8 @@
   }
 </script>
 
-<div class="bg-slate-900">
-  <div class="w-3/4 p-10 my-10 flex-1 mx-auto" bind:this={div}>
+<div class="bg-slate-900 min-h-screen">
+  <div class="w-3/4 py-5 flex-1 mx-auto" bind:this={div}>
     {#each polls as poll}
       <ShowPollitem {poll} {deletePoll} />
     {/each}

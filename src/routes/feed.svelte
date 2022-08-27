@@ -178,7 +178,9 @@
   </div>
 {/if}
 
-<div class="pt-20 w-full h-screen flex overflow-hidden">
+<div
+  class="w-full bg-slate-900 flex flex-col justify-start items-center py-5 min-h-screen"
+>
   <Tree groups={$groups} />
   <div
     class="w-full bg-slate-900 flex flex-col justify-start items-center overflow-y-scroll"
@@ -240,6 +242,3 @@
     {/await}
   </div>
 </div>
-
-<style>
-</style>
