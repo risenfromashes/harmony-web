@@ -21,8 +21,6 @@
     <div class="pt-20 w-full h-screen flex overflow-hidden">
       <GroupTree groups={$groups} />
       <Tabs />
-      <!-- showing the feed page by default, still recheck this later, like the group and subject choices -->
-      <Feed />
     </div>
   </Route>
   <Route path="/feed">
