@@ -17,7 +17,6 @@
   import { current_user } from "../lib/stores/user";
   import { formatRelative } from "date-fns";
   import Loader from "../lib/loader.svelte";
-  import Tree from "../lib/tree.svelte";
 
   let showEditor = false;
   let showGroupDropdown = false;
@@ -74,11 +73,6 @@
     } catch (e) {}
   };
 
-  // $: {
-  //   // console.clear();
-  //   console.log(newPostContent.text);
-  // }
-
   let onTextChange = (e: any) => {
     console.log(e.detail);
     if (showEditor) {
@@ -126,7 +120,7 @@
             {#await load_groups}
               <div>Loading...</div>
             {:then}
-              {#each groups as group}
+              {#each $groups as group}
                 <button
                   type="button"
                   class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
@@ -181,38 +175,33 @@
 <div
   class="w-full bg-slate-900 flex flex-col justify-start items-center py-5 min-h-screen"
 >
-  <Tree groups={$groups} />
   <div
-    class="w-full bg-slate-900 flex flex-col justify-start items-center overflow-y-scroll"
+    class="w-8/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
+    in:scale|local={{ duration: 300 }}
   >
     <div
-      class="w-8/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
-      in:scale|local={{ duration: 300 }}
+      class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-6 flex-shrink-0"
     >
-      <div
-        class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-6 flex-shrink-0"
-      >
-        <img
-          src="https://www.gravatar.com/avatar/{'Ashraf'
-            .length}?s=47&d=robohash"
-          alt={"current user"}
-          class="object-cover w-full h-full"
-        />
-      </div>
+      <img
+        src="https://www.gravatar.com/avatar/{'Ashraf'.length}?s=47&d=robohash"
+        alt={"current user"}
+        class="object-cover w-full h-full"
+      />
+    </div>
 
-      <button
-        type="button"
-        class={"bg-slate-900 flex flex-1 items-center border border-slate-700 rounded-lg text-left px-4 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
-          (newPostContent.text.trim() ? "  text-white" : " text-gray-400")}
-        on:click={() => {
-          showEditor = true;
-        }}
-      >
-        {newPostContent.text.trim()
-          ? newPostContent.text.trim()
-          : "What's in you mind?"}
-      </button>
-      <!-- <button
+    <button
+      type="button"
+      class={"bg-slate-900 flex flex-1 items-center border border-slate-700 rounded-lg text-left px-4 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
+        (newPostContent.text.trim() ? "  text-white" : " text-gray-400")}
+      on:click={() => {
+        showEditor = true;
+      }}
+    >
+      {newPostContent.text.trim()
+        ? newPostContent.text.trim()
+        : "What's in you mind?"}
+    </button>
+    <!-- <button
       type="button"
       class={"w-10/12 h-14 border border-slate-700 rounded-full text-left px-8 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
         (newPostQlContent.text.trim() ? "  text-white" : " text-gray-400")}
@@ -224,21 +213,17 @@
         ? newPostQlContent.text.trim()
         : "What's in you mind, Ashraf?"}</button
     > -->
-    </div>
-
-    {#await load_posts}
-      <Loader />
-    {:then}
-      {#each posts as post}
-        <PostItem
-          poster={post.poster_name}
-          post={post.text}
-          time={formatRelative(new Date(post.time), new Date()).replace(
-            "t",
-            "T"
-          )}
-        />
-      {/each}
-    {/await}
   </div>
+
+  {#await load_posts}
+    <Loader />
+  {:then}
+    {#each posts as post}
+      <PostItem
+        poster={post.poster_name}
+        post={post.text}
+        time={formatRelative(new Date(post.time), new Date()).replace("t", "T")}
+      />
+    {/each}
+  {/await}
 </div>
