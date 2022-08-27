@@ -81,7 +81,7 @@
   };
 </script>
 
-<div class="h-full w-10/12">
+<div class="h-full w-full">
   <!-- Chat Viewer -->
   {#await loadPromise}
     <p class="mx-auto mt-2">Loading...</p>

@@ -9,15 +9,17 @@
   let isCurrent = false;
 
   $: {
-    if (current_group && current_subject) {
+    if ($current_group && $current_subject) {
       isCurrent =
-        $current_group.id == group.id && $current_subject.id == subject.id;
+        $current_group.id === group.id && $current_subject.id === subject.id;
     }
   }
 
   const handleClick = () => {
     $current_group = group;
     $current_subject = subject;
+    console.log("current_group", $current_group);
+    console.log("current_subject", $current_subject);
   };
 </script>
 

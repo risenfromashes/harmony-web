@@ -10,10 +10,7 @@
   loadGroups();
 </script>
 
-<div class="pt-20 w-full h-screen flex overflow-hidden">
-  <!-- Tree -->
-  <Chattree groups={$groups} />
-
+<div class="pt-5 w-full h-full flex overflow-hidden">
   <!-- Chat -->
   <Chatchannelviewer />
 </div>

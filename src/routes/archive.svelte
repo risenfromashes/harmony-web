@@ -180,12 +180,12 @@
   }
 </script>
 
-<div class="bg-slate-900 pt-20 mx-5">
+<div class="bg-slate-900 py-5 min-h-screen">
   <Router>
-    <div class="bg-slate-900 pt-5 pl-10 pr-3 my-5">
+    <div class="bg-slate-900 pl-10 pr-3">
       <Route>
         <ArchiveBreadcrumb
-          levels={[{ id: 1, name: "Archive", link: "/archive" }]}
+          levels={[{ id: 1, name: "Archive", link: "/home/archive" }]}
         />
         {#each question_groups as question_group}
           <SingleFolderView name={question_group.group_name} />
@@ -194,11 +194,11 @@
       <Route path=":group_name" let:params>
         <ArchiveBreadcrumb
           levels={[
-            { id: 1, name: "Archive", link: "/archive" },
+            { id: 1, name: "Archive", link: "/home/archive" },
             {
               id: 2,
               name: params.group_name,
-              link: "/archive/" + params.group_name,
+              link: "/home/archive/" + params.group_name,
             },
           ]}
         />
@@ -209,16 +209,17 @@
       <Route path=":group_name/:set_name" let:params>
         <ArchiveBreadcrumb
           levels={[
-            { id: 1, name: "Archive", link: "/archive" },
+            { id: 1, name: "Archive", link: "/home/archive" },
             {
               id: 2,
               name: params.group_name,
-              link: "/archive/" + params.group_name,
+              link: "/home/archive/" + params.group_name,
             },
             {
               id: 3,
               name: params.set_name,
-              link: "/archive/" + params.group_name + "/" + params.set_name,
+              link:
+                "/home/archive/" + params.group_name + "/" + params.set_name,
             },
           ]}
         />
