@@ -85,60 +85,6 @@
   <title>Showing Posts</title>
 </svelte:head>
 
-{#if false}
-  <div
-    class="fixed h-full w-full bg-[#0005] flex justify-center items-center z-20"
-  >
-    <div
-      class="h-5/6 w-7/12 rounded-2xl flex flex-col shadow-xl border bg-slate-800 border-slate-600 overflow-hidden mx-auto"
-      in:scale={{ duration: 300 }}
-    >
-      <div
-        class="w-full h-1/6 flex items-center justify-between px-10 bg-slate-800 border-b border-slate-600 relative"
-      >
-        <div class="flex items-center">
-          <p class="font-bold text-3xl mr-4">
-            <FaIcon icon="file-pen" />&nbsp;&nbsp;Create Post
-          </p>
-        </div>
-
-        <button
-          type="button"
-          class="flex justify-center items-center mx-4 my-2 hover:text-rose-400"
-          on:click={() => {
-            showEditor = false;
-          }}
-          ><p class="font-bold text-3xl h-full w-full transition-all">
-            <FaIcon icon="times" />
-          </p></button
-        >
-      </div>
-
-      <!-- <textarea
-        class="h-4/6 w-full px-6 py-8 resize-none bg-slate-700 focus:outline-none"
-        placeholder="What's in you mind, Ashraf?"
-        bind:value={newPostContent}
-      /> -->
-
-      <Quill
-        className="h-4/6 w-full bg-slate-900"
-        on:textChange={onTextChange}
-      />
-
-      <div
-        class="w-full h-1/6 flex items-center justify-center border-t border-slate-600 bg-slate-800"
-      >
-        <button
-          type="button"
-          class="resize-none rounded-lg font-semibold text-xl transition-all outline-none hover:text-emerald-400"
-          on:click={submit_post}
-          ><FaIcon icon="paper-plane" />&nbsp;&nbsp;Send</button
-        >
-      </div>
-    </div>
-  </div>
-{/if}
-
 <div
   class="w-full bg-slate-900 flex flex-col justify-start items-center py-5 min-h-screen"
 >
