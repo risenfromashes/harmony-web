@@ -8,7 +8,7 @@
   export let groups: Group[];
 </script>
 
-<div class="h-full w-2/12 bg-slate-800">
+<div class="h-full w-2/12 bg-slate-800 overflow-y-scroll">
   <!-- Tree -->
   {#each groups as group}
     <GroupTreeCollapse {group} />

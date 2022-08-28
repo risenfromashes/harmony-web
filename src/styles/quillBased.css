@@ -1,13 +1,17 @@
 #editor {
   position: relative !important;
+  background-color: rgb(15 23 42) !important;
+  border: #475569 solid 1px !important;
+  border-radius: 10px;
 }
 
 .ql-container {
   overflow-y: hidden !important;
   background-color: #1e293b !important;
   font-size: 1rem !important;
-  border: none !important;
   height: 92% !important;
+  border: none !important;
+  border-radius: 10px;
 }
 
 .ql-toolbar {
@@ -90,6 +94,7 @@
 .ql-tooltip {
   position: absolute !important;
   background-color: #1e293b !important;
+  z-index: 100l
 }
 
 .text-block {
