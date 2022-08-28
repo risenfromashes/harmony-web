@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Chattree from "../lib/tree.svelte";
   import Chatchannelviewer from "../lib/chatchannelviewer.svelte";
 
   import { useLocation } from "svelte-navigator";
