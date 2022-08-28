@@ -31,7 +31,7 @@
   <Editpoll bind:poll bind:show={showedit} />
 {/if}
 
-<div class="my-5 p-5 bg-slate-800 rounded-lg" transition:slide|local>
+<div class="my-5 p-5 bg-slate-800 rounded-lg" transition:slide>
   <div class="flex justify-between">
     <div>
       <p

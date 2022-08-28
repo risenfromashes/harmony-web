@@ -117,7 +117,7 @@
     {:else}
       <Quill className="h-4/6 w-full" on:textChange={onTextChange} />
       <div
-        class="w-auto h-1/6 flex items-center justify-center border-t border-slate-600 bg-slate-800"
+        class="w-auto h-1/6 flex items-center justify-center my-auto border-slate-600 bg-slate-800"
       >
         <button
           type="button"
