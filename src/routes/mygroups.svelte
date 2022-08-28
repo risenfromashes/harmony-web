@@ -205,22 +205,28 @@
           </form>
 
           {#if filteredUsers.length > 0}
-            <ul
-              id="autocomplete-items-list"
-              class="rounded-lg bg-slate-600 mt-1"
+            <div
+              id="dropdown"
+              class="z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 w-full"
             >
-              {#each filteredUsers as user, i}
-                <button
-                  type="button"
-                  class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left rounded-lg font-OpenSans"
-                  on:click|stopPropagation={() => {
-                    add_user(user);
-                  }}
-                >
-                  {@html makeMatchBold(user.user_name)}
-                </button>
-              {/each}
-            </ul>
+              <ul
+                class="py-1 text-base text-gray-700 dark:text-gray-200 w-full"
+                aria-labelledby="dropdownDefault"
+              >
+                {#each filteredUsers as user, i}
+                  <li>
+                    <button
+                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left rounded-lg"
+                      on:click|stopPropagation={() => {
+                        add_user(user);
+                      }}
+                    >
+                      {@html makeMatchBold(user.user_name)}
+                    </button>
+                  </li>
+                {/each}
+              </ul>
+            </div>
           {/if}
 
           <button
