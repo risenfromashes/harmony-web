@@ -20,7 +20,7 @@
 
 <div
   class="flex flex-1 flex-col pl-4 pt-2 bg-slate-800 flex-shrink-0"
-  in:fly={{ duration: 400, x: 100, delay: 200 }}
+  in:fly|local={{ duration: 400, x: 100, delay: 200 }}
 >
   <div class="flex w-full">
     <div
