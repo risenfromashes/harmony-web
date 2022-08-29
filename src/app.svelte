@@ -12,6 +12,7 @@
   import QuillDemo from "./routes/quillDemo.svelte";
   import Mypolls from "./routes/mypolls.svelte";
   import Archive from "./routes/archive.svelte";
+  import Loginregister from "./routes/loginregister.svelte";
 
   const routes: Map<string, string> = new Map([
     ["About", "/about"],
@@ -25,10 +26,11 @@
     ["Quill", "/quill"],
     ["Polls", "/polls"],
     ["Archive", "/archive"],
+    ["Login&Register", "/login-register"],
   ]);
 </script>
 
-<Router> 
+<Router>
   <div class="w-full h-screen bg-slate-900 text-slate-100">
     <Nav {routes} />
     <div class="">
@@ -63,7 +65,10 @@
         <Mypolls />
       </Route>
       <Route path="/archive/*">
-         <Archive />
+        <Archive />
+      </Route>
+      <Route path="/login-register">
+        <Loginregister />
       </Route>
     </div>
   </div>
