@@ -1,4 +1,5 @@
 import { createGroupMessageDispatch } from "./messageevent";
+import { createPostEventDispatch } from "./postevent";
 
 export function createSource(user_id: string) {
   const evs = new EventSource("/events/" + user_id);
@@ -7,6 +8,7 @@ export function createSource(user_id: string) {
   };
 
   createGroupMessageDispatch(evs);
+  createPostEventDispatch(evs);
 
   return evs;
 }

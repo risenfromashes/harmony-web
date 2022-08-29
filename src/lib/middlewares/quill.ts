@@ -18,7 +18,6 @@ const quillmiddleware = (node: Element, options: object) => {
       new CustomEvent("text-change", {
         detail: {
           delta: quillInstance.getContents(),
-          text: quillInstance.getText(),
         },
       })
     );

@@ -1,33 +1,51 @@
+import { navigate } from "svelte-navigator";
+import { current_group } from "../stores/groups";
 import { current_user } from "../stores/user";
+import type { QlDelta } from "../utilities/qlDeltaRenderer";
+
+export interface PostContent {
+  type: string;
+  data: string;
+}
 
 export interface Post {
   id: string;
-  text: string;
-  time: Date;
+  time: string;
   poster_id: string;
   poster_name: string;
-  group_id: string;
+  poster_dp_link: string;
+  content: PostContent;
+  comments: Post[];
 }
 
-export const getPosts = async () => {
-  const res = await fetch(`/posts/${current_user.user_id}`);
+export interface PostEvent extends Post {
+  group_id: string;
+  subject_id: string;
+  parent_post_id: string;
+}
+
+export interface SendPost {
+  poster_id: string;
+  group_id: string;
+  subject_id: string;
+  parent_post_id: string;
+  type: string;
+  content: string | QlDelta;
+}
+
+export interface PostResponse {
+  post_id: string;
+}
+
+export const getPosts = async (gid: string, sid: string, pid: string) => {
+  const res = await fetch(
+    `/posts/${current_user.user_id}/${gid}/${sid}/${pid}`
+  );
 
   if (res.ok) {
     console.log("received posts");
     let body = await res.json();
-    let posts: Post[] = [];
-    for (let post of body) {
-      let p: Post = {
-        id: post.post_id,
-        text: post.post_text,
-        time: new Date(post.time),
-        poster_id: post.poster_id,
-        poster_name: post.poster_name,
-        group_id: post.group_id,
-      };
-      posts.push(p);
-    }
-    return posts;
+    return body;
   } else {
     if (res.status === 401) {
       throw new Error("Unauthorized");
@@ -39,30 +57,19 @@ export const getPosts = async () => {
   }
 };
 
-export const getPostsDev = async () => {
-  console.log("fetching posts");
-  let posts: Array<Post> = [
-    {
-      id: "1",
-      text: "This is a test post",
-      time: new Date(),
-      poster_id: "1",
-      poster_name: "John Doe",
-      group_id: "1",
-    },
-    {
-      id: "2",
-      text: "This is another test post",
-      time: new Date(),
-      poster_id: "1",
-      poster_name: "John Doe",
-      group_id: "1",
-    },
-  ];
+export const addPost = async (post: SendPost) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
+  }
+  let res = await fetch("/post", {
+    method: "POST",
+    body: JSON.stringify(post),
+  });
 
-  const res = await new Promise((resolve) =>
-    setTimeout(() => resolve(posts), 1000)
-  );
-
-  return res;
+  if (res.ok) {
+    let json = await res.json();
+    return json as PostResponse;
+  } else {
+    throw new Error(res.status.toString());
+  }
 };

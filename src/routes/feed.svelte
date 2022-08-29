@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scale } from "svelte/transition";
+  import { scale, fade } from "svelte/transition";
   import PostItem from "../lib/post.svelte";
   import FaIcon from "../lib/faIcon.svelte";
   import Quill from "../lib/quill.svelte";
@@ -9,76 +9,138 @@
     loadGroups,
     loadGroupsDev,
   } from "../lib/data/groups";
-  import { type Post, getPosts, getPostsDev } from "../lib/data/posts";
-  import { groups } from "../lib/stores/groups";
+  import {
+    type Post,
+    getPosts,
+    // getPostsDev,
+    addPost,
+    type PostContent,
+    type PostEvent,
+  } from "../lib/data/posts";
+  import { current_group, current_subject, groups } from "../lib/stores/groups";
   import { navigate } from "svelte-navigator";
-
-  // import { type QlDelta } from "../lib/utilities/qlDeltaProcessing";
   import { current_user } from "../lib/stores/user";
   import { formatRelative } from "date-fns";
   import Loader from "../lib/loader.svelte";
+  import type { QlImage, QlDelta } from "../lib/utilities/qlDeltaRenderer";
+  import Nav from "../lib/nav.svelte";
+  import { uploadImage } from "../lib/data/image";
+  import { onDestroy, onMount } from "svelte";
+  import { notifyTarget } from "../lib/events/notifytarget";
 
   let showEditor = false;
   let showGroupDropdown = false;
 
-  let newPostContent = {
-    delta: {},
-    text: "",
-  };
+  let newPostContent: QlDelta;
 
   let posts: Array<Post> = [];
-  let selected_group: Group = null;
 
-  let load_groups = loadGroupsDev();
-  loadGroups();
+  if ($groups.length == 0) {
+    loadGroups();
+  }
 
-  let load_posts = (async () => {
+  let loadPosts = async (gid, sid) => {
     try {
-      posts = await getPostsDev();
+      posts = await getPosts(gid, sid, "0");
     } catch (e) {
-      navigate("/login");
       console.log(e);
+      navigate("/login");
     }
-  })();
+  };
 
-  const submit_post = async () => {
-    // TODO: show error alerts
+  let loadPromise;
+
+  $: if ($current_group && $current_subject) {
+    console.log("current group: " + $current_group.id);
+    console.log("current subject: " + $current_subject.id);
+    loadPromise = loadPosts($current_group.id, $current_subject.id);
+  }
+
+  const submitPost = async () => {
+    if (!current_user.loggedIn) {
+      navigate("/login");
+    }
     try {
-      if (selected_group == null) {
-        return;
+      for (let delta of newPostContent.ops) {
+        if (typeof delta.insert != "string" && delta.insert.image) {
+          const ft = await fetch(delta.insert.image);
+          let image = await uploadImage(await ft.blob());
+          delta.insert.image = image.link;
+        }
       }
-      if (!current_user.loggedIn) {
-        navigate("/");
-      }
-
-      let post = {
-        user_id: current_user.user_id,
-        group_id: selected_group.id.toString(),
-        text: newPostContent.text.toString(),
-      };
-
-      console.log({ post });
-
-      let res = await fetch("/post", {
-        method: "POST",
-        body: JSON.stringify(post),
+      let pid = await addPost({
+        poster_id: current_user.user_id,
+        subject_id: $current_subject.id,
+        group_id: $current_group.id,
+        parent_post_id: "0",
+        type: "quill-delta",
+        content: JSON.stringify(newPostContent),
       });
-
-      if (res.ok) {
-        showEditor = false;
-        navigate("/");
-      } else {
-        console.log(res);
-      }
-    } catch (e) {}
-  };
-
-  let onTextChange = (e: any) => {
-    console.log(e.detail);
-    if (showEditor) {
-      newPostContent = e.detail;
+      showEditor = false;
+    } catch (e) {
+      console.log(e);
+      // todo show error
     }
   };
+
+  let onTextChange = async (e: any) => {
+    // console.log(e.detail);
+    if (showEditor) {
+      newPostContent = e.detail.delta;
+    }
+  };
+
+  const searchPost = (post: Post, id: string): Post => {
+    if (post.id == id) {
+      return post;
+    }
+    let ret: Post;
+    for (let child of post.comments) {
+      ret = searchPost(child, id);
+      if (ret != null) {
+        return ret;
+      }
+    }
+    return null;
+  };
+
+  const handleNewPost = async (e) => {
+    if ($current_group && $current_subject) {
+      const post: PostEvent = e.detail;
+      if (
+        post.group_id == $current_group.id &&
+        post.subject_id == $current_subject.id
+      ) {
+        console.log("handler called");
+        let parent: Post = null;
+        if (post.parent_post_id != null) {
+          for (let p of posts) {
+            parent = searchPost(p, post.parent_post_id);
+            if (parent != null) {
+              break;
+            }
+          }
+          if (parent == null) {
+            return;
+          }
+        }
+        if (parent == null) {
+          posts = [...posts, post];
+        } else {
+          parent.comments = [...parent.comments, post];
+        }
+        posts = posts;
+      }
+    }
+  };
+
+  onMount(() => {
+    notifyTarget.addEventListener("post", handleNewPost);
+  });
+
+  onDestroy(() => {
+    notifyTarget.removeEventListener("post", handleNewPost);
+  });
 </script>
 
 <svelte:head>
@@ -86,8 +148,24 @@
 </svelte:head>
 
 <div
-  class="w-full bg-slate-900 flex flex-col justify-start items-center py-5 min-h-screen"
+  class="w-full bg-slate-900 flex flex-col-reverse justify-start items-center py-5 min-h-screen"
 >
+  {#if loadPromise}
+    {#await loadPromise}
+      <Loader />
+    {:then}
+      {#each posts as post}
+        <PostItem
+          {post}
+          time={formatRelative(new Date(post.time), new Date()).replace(
+            "t",
+            "T"
+          )}
+        />
+      {/each}
+    {/await}
+  {/if}
+
   <div
     class="w-8/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
     in:scale|local={{ duration: 300 }}
@@ -104,40 +182,38 @@
     {#if !showEditor}
       <button
         type="button"
-        class={"bg-slate-900 flex flex-1 items-center border border-slate-700 rounded-lg text-left px-4 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
-          (newPostContent.text.trim() ? "  text-white" : " text-gray-400")}
+        class="bg-slate-900 flex flex-1 items-center border border-slate-700 rounded-lg text-left px-4 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap text-gray-400"
         on:click={() => {
           showEditor = true;
         }}
       >
-        {newPostContent.text.trim()
-          ? newPostContent.text.trim()
-          : "What's in you mind?"}
+        "What's in you mind?"
       </button>
     {:else}
-      <Quill className="h-4/6 w-full" on:textChange={onTextChange} />
-      <div
-        class="w-auto h-1/6 flex items-center justify-center my-auto border-slate-600 bg-slate-800"
-      >
-        <button
-          type="button"
-          class="resize-none rounded-lg font-semibold text-xl transition-all outline-none hover:text-emerald-400"
-          on:click={submit_post}
-          ><FaIcon icon="paper-plane" />&nbsp;&nbsp;Send</button
+      <div class="flex flex-col w-full h-full flex-grow">
+        <Quill className="h-4/6 w-full" on:textChange={onTextChange} />
+
+        <div
+          class="w-auto p-2 flex items-center justify-end my-auto bg-slate-800"
         >
+          <button
+            type="button"
+            class="resize-non mr-2 py-1 px-4 rounded-lg font-semibold text-lg transition-all outline-none hover:text-emerald-400"
+            on:click={submitPost}
+          >
+            <FaIcon icon="paper-plane" />&nbsp;&nbsp;Send
+          </button>
+          <button
+            type="button"
+            class="resize-noe py-1 px-4 rounded-lg font-semibold text-lg transition-all outline-none hover:text-emerald-400"
+            on:click={() => {
+              showEditor = false;
+            }}
+          >
+            <FaIcon icon="times" />&nbsp;&nbsp;Cancel
+          </button>
+        </div>
       </div>
     {/if}
   </div>
-
-  {#await load_posts}
-    <Loader />
-  {:then}
-    {#each posts as post}
-      <PostItem
-        poster={post.poster_name}
-        post={post.text}
-        time={formatRelative(new Date(post.time), new Date()).replace("t", "T")}
-      />
-    {/each}
-  {/await}
 </div>

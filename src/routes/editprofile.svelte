@@ -4,6 +4,7 @@
   import type { UserUpdate } from "src/lib/data/userupdate";
   import { navigate } from "svelte-navigator";
   import Loader from "../lib/loader.svelte";
+  import { uploadImage } from "../lib/data/image";
 
   //extract the already existing data from the database
   let reg: UserUpdate = undefined;
@@ -39,22 +40,12 @@
   const loadPromise = load();
 
   const submitImage = async () => {
-    const file: File = input.files[0];
-    let res = await fetch(`/upload-image/${current_user.user_id}`, {
-      method: "POST",
-      headers: {
-        "content-type": file.type,
-        "content-length": file.size.toString(),
-      },
-      body: file,
-    });
-
-    if (res.ok) {
-      let img = await res.json();
-      return img.id;
-    } else {
+    try {
+      const img = await uploadImage(input.files[0]);
+      return img;
+    } catch (e) {
       warning = true;
-      warningText = "Failed to upload image";
+      warningText = `Failed to upload image: ${e.message}`;
     }
   };
 
@@ -110,7 +101,7 @@
     if (newPicture) {
       reg.dp_id = "0";
       try {
-        reg.dp_id = await submitImage();
+        reg.dp_id = (await submitImage()).id;
         uploadedPicture = true;
       } catch (e) {
         warning = true;

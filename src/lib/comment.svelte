@@ -3,8 +3,15 @@
   import { formatRelative } from "date-fns";
   import type { CommentReply } from "./data/comments";
   import FaIcon from "./faIcon.svelte";
+  import { addPost, type Post } from "./data/posts";
+  import Avatar from "./avatar.svelte";
+  import { current_user } from "./stores/user";
+  import { current_group, current_subject } from "./stores/groups";
+  import { afterUpdate, beforeUpdate } from "svelte";
 
-  export let comment: CommentReply;
+  export let comment: Post;
+
+  let text = "";
 
   let showSubcomments = false;
   let showReplyChatbox = false;
@@ -16,28 +23,48 @@
   function toggleReplyChatbox() {
     showReplyChatbox = !showReplyChatbox;
   }
+
+  let lastCount = comment.comments.length;
+  afterUpdate(() => {
+    if (comment.comments.length > lastCount) {
+      showSubcomments = true;
+      lastCount = comment.comments.length;
+    }
+  });
+
+  const submitComment = async () => {
+    try {
+      let pid = await addPost({
+        poster_id: current_user.user_id,
+        subject_id: $current_subject.id,
+        group_id: $current_group.id,
+        parent_post_id: comment.id,
+        type: "text",
+        content: text,
+      });
+      text = "";
+    } catch (e) {
+      console.log(e);
+      // todo show error
+    }
+  };
 </script>
 
 <div
   class="flex flex-1 flex-col pl-4 pt-2 bg-slate-800 flex-shrink-0"
-  in:fly={{ duration: 400, x: 100, delay: 200 }}
+  in:fly|local={{ duration: 400, x: 100, delay: 200 }}
 >
   <div class="flex w-full">
     <div
       class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-4 flex-shrink-0"
     >
-      <img
-        src="https://www.gravatar.com/avatar/{comment.commenter_name
-          .length}?s=47&d=robohash"
-        alt={comment.commenter_name}
-        class="object-cover w-full h-full"
-      />
+      <Avatar dp={comment.poster_dp_link} name={comment.poster_name} />
     </div>
 
     <div class="p-2 w-full">
       <div class="flex flex-1 items-center justify-between">
         <p class="font-semibold text-lg mb-2">
-          {comment.commenter_name}
+          {comment.poster_name}
           <span class="ml-2 font-semibold text-sm text-slate-600"
             >{formatRelative(new Date(comment.time), new Date()).replace(
               "t",
@@ -48,14 +75,14 @@
 
         <div class="flex items-center">
           <!-- Reply -->
-          {#if comment.subcomments.length > 0}
+          {#if comment.comments.length > 0}
             <button
               type="button"
               class="font-semibold text-gray-400 transition-all hover:text-gray-200 mr-4"
               on:click={toggleSubComments}
             >
-              {comment.subcomments.length}
-              {comment.subcomments.length > 1 ? "Replies" : "Reply"}
+              {comment.comments.length}
+              {comment.comments.length > 1 ? "Replies" : "Reply"}
             </button>
           {/if}
 
@@ -72,7 +99,7 @@
       </div>
 
       <div class="flex flex-col flex-1">
-        <p>{comment.text}</p>
+        <p>{comment.content.data}</p>
       </div>
     </div>
   </div>
@@ -85,7 +112,7 @@
         duration: 300,
       }}
     >
-      {#each comment.subcomments as subc}
+      {#each comment.comments as subc}
         <svelte:self comment={subc} />
       {/each}
     </div>
@@ -103,11 +130,13 @@
         type="text"
         placeholder="Type a reply comment..."
         class="w-11/12 h-12 px-4 bg-slate-900 rounded-lg outline-none"
+        bind:value={text}
       />
 
       <button
         type="button"
         class="font-semibold text-gray-400 h-12 w-20 ml-4 transition-all outline-none hover:text-emerald-400"
+        on:click={submitComment}
       >
         <FaIcon icon="paper-plane" />&nbsp;&nbsp;Reply
       </button>
