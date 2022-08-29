@@ -202,13 +202,13 @@
             type="button"
             class="resize-none mr-2 py-1 px-4 rounded-lg font-semibold text-lg transition-all outline-none hover:text-emerald-400"
             on:click={submitPost}
+            disabled={!enableSubmit}
           >
             <FaIcon icon="paper-plane" />&nbsp;&nbsp;Send
           </button>
           <button
             type="button"
             class="resize-none py-1 px-4 rounded-lg font-semibold text-lg transition-all outline-none hover:text-emerald-400"
-            disabled={!enableSubmit}
             on:click={() => {
               showEditor = false;
             }}
