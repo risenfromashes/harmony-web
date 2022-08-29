@@ -238,20 +238,6 @@
         showable_events = events;
       }}>Reset</button
     >
-    <!-- drawer init and show -->
-    <!-- <button
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg lg:ml-40 ml-10 text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      type="button"
-      data-drawer-target="drawer-form"
-      data-drawer-show="drawer-form"
-      aria-controls="drawer-form"
-      on:click|stopPropagation={() => (draweropen = !draweropen)}
-    >
-      <FaIcon type="regular" icon="plus" />
-      Create New Event
-    </button> -->
-
-    <!-- Add Event Button v2 -->
     <button
       class="h-14 w-14 fixed bottom-12 right-12 z-10 shadow-xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full lg:ml-40 ml-10 text-sm mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
       type="button"

@@ -1,6 +1,10 @@
 <script lang="ts">
   import { current_group, current_subject } from "./stores/groups";
+  import { Router, Link, Route, navigate } from "svelte-navigator";
+  import { tabs } from "./stores/tab";
   import type { Group } from "./data/groups";
+  import { selected_tab } from "./stores/tab";
+  import GroupSettings from "../routes/groupsettings.svelte";
   //declare an object with name, intro, institution, image_link, department, group_link and batch
   export let group: Group;
 
@@ -50,30 +54,38 @@
         style="position: absolute; top: 3rem; right: -2rem;"
         on:click|stopPropagation={() => {}}
       >
-        <ul class="py-1 font-Hahmlet">
+        <ul class="py-1 font-Roboto">
           <li>
-            <a
-              href="home/chats"
-              class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            <div
+              class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white hover:cursor-pointer"
               on:click={() => {
                 $current_group = group;
                 $current_subject = group.subjects[0];
-              }}>Group Chat</a
+                $selected_tab = tabs[4];
+                navigate("/home/chats");
+              }}
             >
+              Group Chat
+            </div>
           </li>
           <li>
-            <a
-              href="#"
-              class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-              >Group Settings</a
+            <div
+              class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white hover:cursor-pointer"
+              on:click={() => {
+                $current_group = group;
+                $current_subject = $current_group.subjects[0];
+                navigate("/groupsettings");
+              }}
             >
+              Group Settings
+            </div>
           </li>
           <li>
-            <a
-              href="#"
-              class="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-              >Leave</a
+            <div
+              class="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white hover:cursor-pointer"
             >
+              Leave
+            </div>
           </li>
         </ul>
       </div>
