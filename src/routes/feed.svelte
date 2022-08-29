@@ -48,6 +48,7 @@
     }
   };
 
+  let enableSubmit = false;
   let loadPromise;
 
   $: if ($current_group && $current_subject) {
@@ -86,6 +87,7 @@
   let onTextChange = async (e: any) => {
     // console.log(e.detail);
     if (showEditor) {
+      enableSubmit = e.detail.text.trim().length > 0;
       newPostContent = e.detail.delta;
     }
   };
@@ -148,7 +150,7 @@
 </svelte:head>
 
 <div
-  class="w-full bg-slate-900 flex flex-col-reverse justify-start items-center py-5 min-h-screen"
+  class="w-full bg-slate-900 flex flex-col-reverse justify-end items-center py-5 min-h-screen"
 >
   {#if loadPromise}
     {#await loadPromise}
@@ -198,14 +200,15 @@
         >
           <button
             type="button"
-            class="resize-non mr-2 py-1 px-4 rounded-lg font-semibold text-lg transition-all outline-none hover:text-emerald-400"
+            class="resize-none mr-2 py-1 px-4 rounded-lg font-semibold text-lg transition-all outline-none hover:text-emerald-400"
             on:click={submitPost}
           >
             <FaIcon icon="paper-plane" />&nbsp;&nbsp;Send
           </button>
           <button
             type="button"
-            class="resize-noe py-1 px-4 rounded-lg font-semibold text-lg transition-all outline-none hover:text-emerald-400"
+            class="resize-none py-1 px-4 rounded-lg font-semibold text-lg transition-all outline-none hover:text-emerald-400"
+            disabled={!enableSubmit}
             on:click={() => {
               showEditor = false;
             }}
