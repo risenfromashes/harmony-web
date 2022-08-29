@@ -7,6 +7,7 @@
   import Register from "./routes/register.svelte";
   import Mygroups from "./routes/mygroups.svelte";
   import Home from "./routes/home.svelte";
+  import GroupSettings from "./routes/groupsettings.svelte";
 
   const routes: Map<string, string> = new Map([
     ["Home", "/home"],
@@ -42,6 +43,9 @@
       </Route>
       <Route path="/home/*">
         <Home />
+      </Route>
+      <Route path="/groupsettings">
+        <GroupSettings />
       </Route>
     </div>
   </div>

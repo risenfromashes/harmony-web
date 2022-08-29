@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Router, Link, Route, navigate } from "svelte-navigator";
-  import GroupTree from "../lib/grouptree.svelte";
+  import Tree from "../lib/tree.svelte";
   import Feed from "./feed.svelte";
   import Myevents from "./myevents.svelte";
   import Chats from "./chats.svelte";
@@ -22,7 +22,7 @@
 
 <div class="pt-20 w-full h-screen flex overflow-hidden">
   <!-- Tree -->
-  <GroupTree groups={$groups} />
+  <Tree groups={$groups} />
   <div class="w-10/12 flex-shrink-0 h-full">
     <Tabs />
     <div class="h-full overflow-y-scroll pb-12">
