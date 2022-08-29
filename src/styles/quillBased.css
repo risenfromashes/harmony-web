@@ -25,6 +25,10 @@
   color: #fff;
 }
 
+.ql-editor > p > img{
+  display: inline !important;
+}
+
 .ql-editor::-webkit-scrollbar {
   background-color: transparent;
   width: 0.6rem;

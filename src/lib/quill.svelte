@@ -9,7 +9,7 @@
       toolbar: [
         [{ header: [1, 2, 3, false] }],
         ["bold", "italic", "underline", "strike"],
-        ["link", "code-block"],
+        ["link", "code-block", "image"],
         [{ script: "sub" }, { script: "super" }],
         [{ align: [false, "right", "center", "justify"] }],
       ],
@@ -24,10 +24,6 @@
     dispatch("textChange", e.detail);
   };
 </script>
-
-<svelte:head>
-  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
-</svelte:head>
 
 <div class={className} id="editor">
   <div use:quillmiddleware={qlEditorOptions} on:text-change={onTextChange} />

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { linear } from "svelte/easing";
   import { scale } from "svelte/transition";
+  import Avatar from "./avatar.svelte";
   export let poster = "";
   export let time = ""; //when it was posted
   export let dp: string | null = null;
@@ -15,15 +16,7 @@
     <div
       class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-4 flex-shrink-0"
     >
-      {#if dp == null}
-        <img
-          src="https://www.gravatar.com/avatar/{poster.length}?s=47&d=robohash"
-          alt={poster}
-          class="object-cover w-full h-full"
-        />
-      {:else}
-        <img src={dp} alt={poster} class="object-cover w-full h-full" />
-      {/if}
+      <Avatar {dp} name={poster} />
     </div>
 
     <div class="p-2">

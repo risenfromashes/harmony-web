@@ -4,16 +4,16 @@ export interface QlDelta {
 
 declare let hljs: any;
 
-interface QlImage {
-  link: string;
+export interface QlImage {
+  image: string;
 }
 
-interface QlDeltaOp {
+export interface QlDeltaOp {
   insert: string | QlImage;
   attributes?: QlAttribute;
 }
 
-interface QlAttribute {
+export interface QlAttribute {
   header?: number;
   bold?: boolean;
   italic?: boolean;
@@ -170,12 +170,18 @@ class QlRenderer {
       }
     }
   }
+  handleImage(src: string) {
+    let img = document.createElement("img");
+    img.setAttribute("src", src);
+    this.currentLine.push(img);
+  }
 
   handleOp(op: QlDeltaOp) {
     if (typeof op.insert == "string") {
       this.handleString(op, op.insert);
+    } else if (op.insert.image) {
+      this.handleImage(op.insert.image);
     }
-    // TODO: handle images
   }
 
   render(delta: QlDelta) {
