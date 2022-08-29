@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Pollitem from "../lib/pollitem.svelte";
+  import ShowPollitem from "../lib/showpollitem.svelte";
   import type { Poll } from "../lib/data/polls";
   import { beforeUpdate, afterUpdate } from "svelte";
 
@@ -210,7 +210,8 @@
           pollid: "5",
           optionid: "8",
           option_title: "Option 8",
-          description: "This is some option that you may check out",
+          description:
+            "This is some option that you may check out. This is some option that you may check out. This is some option that you may check out. This is some option that you may check out. This is some option that you may check out.",
           vote_count: 0,
           width: 0,
         },
@@ -237,10 +238,10 @@
   }
 </script>
 
-<div class="bg-slate-900">
-  <div class="w-3/4 p-10 my-10 flex-1 mx-auto" bind:this={div}>
+<div class="bg-slate-900 min-h-screen">
+  <div class="w-3/4 py-5 flex-1 mx-auto" bind:this={div}>
     {#each polls as poll}
-      <Pollitem {poll} {deletePoll} />
+      <ShowPollitem {poll} {deletePoll} />
     {/each}
   </div>
 </div>

@@ -13,13 +13,14 @@
   import Mypolls from "./routes/mypolls.svelte";
   import Archive from "./routes/archive.svelte";
   import Loginregister from "./routes/loginregister.svelte";
+  import Home from "./routes/home.svelte";
 
   const routes: Map<string, string> = new Map([
     ["About", "/about"],
     ["Login", "/login"],
     ["Register", "/register"],
     ["Edit Profile", "/editprofile"],
-    ["Feed", "/"],
+    ["Home", "/home"],
     ["My Groups", "/mygroups"],
     ["My Events", "/myevents"],
     ["Chats", "/chats"],
@@ -35,7 +36,7 @@
     <Nav {routes} />
     <div class="">
       <Route path="/">
-        <Feed />
+        <Home />
       </Route>
       <Route path="/about">
         <About />

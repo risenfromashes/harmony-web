@@ -1,4 +1,4 @@
-import { login } from "../stores/login";
+import { current_user } from "../stores/user";
 
 export interface Post {
   id: string;
@@ -10,7 +10,7 @@ export interface Post {
 }
 
 export const getPosts = async () => {
-  const res = await fetch(`/posts/${login.user_id}`);
+  const res = await fetch(`/posts/${current_user.user_id}`);
 
   if (res.ok) {
     console.log("received posts");

@@ -1,14 +1,15 @@
 <script lang="ts">
   import GroupCard from "./groupcard.svelte";
   import FaIcon from "./faIcon.svelte";
-  import { login } from "../lib/stores/login";
+  import { current_user } from "./stores/user";
   import { navigate } from "svelte-navigator";
-  import { type Group, getGroups, loadGroups } from "./data/groups";
+  import type { Group } from "./data/groups";
+  import { getGroups, loadGroups } from "./data/groups";
   import { groups } from "./stores/groups";
 
   let load_groups = loadGroups();
 
-  let showable_groups = [];
+  let showable_groups: Array<Group> = $groups;
 
   let search_term = "";
 
