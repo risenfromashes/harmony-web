@@ -1,4 +1,5 @@
 import { createGroupMessageDispatch } from "./messageevent";
+import { createPollEventDispatch } from "./pollevent";
 import { createPostEventDispatch } from "./postevent";
 
 export function createSource(user_id: string) {
@@ -9,6 +10,7 @@ export function createSource(user_id: string) {
 
   createGroupMessageDispatch(evs);
   createPostEventDispatch(evs);
+  createPollEventDispatch(evs);
 
   return evs;
 }

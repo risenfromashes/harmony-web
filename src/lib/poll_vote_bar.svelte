@@ -7,7 +7,7 @@
 
   const progress = tweened(30, {
     delay: 0,
-    duration: 1000,
+    duration: 500,
     easing: cubicOut,
   });
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Option, Poll } from "./data/polls";
+  import { changeVote, type Option, type Poll } from "./data/polls";
   import PollVoteBar from "./poll_vote_bar.svelte";
   import FaIcon from "../lib/faIcon.svelte";
   import { slide } from "svelte/transition";
@@ -7,31 +7,28 @@
   export let option: Option;
   export let poll: Poll;
 
-  function castVote(optionid: string) {
+  const castVote = async (oid: string) => {
     //update the vote count for the option
-    poll.options.forEach((option) => {
-      if (option.id === optionid) {
-        option.vote_count++;
+    try {
+      let success = await changeVote(poll.id, oid, true);
+      if (success) {
+        poll.voted_option = oid;
       }
-    });
-    //update the total vote count
-    poll.total_vote++;
-    //update the hasVoted flag
-    poll.voted_option = optionid;
-  }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-  function removeVote(optionid: string) {
-    //update the vote count for the option
-    poll.options.forEach((option) => {
-      if (option.id === optionid) {
-        option.vote_count--;
+  const removeVote = async (oid: string) => {
+    try {
+      let success = await changeVote(poll.id, oid, false);
+      if (success) {
+        poll.voted_option = "-1";
       }
-    });
-    //update the total vote count
-    poll.total_vote--;
-    //update the hasVoted flag
-    poll.voted_option = "-1";
-  }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   let isdescriptionexpanded: boolean = false;
 </script>

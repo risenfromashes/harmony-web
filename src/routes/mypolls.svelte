@@ -1,13 +1,21 @@
 <script lang="ts">
   import ShowPollitem from "../lib/showpollitem.svelte";
-  import { getPolls, type Poll } from "../lib/data/polls";
+  import {
+    addPoll,
+    getPolls,
+    removePoll,
+    type Poll,
+    type PollEvent,
+    type SendPoll,
+  } from "../lib/data/polls";
   import { fade } from "svelte/transition";
   import { flip } from "svelte/animate";
   import Drawer from "../lib/drawer.svelte";
   import FaIcon from "../lib/faIcon.svelte";
-  import { beforeUpdate, afterUpdate } from "svelte";
+  import { beforeUpdate, afterUpdate, onMount, onDestroy } from "svelte";
   import { current_group } from "../lib/stores/groups";
   import Loader from "../lib/loader.svelte";
+  import { notifyTarget } from "../lib/events/notifytarget";
 
   let div;
   let autoscroll;
@@ -20,6 +28,37 @@
   afterUpdate(() => {
     console.log(div.scrollHeight);
     if (autoscroll) div.scrollTo(0, div.scrollHeight);
+  });
+
+  const handleEvent = (e: CustomEvent) => {
+    const event: PollEvent = e.detail;
+    if (event.op === "add") {
+      polls = [event.poll, ...polls];
+    } else if (event.op === "delete") {
+      polls = polls.filter((poll) => poll.id != event.id);
+    } else if (event.op === "update") {
+      let i = polls.findIndex((p) => event.id === p.id);
+      if (i >= 0) {
+        let lastVote = polls[i].voted_option;
+        polls[i] = event.poll;
+        if (lastVote !== "-1" && polls[i].voted_option === "-1") {
+          // this is hacky way of handling the issue with event notifications
+          // there is no way for the server to distinguish between clients receiving the same notification
+          polls[i].voted_option = lastVote;
+        }
+        polls = polls;
+      } else {
+        polls = [event.poll, ...polls];
+      }
+    }
+  };
+
+  onMount(() => {
+    notifyTarget.addEventListener("poll", handleEvent);
+  });
+
+  onDestroy(() => {
+    notifyTarget.removeEventListener("poll", handleEvent);
   });
 
   //declare an array of 5 Poll Objects
@@ -39,75 +78,58 @@
     loadPromise = loadPolls($current_group.id);
   }
 
-  function deletePoll(id: string) {
-    console.log("got delete request for poll with id: " + id);
-    const index = polls.findIndex((p) => p.id === id);
-    console.log(index);
-    if (index === -1) return;
-    polls.splice(index, 1);
-    polls = polls;
-  }
-
-  let newPoll: Poll = {
-    id: "",
-    title: "",
-    options: [],
-    total_vote: 0,
-    voted_option: "-1",
+  const deletePoll = async (id: string) => {
+    try {
+      await removePoll(id);
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  let emptyPoll: SendPoll = {
+    title: "New Poll",
+    options: [],
+  };
+
+  let newPoll: SendPoll = structuredClone(emptyPoll);
 
   let draweropen: boolean = false;
 
-  function removeOption(id: string) {
-    //decrement the count of votes of the options which have been removed
-    newPoll.options.forEach((option) => {
-      if (option.id === id) {
-        newPoll.total_vote -= option.vote_count;
-      }
-    });
+  const removeOption = (index: number) => {
     //remove the option from the poll
     newPoll.options = newPoll.options.filter((option) => {
-      return option.id !== id;
+      return option.index !== index;
     });
-    if (newPoll.voted_option === id) {
-      newPoll.voted_option = "-1";
-    }
-  }
+  };
 
-  function addNewOption() {
+  const addNewOption = () => {
     //add an empty option to the poll
     //take the maximum of all existing and add 1 to that
     console.log("add new option");
     let max = 0;
     newPoll.options.forEach((option) => {
-      if (Number(option.id) > max) max = Number(option.id);
-    }),
-      max++;
+      max = Math.max(max, option.index);
+    });
+    max++;
     newPoll.options.push({
-      id: max.toString(),
-      poll_id: newPoll.id,
+      index: max,
       title: "New Option",
       description: "",
-      vote_count: 0,
-      width: 0,
     });
     newPoll.options = newPoll.options;
-  }
+  };
 
-  function confirmupdate() {
+  const submitPoll = async () => {
     console.log("confirm update");
-    //copy newPoll into poll
-    newPoll = {
-      id: newPoll.id,
-      title: newPoll.title,
-      // description: newPoll.description,
-      options: [...newPoll.options],
-      total_vote: newPoll.total_vote,
-      voted_option: newPoll.voted_option,
-    };
-    // poll = temp;
-    //update in database as well
-  }
+    try {
+      let id = await addPoll(newPoll, $current_group.id);
+      console.log("new poll: " + id);
+      draweropen = false;
+      newPoll = structuredClone(emptyPoll);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 </script>
 
 <svelte:head>
@@ -122,7 +144,7 @@
       {#await loadPromise}
         <Loader />
       {:then}
-        {#each polls as poll}
+        {#each polls as poll (poll.id)}
           <ShowPollitem {poll} {deletePoll} />
         {/each}
       {/await}
@@ -174,7 +196,7 @@
           bind:value={newPoll.title}
         />
       </div>
-      {#each newPoll.options as option (Number(option.id))}
+      {#each newPoll.options as option (Number(option.index))}
         <div
           animate:flip
           class="bg-gray-700 rounded-lg p-2 my-2"
@@ -193,7 +215,7 @@
                 .options.length > 1 &&
                 'dark:hover:bg-gray-800 dark:hover:text-white'}"
               type="button"
-              on:click={() => removeOption(option.id)}
+              on:click={() => removeOption(option.index)}
               disabled={newPoll.options.length === 1}
             >
               <FaIcon
@@ -231,16 +253,16 @@
       <div class="flex justify-center mx-auto my-5">
         <button
           type="button"
-          class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          class="w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           on:click={() => addNewOption()}>Add Option</button
         >
       </div>
       <button
+        disabled={newPoll.options.length === 0}
         type="submit"
         class="text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         on:click|stopPropagation={() => {
-          // do stuffs
-          draweropen = false;
+          submitPoll();
         }}
         ><svg
           class="w-5 h-5 mr-2"
