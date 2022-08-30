@@ -189,7 +189,7 @@
           showEditor = true;
         }}
       >
-        "What's in you mind?"
+        What's on your mind?
       </button>
     {:else}
       <div class="flex flex-col w-full h-full flex-grow">
