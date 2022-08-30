@@ -48,7 +48,7 @@ export const getPosts = async (gid: string, sid: string, pid: string) => {
     return body;
   } else {
     if (res.status === 401) {
-      throw new Error("Unauthorized");
+      navigate("/login");
     } else {
       console.log("unexpected status: " + res.status);
       console.log({ res });
@@ -70,6 +70,10 @@ export const addPost = async (post: SendPost) => {
     let json = await res.json();
     return json as PostResponse;
   } else {
-    throw new Error(res.status.toString());
+    if (res.status == 401) {
+      navigate("/login");
+    } else {
+      throw new Error(res.status.toString());
+    }
   }
 };

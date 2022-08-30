@@ -20,8 +20,8 @@
   $: {
     poll.options = sortOptions(poll.options);
     poll.options.forEach((option) => {
-      if (poll.totalvote > 0)
-        option.width = Math.round((option.vote_count / poll.totalvote) * 100);
+      if (poll.total_vote > 0)
+        option.width = Math.round((option.vote_count / poll.total_vote) * 100);
       else option.width = 0;
     });
   }
@@ -40,7 +40,7 @@
         {poll.title}
       </p>
       <p class="text-xl font-medium text-gray-500 dark:text-gray-400">
-        {poll.totalvote} total votes
+        {poll.total_vote} total votes
       </p>
     </div>
     <div class="flex justify-end items-center">
@@ -66,10 +66,10 @@
   <!-- but then again, if you do not use it, then voted or unvoted options will be of different widths, leading to mismatched version -->
   <!-- so, as solution I chose to insert a dummy div tag with equal height as the button, hackerman!!! -->
   <div class="grid">
-    {#each poll.options as option (Number(option.optionid))}
+    {#each poll.options as option (Number(option.id))}
       <div
         animate:flip={{
-          duration: () => 750 * Math.sqrt(Number(option.optionid)),
+          duration: () => 750 * Math.sqrt(Number(option.id)),
         }}
       >
         <ShowPollOption bind:poll bind:option />
