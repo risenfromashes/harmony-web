@@ -1,72 +1,55 @@
 <script lang="ts">
-  import type { Poll } from "./data/polls";
+  import { updatePoll, type Poll, type UpdatePoll } from "./data/polls";
   import { fade } from "svelte/transition";
   import FaIcon from "../lib/faIcon.svelte";
   import { flip } from "svelte/animate";
+  import Post from "./post.svelte";
   export let poll: Poll;
   export let show: boolean = false;
 
   //create a copy of poll in temp
-  let temp: Poll = {
+  let newPoll: UpdatePoll = {
     id: poll.id,
     title: poll.title,
-    // description: poll.description,
-    options: [...poll.options],
-    totalvote: poll.totalvote,
-    votedOption: poll.votedOption,
+    options: poll.options.map((option, index) => ({
+      index: index,
+      ...option,
+    })),
   };
 
-  function removeOption(id: string) {
-    //decrement the count of votes of the options which have been removed
-    temp.options.forEach((option) => {
-      if (option.optionid === id) {
-        temp.totalvote -= option.vote_count;
-      }
-    });
+  function removeOption(index: number, id: string) {
     //remove the option from the poll
-    temp.options = temp.options.filter((option) => {
-      return option.optionid !== id;
-    });
-    if (temp.votedOption === id) {
-      temp.votedOption = "-1";
+    newPoll.options = newPoll.options.filter((option) => option.index != index);
+    if (poll.voted_option === id) {
+      poll.voted_option = "-1";
     }
   }
 
   function addNewOption() {
     //add an empty option to the poll
     //take the maximum of all existing and add 1 to that
-    console.log("add new option");
     let max = 0;
-    temp.options.forEach((option) => {
-      if (Number(option.optionid) > max) max = Number(option.optionid);
-    }),
-      max++;
-    temp.options.push({
-      pollid: poll.id,
-      optionid: max.toString(),
-      option_title: "New Option",
+    newPoll.options.forEach((option) => (max = Math.max(max, option.index)));
+    max++;
+
+    newPoll.options.push({
+      id: "0",
+      index: max,
+      title: "New Option",
       description: "",
-      vote_count: 0,
-      width: 0,
     });
-    temp.options = temp.options;
+    newPoll.options = newPoll.options;
   }
 
-  function confirmupdate() {
+  const submitUpdate = async () => {
     console.log("confirm update");
-    show = false;
-    //copy temp into poll
-    poll = {
-      id: temp.id,
-      title: temp.title,
-      // description: temp.description,
-      options: [...temp.options],
-      totalvote: temp.totalvote,
-      votedOption: temp.votedOption,
-    };
-    // poll = temp;
-    //update in database as well
-  }
+    try {
+      await updatePoll(newPoll, poll.id);
+      show = false;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 </script>
 
 {#if show}
@@ -118,11 +101,11 @@
               >
               <input
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                value={poll.title}
+                bind:value={newPoll.title}
                 required
               />
             </div>
-            {#each temp.options as option (Number(option.optionid))}
+            {#each newPoll.options as option (Number(option.index))}
               <div
                 animate:flip
                 class="bg-gray-600 rounded-lg p-2"
@@ -135,15 +118,15 @@
                     >Option Title</label
                   >
                   <button
-                    class="text-gray-400 bg-transparent {temp.options.length ===
-                    1
+                    class="text-gray-400 bg-transparent {newPoll.options
+                      .length === 1
                       ? 'cursor-not-allowed'
-                      : 'hover:bg-gray-200 hover:text-gray-900'} rounded-lg align-middle text-sm ml-auto inline-flex items-center {temp
+                      : 'hover:bg-gray-200 hover:text-gray-900'} rounded-lg align-middle text-sm ml-auto inline-flex items-center {newPoll
                       .options.length > 1 &&
                       'dark:hover:bg-gray-800 dark:hover:text-white'}"
                     type="button"
-                    on:click={() => removeOption(option.optionid)}
-                    disabled={temp.options.length === 1}
+                    on:click={() => removeOption(option.index, option.id)}
+                    disabled={newPoll.options.length === 1}
                   >
                     <FaIcon
                       type="regular"
@@ -157,7 +140,7 @@
                     type="text"
                     id="title"
                     class="bg-gray-50 my-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    bind:value={option.option_title}
+                    bind:value={option.title}
                     required
                   />
                 </div>
@@ -186,7 +169,7 @@
               <button
                 type="button"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                on:click={() => confirmupdate()}>Confirm</button
+                on:click={() => submitUpdate()}>Confirm</button
               >
             </div>
           </form>

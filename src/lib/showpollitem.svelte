@@ -69,7 +69,7 @@
     {#each poll.options as option (Number(option.id))}
       <div
         animate:flip={{
-          duration: () => 750 * Math.sqrt(Number(option.id)),
+          duration: 1000,
         }}
       >
         <ShowPollOption bind:poll bind:option />
