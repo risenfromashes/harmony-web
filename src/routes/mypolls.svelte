@@ -33,7 +33,7 @@
   const handleEvent = (e: CustomEvent) => {
     const event: PollEvent = e.detail;
 
-    if (event.group_id != $current_group.id) {
+    if ($current_group == undefined || event.group_id != $current_group.id) {
       return;
     }
 
