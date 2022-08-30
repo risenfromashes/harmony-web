@@ -6,6 +6,7 @@
   import type { Group } from "./data/groups";
   import { getGroups, loadGroups } from "./data/groups";
   import { groups } from "./stores/groups";
+  import Loader from "../lib/loader.svelte";
 
   let load_groups = loadGroups();
 
@@ -32,7 +33,7 @@
 </script>
 
 {#await load_groups}
-  <p class="mx-auto my-auto">loading...</p>
+  <Loader />
 {:then}
   <!-- card showing v2 -->
   <div class="py-10">

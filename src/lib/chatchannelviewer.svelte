@@ -12,6 +12,7 @@
   import About from "../routes/about.svelte";
   import { onMount, onDestroy, afterUpdate } from "svelte";
   import { notifyTarget } from "./events/notifytarget";
+  import Loader from "../lib/loader.svelte";
 
   const location = useLocation();
 
@@ -84,7 +85,7 @@
 <div class="h-full w-full">
   <!-- Chat Viewer -->
   {#await loadPromise}
-    <p class="mx-auto mt-2">Loading...</p>
+    <Loader />
   {:then}
     <div
       bind:this={chatScroll}
