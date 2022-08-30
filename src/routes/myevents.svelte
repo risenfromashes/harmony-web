@@ -2,206 +2,112 @@
   import EventItem from "../lib/eventitem.svelte";
   import Drawer from "../lib/drawer.svelte";
   import FaIcon from "../lib/faIcon.svelte";
+  import { dateStringToJSDate, type Event } from "../lib/data/event";
+  import { datetimeStringToJSDate } from "../lib/data/event";
+
   let current_time = new Date();
 
   console.log(current_time);
-  //declare an array of 10 objects with title, start time (js date time format), end time (js date time format), description
-  //Remember, January is 0, not 1
-  let events = [
+
+  let events: Array<Event> = [
     {
-      title: "CSE216 Project Evaluation 2",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 3,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 10, 14, 0),
-      description:
-        "This is the second evaluation for the database project. In this assessment, you are expected to show significant improvement over what you showed three weeks back, else you will be disqualified. So, we expect that you will be able to show significant improvement over the previous evaluation.",
+      id: 1,
+      title: "Event 1",
+      time: "13:59",
+      date: "2022-09-01",
+      description: "This is event 1",
     },
     {
-      title: "CSE215 Class Test 2",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 3,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 10, 8, 15),
-      description:
-        "The third and last class test of the database course is here. Syllabus: First four slides.",
+      id: 2,
+      title: "Event 2",
+      time: "13:59",
+      date: "2022-09-05",
+      description: "This is event 2",
     },
     {
-      title: "EEE269 Class Test 3",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 5,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 20, 10, 0),
-      description:
-        "Syllabus: DC and Induction Motor. Study hard, or else EEE will make you suffer.",
+      id: 3,
+      title: "Event 3",
+      time: "13:59",
+      date: "2022-09-10",
+      description: "This is event 3",
     },
     {
-      title: "CSE216 Lab Quiz",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 7,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 17, 14, 30),
-      description: "The mighty lab quiz of CSE216 is here.",
+      id: 4,
+      title: "Event 4",
+      time: "13:59",
+      date: "2022-09-10",
+      description: "This is event 4",
     },
     {
-      title: "MATH245 Class Test 4",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 7,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 14, 11, 0),
-      description:
-        "Class Test on Laplace Analysis, everything that Nilufar Madam has covered until now.",
+      id: 5,
+      title: "Event 5",
+      time: "13:59",
+      date: "2022-09-10",
+      description: "This is event 5",
     },
     {
-      title: "MATH245 Class Test 5",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 7,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 21, 11, 0),
-      description:
-        "Class Test on Fourier Analysis, everything that Eliyas Sir has covered until now.",
+      id: 6,
+      title: "Event 6",
+      time: "13:59",
+      date: "2022-09-10",
+      description: "This is event 6",
     },
     {
-      title: "CSE207 Class Test 4",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 7,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 13, 8, 0),
-      description: "Syllabus: Splay Tree, Hashtable.",
-    },
-    {
-      title: "CSE211 Class Test 4",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 8,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 17, 8, 0),
-      description: "Syllabus: Turing Machine",
-    },
-    {
-      title: "CSE208 Online Evaluation",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 8,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 17, 11, 0),
-      description: "Online on NP-complete problems.",
-    },
-    {
-      title: "CSE208 Offline Assignment",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 8,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 24, 11, 0),
-      description: "Offline on Branching and Approximation Algorithms.",
-    },
-    {
-      title: "CSE216 Final Project Evaluation",
-      start_time: new Date(
-        current_time.getFullYear(),
-        current_time.getMonth(),
-        current_time.getDate(),
-        current_time.getHours() + 3,
-        current_time.getMinutes()
-      ),
-      end_time: new Date(2022, 7, 10, 31, 0),
-      description: "The final and grand evaluation of the Database Project.",
+      id: 7,
+      title: "Event 7",
+      time: "13:59",
+      date: "2022-09-10",
+      description: "This is event 7",
     },
   ];
 
   //sort the events based on end time, and then start time
   events.sort((a, b) => {
-    if (a.end_time > b.end_time) {
+    let aDate = datetimeStringToJSDate(a.date, a.time);
+    let bDate = datetimeStringToJSDate(b.date, b.time);
+    if (aDate > bDate) {
       return 1;
-    } else if (a.end_time < b.end_time) {
+    } else if (aDate < bDate) {
       return -1;
     } else {
-      if (a.start_time > b.start_time) {
-        return 1;
-      } else if (a.start_time < b.start_time) {
-        return -1;
-      } else {
-        return 0;
-      }
+      return 0;
     }
   });
 
-  let showable_events = events;
+  let showable_events: Array<Event> = events;
 
-  //write a function to convert a string (YYYY-MM-DD) to a Date object
-  function stringToDate(date_string, h, m) {
-    let date_array = date_string.split("-");
-    return new Date(date_array[0], date_array[1] - 1, date_array[2], h, m);
-  }
+  let search_start_date = "";
+  let search_end_date = "";
 
   function search() {
-    if (start_date != "" && end_date != "") {
-      //filter events based on whether they are in the range of start_date and end_date
-      // console.log(start_date, stringToDate(start_date, 0, 0));
-      // console.log(end_date, stringToDate(end_date, 23, 59));
+    if (search_start_date != "" && search_end_date != "") {
       showable_events = events.filter((event) => {
         return (
-          event.end_time >= stringToDate(start_date, 0, 0) &&
-          event.end_time <= stringToDate(end_date, 23, 59)
+          dateStringToJSDate(event.date) >=
+            datetimeStringToJSDate(search_start_date, "0:0") &&
+          dateStringToJSDate(event.date) <=
+            datetimeStringToJSDate(search_end_date, "23:59")
         );
       });
     } else showable_events = events;
   }
 
-  let start_date = "";
-  let end_date = "";
-
   // $: if (start_date) console.log(start_date);
   let draweropen: boolean = false;
 
-  let new_event_title: string = "";
-  let new_event_description: string = "";
-  let new_event_time: string = "";
-  let new_event_date: string = "";
+  let newEvent: Event = {
+    id: 0,
+    title: "",
+    time: "",
+    date: "",
+    description: "",
+  };
   $: {
     console.log(
-      new_event_title,
-      new_event_description,
-      new_event_date,
-      new_event_time
+      newEvent.title,
+      newEvent.description,
+      newEvent.time,
+      newEvent.date
     );
   }
 </script>
@@ -223,7 +129,7 @@
           name="start"
           type="date"
           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-Roboto"
-          bind:value={start_date}
+          bind:value={search_start_date}
           placeholder="Select date start"
         />
       </div>
@@ -236,7 +142,7 @@
           name="end"
           type="date"
           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-Roboto"
-          bind:value={end_date}
+          bind:value={search_end_date}
           placeholder="Select date end"
         />
       </div>
@@ -250,8 +156,8 @@
       type="button"
       class="text-white bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-1/10"
       on:click={() => {
-        start_date = "";
-        end_date = "";
+        search_start_date = "";
+        search_end_date = "";
         showable_events = events;
       }}>Reset</button
     >
@@ -270,7 +176,7 @@
   <div class="flex place-content-left">
     <ol class="relative border-l border-gray-200 dark:border-gray-700 w-full">
       {#each showable_events as e}
-        <EventItem event={e} {current_time} />
+        <EventItem event={e} />
       {/each}
     </ol>
   </div>
@@ -295,7 +201,7 @@
           /></svg
         >New Event
       </h5>
-      <div class="mb-12">
+      <div class="mb-6">
         <label
           for="title"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -307,7 +213,7 @@
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Event Headline"
           required
-          bind:value={new_event_title}
+          bind:value={newEvent.title}
         />
       </div>
       <div class="mb-6">
@@ -322,7 +228,7 @@
           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Write event description..."
           required
-          bind:value={new_event_description}
+          bind:value={newEvent.description}
         />
       </div>
       <div class="relative mb-6">
@@ -334,7 +240,7 @@
           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"
           placeholder="Select date"
           required
-          bind:value={new_event_date}
+          bind:value={newEvent.date}
         />
         <input
           type="time"
@@ -342,7 +248,7 @@
           name="appt"
           class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"
           required
-          bind:value={new_event_time}
+          bind:value={newEvent.time}
         />
       </div>
       <button
@@ -351,10 +257,6 @@
         on:click|stopPropagation={() => {
           // do stuffs
           draweropen = false;
-          new_event_date = "";
-          new_event_time = "";
-          new_event_title = "";
-          new_event_description = "";
         }}
         ><svg
           class="w-5 h-5 mr-2"
