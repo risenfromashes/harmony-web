@@ -169,6 +169,10 @@
   };
 </script>
 
+<svelte:head>
+  <title>Group Settings</title>
+</svelte:head>
+
 <svelte:window
   on:click={() => {
     name_input_clicked = false;

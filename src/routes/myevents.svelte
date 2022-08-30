@@ -206,6 +206,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Events</title>
+</svelte:head>
+
 <svelte:window on:click|stopPropagation={() => (draweropen = false)} />
 
 <div class="bg-slate-900 py-5 pl-10 min-h-screen">

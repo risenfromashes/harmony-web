@@ -84,6 +84,10 @@
   let showtooltip: boolean = false;
 </script>
 
+<svelte:head>
+  <title>Register</title>
+</svelte:head>
+
 <div class="bg-slate-900">
   <form class="w-1/3 mx-auto pt-40" on:submit|preventDefault={submit}>
     <div class="grid gap-6 mb-6 md:grid-cols-2">

@@ -9,6 +9,10 @@
   loadGroups();
 </script>
 
+<svelte:head>
+  <title>Chats</title>
+</svelte:head>
+
 <div class="pt-5 w-full h-full flex overflow-hidden">
   <!-- Chat -->
   <Chatchannelviewer />

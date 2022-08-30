@@ -90,6 +90,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>My Groups</title>
+</svelte:head>
+
 <svelte:window on:click|stopPropagation={() => (draweropen = false)} />
 
 <div class="bg-slate-900 py-10 mt-10">

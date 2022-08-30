@@ -110,6 +110,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Polls</title>
+</svelte:head>
+
 <svelte:window on:click|stopPropagation={() => (draweropen = false)} />
 
 <div class="bg-slate-900 min-h-screen">

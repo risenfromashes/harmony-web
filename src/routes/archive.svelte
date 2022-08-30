@@ -180,6 +180,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Archive</title>
+</svelte:head>
+
 <div class="bg-slate-900 py-5 min-h-screen">
   <Router>
     <div class="bg-slate-900 pl-10 pr-3">

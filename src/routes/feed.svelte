@@ -27,6 +27,11 @@
   import { uploadImage } from "../lib/data/image";
   import { onDestroy, onMount } from "svelte";
   import { notifyTarget } from "../lib/events/notifytarget";
+  import { tabs, selected_tab } from "../lib/stores/tab";
+
+  if ($selected_tab != tabs[0]) {
+    $selected_tab = tabs[0];
+  }
 
   let showEditor = false;
   let showGroupDropdown = false;
@@ -146,7 +151,7 @@
 </script>
 
 <svelte:head>
-  <title>Showing Posts</title>
+  <title>Feed</title>
 </svelte:head>
 
 <div

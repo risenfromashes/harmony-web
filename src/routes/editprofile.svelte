@@ -135,6 +135,10 @@
   };
 </script>
 
+<svelte:head>
+  <title>Edit Profile</title>
+</svelte:head>
+
 {#await loadPromise}
   <Loader />
 {:then}

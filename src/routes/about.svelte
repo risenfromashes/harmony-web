@@ -7,6 +7,10 @@
 
 <!-- //this is without using flowbite-svelte -->
 
+<svelte:head>
+  <title>About Us</title>
+</svelte:head>
+
 <svelte:window on:click|stopPropagation={() => (draweropen = false)} />
 
 <!-- 
