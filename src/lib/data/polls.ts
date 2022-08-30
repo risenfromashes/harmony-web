@@ -46,6 +46,7 @@ export interface UpdatePoll {
 export interface PollEvent {
   op: "add" | "delete" | "update";
   id: string;
+  group_id: string;
   poll?: Poll;
 }
 

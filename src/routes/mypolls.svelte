@@ -32,6 +32,11 @@
 
   const handleEvent = (e: CustomEvent) => {
     const event: PollEvent = e.detail;
+
+    if (event.group_id != $current_group.id) {
+      return;
+    }
+
     if (event.op === "add") {
       polls = [event.poll, ...polls];
     } else if (event.op === "delete") {
