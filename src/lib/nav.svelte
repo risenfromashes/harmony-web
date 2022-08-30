@@ -20,7 +20,11 @@
       class="mr-3 h-6 sm:h-9"
       alt="Harmony Logo"
     /> -->
-    <img src="/assets/harmony-logo.svg" class="mr-3 sm:h-12" alt="Harmony Logo" />
+    <img
+      src="/assets/harmony-logo.svg"
+      class="mr-3 h-8 sm:h-16"
+      alt="Harmony Logo"
+    />
     <span
       class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
       >Harmony</span
