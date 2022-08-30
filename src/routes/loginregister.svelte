@@ -141,7 +141,7 @@
             <button
               type="button"
               href="/register"
-              class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-5 hover:cursor-pointer align-middle"
+              class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer align-middle"
               on:click={changeState}
             >
               <svg
@@ -330,18 +330,22 @@
           <!-- if matched then show text in green, else in red -->
           {#if reg.password != "" && other_pass != ""}
             {#if matched}
-              <p class="mt-2 text-sm text-green-600 dark:text-green-500 mb-2">
+              <p
+                class="mt-2 w-10/12 text-sm text-green-600 dark:text-green-500 mb-2 text-right"
+              >
                 <span class="font-medium font-OpenSans">Passwords match</span>
               </p>
             {:else}
-              <p class="mt-2 text-sm text-red-600 dark:text-red-500 mb-2">
+              <p
+                class="mt-2 w-10/12 text-sm text-red-600 dark:text-red-500 mb-2 text-right"
+              >
                 <span class="font-medium font-OpenSans"
                   >Passwords do not match</span
                 >
               </p>
             {/if}
           {/if}
-          <div class="flex items-start mb-6">
+          <div class="flex w-10/12 items-start mb-6">
             <div class="flex items-center h-5">
               <input
                 id="remember"
@@ -358,7 +362,7 @@
             >
           </div>
 
-          <div class="w-10/12 flex justify-center">
+          <div class="w-full flex justify-end pr-4">
             <button
               type="submit"
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium font-OpenSans rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
