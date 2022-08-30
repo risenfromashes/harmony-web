@@ -15,11 +15,12 @@
   class="dark:bg-gray-900 flex items-center justify-between w-full py-3 px-4 sm:px-8 fixed z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-800"
 >
   <a href="https://www.harmony-open.com/" class="flex items-center z-50">
-    <img
+    <!-- <img
       src="https://flowbite.com/docs/images/logo.svg"
       class="mr-3 h-6 sm:h-9"
       alt="Harmony Logo"
-    />
+    /> -->
+    <img src="/assets/harmony-logo.svg" class="mr-3 sm:h-12" alt="Harmony Logo" />
     <span
       class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
       >Harmony</span
