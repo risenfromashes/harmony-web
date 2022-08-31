@@ -36,10 +36,10 @@
         <About />
       </Route>
       <Route path="/login">
-        <Login />
+        <Loginregister pageStateLogin={true} />
       </Route>
       <Route path="/register">
-        <Register />
+        <Loginregister pageStateLogin={false} />
       </Route>
       <Route path="/editprofile">
         <EditProfile />

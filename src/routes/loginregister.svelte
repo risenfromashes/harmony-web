@@ -81,7 +81,7 @@
     }
   };
 
-  let pageStateLogin = true;
+  export let pageStateLogin = true;
 
   function changeState() {
     pageStateLogin = !pageStateLogin;
