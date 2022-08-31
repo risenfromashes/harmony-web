@@ -2,69 +2,45 @@
   import EventItem from "../lib/eventitem.svelte";
   import Drawer from "../lib/drawer.svelte";
   import FaIcon from "../lib/faIcon.svelte";
-  import { dateStringToJSDate, type Event } from "../lib/data/event";
-  import { datetimeStringToJSDate } from "../lib/data/event";
+  import {
+    addEvent,
+    getEvents,
+    type Event,
+    type SendEvent,
+  } from "../lib/data/event";
+  import { datetimeStringToJSDate } from "../lib/data/dateutils";
+  import { current_group } from "../lib/stores/groups";
+  import Loader from "../lib/loader.svelte";
+  import id from "date-fns/locale/id";
 
   let current_time = new Date();
 
   console.log(current_time);
 
-  let events: Array<Event> = [
-    {
-      id: 1,
-      title: "Event 1",
-      time: "13:59",
-      date: "2022-09-01",
-      description: "This is event 1",
-    },
-    {
-      id: 2,
-      title: "Event 2",
-      time: "13:59",
-      date: "2022-09-05",
-      description: "This is event 2",
-    },
-    {
-      id: 3,
-      title: "Event 3",
-      time: "13:59",
-      date: "2022-09-10",
-      description: "This is event 3",
-    },
-    {
-      id: 4,
-      title: "Event 4",
-      time: "13:59",
-      date: "2022-09-10",
-      description: "This is event 4",
-    },
-    {
-      id: 5,
-      title: "Event 5",
-      time: "13:59",
-      date: "2022-09-10",
-      description: "This is event 5",
-    },
-    {
-      id: 6,
-      title: "Event 6",
-      time: "13:59",
-      date: "2022-09-10",
-      description: "This is event 6",
-    },
-    {
-      id: 7,
-      title: "Event 7",
-      time: "13:59",
-      date: "2022-09-10",
-      description: "This is event 7",
-    },
-  ];
+  let events: Event[] = [];
+
+  const load = async (gid: string) => {
+    try {
+      events = await getEvents(gid);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  let loadPromise;
+  $: if ($current_group) {
+    loadPromise = load($current_group.id);
+  }
+
+  let date: string = "";
+  let time: string = "";
+
+  $: newEvent.time = datetimeStringToJSDate(date, time).toUTCString();
 
   //sort the events based on end time, and then start time
   events.sort((a, b) => {
-    let aDate = datetimeStringToJSDate(a.date, a.time);
-    let bDate = datetimeStringToJSDate(b.date, b.time);
+    let aDate = new Date(a.time);
+    let bDate = new Date(b.time);
     if (aDate > bDate) {
       return 1;
     } else if (aDate < bDate) {
@@ -82,11 +58,10 @@
   function search() {
     if (search_start_date != "" && search_end_date != "") {
       showable_events = events.filter((event) => {
+        let date = new Date(event.time);
         return (
-          dateStringToJSDate(event.date) >=
-            datetimeStringToJSDate(search_start_date, "0:0") &&
-          dateStringToJSDate(event.date) <=
-            datetimeStringToJSDate(search_end_date, "23:59")
+          date >= datetimeStringToJSDate(search_start_date, "0:0") &&
+          date <= datetimeStringToJSDate(search_end_date, "23:59")
         );
       });
     } else showable_events = events;
@@ -95,21 +70,34 @@
   // $: if (start_date) console.log(start_date);
   let draweropen: boolean = false;
 
-  let newEvent: Event = {
-    id: 0,
+  const emptyEvent: SendEvent = {
     title: "",
     time: "",
-    date: "",
     description: "",
   };
+
+  let newEvent = structuredClone(emptyEvent);
+
   $: {
-    console.log(
-      newEvent.title,
-      newEvent.description,
-      newEvent.time,
-      newEvent.date
-    );
+    console.log(newEvent.title, newEvent.description, newEvent.time);
   }
+
+  const handleNewEvent = async () => {
+    try {
+      if ($current_group) {
+        let event_id = await addEvent(newEvent, $current_group.id);
+        if (event_id != "-1") {
+          let event: Event = newEvent as Event;
+          event.id = event_id;
+          events = [event, ...events];
+          draweropen = false;
+          newEvent = structuredClone(emptyEvent);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 </script>
 
 <svelte:head>
@@ -173,13 +161,21 @@
     </button>
   </div>
 
-  <div class="flex place-content-left">
-    <ol class="relative border-l border-gray-200 dark:border-gray-700 w-full">
-      {#each showable_events as e}
-        <EventItem event={e} />
-      {/each}
-    </ol>
-  </div>
+  {#if loadPromise}
+    {#await loadPromise}
+      <Loader />
+    {:then}
+      <div class="flex place-content-left">
+        <ol
+          class="relative border-l border-gray-200 dark:border-gray-700 w-full"
+        >
+          {#each showable_events as e (e.id)}
+            <EventItem event={e} />
+          {/each}
+        </ol>
+      </div>
+    {/await}
+  {/if}
 
   <Drawer transition_axis="-x" bind:open={draweropen}>
     <!-- drawer component -->
@@ -240,7 +236,7 @@
           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"
           placeholder="Select date"
           required
-          bind:value={newEvent.date}
+          bind:value={date}
         />
         <input
           type="time"
@@ -248,7 +244,7 @@
           name="appt"
           class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"
           required
-          bind:value={newEvent.time}
+          bind:value={time}
         />
       </div>
       <button
@@ -256,7 +252,7 @@
         class="text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         on:click|stopPropagation={() => {
           // do stuffs
-          draweropen = false;
+          handleNewEvent();
         }}
         ><svg
           class="w-5 h-5 mr-2"

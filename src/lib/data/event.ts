@@ -1,89 +1,110 @@
-export interface Event {
-  id: number;
+import { navigate } from "svelte-navigator";
+import { current_user } from "../stores/user";
+
+export interface SendEvent {
   title: string;
   description: string;
   time: string;
-  date: string;
 }
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-//write a function to convert date time string to JS date object
-export function dateStringToJSDate(date: string): Date {
-  let dateArray = date.split("-");
-  let ret = new Date(+dateArray[0], +dateArray[1] - 1, +dateArray[2]);
-  console.log(date, ret);
-  return ret;
+export interface Event extends SendEvent {
+  id: string;
 }
 
-export function datetimeStringToJSDate(date: string, time: string): Date {
-  let dateArray = date.split("-");
-  let timeArray = time.split(":");
-  let ret = new Date(
-    +dateArray[0],
-    +dateArray[1] - 1,
-    +dateArray[2],
-    +timeArray[0],
-    +timeArray[1]
-  );
-  console.log(date, time, ret);
-  return ret;
-}
-
-export function remainingDays(date: Date): number {
-  let diff = date.getTime() - new Date().getTime();
-  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  return days;
-}
-
-// return something like 11:59 PM
-export function getTimeString(date: Date): string {
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let h: string;
-  let m: string;
-  let ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12;
-  h = hours ? hours.toString() : "12"; // the hour '0' should be '12'
-  m = minutes < 10 ? "0" + minutes.toString() : minutes.toString();
-  let strTime = h + ":" + m + " " + ampm;
-  return strTime;
-}
-
-export function getDateTimeString(date: Date): string {
-  let day = date.getDate();
-  let suff = "";
-  if (day >= 10 && day < 20) suff = "th";
-  else if (day % 10 == 1) {
-    suff = "st";
-  } else if (day % 10 == 2) {
-    suff = "nd";
-  } else if (day % 10 == 3) {
-    suff = "rd";
-  } else {
-    suff = "th";
+export const getEvents = async (gid: string) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
   }
-  return (
-    `${date.getDate()}` +
-    suff +
-    " " +
-    `${months[date.getMonth()]}` +
-    " " +
-    `${date.getFullYear()}` +
-    ", " +
-    getTimeString(date)
-  );
-}
+  let res = await fetch(`/get-events/${current_user.user_id}/${gid}`);
+
+  if (res.ok) {
+    let json = await res.json();
+    return json as Event[];
+  } else {
+    if (res.status == 401) {
+      navigate("/login");
+    } else {
+      throw new Error(res.status.toString());
+    }
+  }
+};
+
+export const addEvent = async (event: SendEvent, gid: string) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
+  }
+  let res = await fetch("/add-event", {
+    method: "POST",
+    body: JSON.stringify({
+      user_id: current_user.user_id,
+      group_id: gid,
+      event_title: event.title,
+      event_description: event.description,
+      event_time: event.time,
+    }),
+  });
+
+  if (res.ok) {
+    let json = await res.json();
+    return json.event_id;
+  } else {
+    if (res.status == 401) {
+      navigate("/login");
+    } else {
+      throw new Error(res.status.toString());
+    }
+  }
+};
+
+export const updateEvent = async (event: Event) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
+  }
+
+  let res = await fetch("/update-event", {
+    method: "POST",
+    body: JSON.stringify({
+      user_id: current_user.user_id,
+      event_id: event.id,
+      event_title: event.title,
+      event_description: event.description,
+      event_time: event.time,
+    }),
+  });
+
+  if (res.ok) {
+    let json = await res.json();
+    return json.success;
+  } else {
+    if (res.status == 401) {
+      navigate("/login");
+    } else {
+      throw new Error(res.status.toString());
+    }
+  }
+};
+
+export const removeEvent = async (eid: string) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
+  }
+
+  let res = await fetch("/remove-event", {
+    method: "POST",
+    body: JSON.stringify({
+      user_id: current_user.user_id,
+      event_id: eid,
+    }),
+  });
+
+  if (res.ok) {
+    let json = await res.json();
+    return json.success;
+  } else {
+    if (res.status == 401) {
+      navigate("/login");
+    } else {
+      throw new Error(res.status.toString());
+    }
+  }
+};
