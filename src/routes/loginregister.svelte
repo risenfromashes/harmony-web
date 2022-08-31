@@ -108,10 +108,11 @@
       <div class="h-full flex flex-col justify-center">
         <p class="text-8xl font-bold mb-8">Harmony</p>
         <p class="text-2xl w-[65rem]">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet non
-          iusto optio dicta hic, velit adipisci blanditiis mollitia eaque
-          debitis nobis ea? Omnis facilis dolor suscipit aspernatur molestiae
-          quo perspiciatis.
+          Harmony is a social network for students to collaborate each other. It
+          is a place where students can share their knowledge and experience and
+          also can discuss the topics that they are interested in. We expect
+          Harmony to be the hub of the students’ academic enthusiasm and
+          excellence.
         </p>
       </div>
     </div>
