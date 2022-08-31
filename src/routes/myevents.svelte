@@ -5,13 +5,14 @@
   import {
     addEvent,
     getEvents,
+    sortEvents,
     type Event,
     type SendEvent,
   } from "../lib/data/event";
   import { datetimeStringToJSDate } from "../lib/data/dateutils";
   import { current_group } from "../lib/stores/groups";
   import Loader from "../lib/loader.svelte";
-  import id from "date-fns/locale/id";
+  import { afterUpdate } from "svelte";
 
   let current_time = new Date();
 
@@ -22,15 +23,23 @@
   const load = async (gid: string) => {
     try {
       events = await getEvents(gid);
+      showable_events = sortEvents(events);
+      console.log(events);
     } catch (e) {
       console.log(e);
     }
   };
 
-  let loadPromise;
+  let loadPromise: Promise<void>;
   $: if ($current_group) {
     loadPromise = load($current_group.id);
   }
+
+  afterUpdate(() => {
+    showable_events = sortEvents(showable_events);
+  });
+
+  // afterUpdate();
 
   let date: string = "";
   let time: string = "";
@@ -38,24 +47,13 @@
   $: newEvent.time = datetimeStringToJSDate(date, time).toUTCString();
 
   //sort the events based on end time, and then start time
-  events.sort((a, b) => {
-    let aDate = new Date(a.time);
-    let bDate = new Date(b.time);
-    if (aDate > bDate) {
-      return 1;
-    } else if (aDate < bDate) {
-      return -1;
-    } else {
-      return 0;
-    }
-  });
 
   let showable_events: Array<Event> = events;
 
-  let search_start_date = "";
-  let search_end_date = "";
+  let search_start_date: string = "";
+  let search_end_date: string = "";
 
-  function search() {
+  const search = () => {
     if (search_start_date != "" && search_end_date != "") {
       showable_events = events.filter((event) => {
         let date = new Date(event.time);
@@ -65,7 +63,7 @@
         );
       });
     } else showable_events = events;
-  }
+  };
 
   // $: if (start_date) console.log(start_date);
   let draweropen: boolean = false;
@@ -79,7 +77,9 @@
   let newEvent = structuredClone(emptyEvent);
 
   $: {
-    console.log(newEvent.title, newEvent.description, newEvent.time);
+    // console.log(newEvent.title, newEvent.description, newEvent.time);
+    console.log(`date: ${date}`);
+    console.log(`time: ${time}`);
   }
 
   const handleNewEvent = async () => {
@@ -89,9 +89,10 @@
         if (event_id != "-1") {
           let event: Event = newEvent as Event;
           event.id = event_id;
-          events = [event, ...events];
           draweropen = false;
           newEvent = structuredClone(emptyEvent);
+          events = [...events, event];
+          showable_events = sortEvents(events);
         }
       }
     } catch (e) {
@@ -149,16 +150,18 @@
         showable_events = events;
       }}>Reset</button
     >
-    <button
-      class="h-14 w-14 fixed bottom-12 right-12 z-10 shadow-xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full lg:ml-40 ml-10 text-sm mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      type="button"
-      data-drawer-target="drawer-form"
-      data-drawer-show="drawer-form"
-      aria-controls="drawer-form"
-      on:click|stopPropagation={() => (draweropen = !draweropen)}
-    >
-      <FaIcon type="regular" icon="plus" className="text-xl" />
-    </button>
+    {#if $current_group && $current_group.access === "admin"}
+      <button
+        class="h-14 w-14 fixed bottom-12 right-12 z-10 shadow-xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full lg:ml-40 ml-10 text-sm mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        type="button"
+        data-drawer-target="drawer-form"
+        data-drawer-show="drawer-form"
+        aria-controls="drawer-form"
+        on:click|stopPropagation={() => (draweropen = !draweropen)}
+      >
+        <FaIcon type="regular" icon="plus" className="text-xl" />
+      </button>
+    {/if}
   </div>
 
   {#if loadPromise}
@@ -170,7 +173,7 @@
           class="relative border-l border-gray-200 dark:border-gray-700 w-full"
         >
           {#each showable_events as e (e.id)}
-            <EventItem event={e} />
+            <EventItem bind:event={e} />
           {/each}
         </ol>
       </div>

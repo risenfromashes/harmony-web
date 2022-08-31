@@ -10,7 +10,7 @@ export let tabs = [
   { name: "Feed", icon: "", link: "/home/feed" },
   { name: "Polls", icon: "", link: "/home/polls" },
   { name: "Events", icon: "", link: "/home/events" },
-  { name: "Archive", icon: "", link: "/home/archive" },
+  // { name: "Archive", icon: "", link: "/home/archive" },
   { name: "Chats", icon: "", link: "/home/chats" },
 ];
 

@@ -164,10 +164,7 @@
       {#each posts as post}
         <PostItem
           {post}
-          time={formatRelative(new Date(post.time), new Date()).replace(
-            "t",
-            "T"
-          )}
+          time={formatRelative(new Date(post.time), new Date())}
         />
       {/each}
     {/await}

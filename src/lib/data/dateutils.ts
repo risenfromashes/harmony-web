@@ -79,3 +79,21 @@ export function getDateTimeString(date: Date): string {
     getTimeString(date)
   );
 }
+
+
+export function getHTMLDateString(date: Date): string {
+  let year = date.getFullYear().toString();
+  let month = (date.getMonth() + 1).toString();
+  let day = date.getDate().toString();
+  if (day.length == 1) { day = '0' + day; }
+  if (month.length == 1) { month = '0' + month; }
+  return year + '-' + month + '-' + day;
+}
+
+export function getHTMLTimeString(date: Date): string {
+  let hour = date.getHours().toString();
+  let minute = date.getMinutes().toString();
+  if (hour.length == 1) { hour = '0' + hour; }
+  if (minute.length == 1) { minute = '0' + minute; }
+  return hour + ':' + minute;
+}

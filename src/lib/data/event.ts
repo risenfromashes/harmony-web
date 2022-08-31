@@ -108,3 +108,20 @@ export const removeEvent = async (eid: string) => {
     }
   }
 };
+
+
+export const sortEvents = (events: Event[]) => {
+  events.sort((a, b) => {
+    let aDate = new Date(a.time);
+    let bDate = new Date(b.time);
+    if (aDate > bDate) {
+      return 1;
+    } else if (aDate < bDate) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+  return events;
+};
+

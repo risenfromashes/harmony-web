@@ -2,8 +2,14 @@
   import FaIcon from "./faIcon.svelte";
   import Drawer from "../lib/drawer.svelte";
   import { removeEvent, updateEvent, type Event } from "../lib/data/event";
-  import { datetimeStringToJSDate, remainingDays } from "./data/dateutils";
+  import {
+    datetimeStringToJSDate,
+    getHTMLDateString,
+    getHTMLTimeString,
+    remainingDays,
+  } from "./data/dateutils";
   import { formatRelative } from "date-fns";
+  import { current_group } from "./stores/groups";
 
   export let event: Event;
 
@@ -11,8 +17,12 @@
 
   let show = true;
 
-  let date: string;
-  let time: string;
+  let jsDate = new Date(event.time);
+  let date: string = getHTMLDateString(jsDate);
+  let time: string = getHTMLTimeString(jsDate);
+
+  console.log(`date: ${date}`);
+  console.log(`time: ${time}`);
 
   $: newEvent.time = datetimeStringToJSDate(date, time).toUTCString();
   $: daysLeft = remainingDays(new Date(event.time));
@@ -47,7 +57,7 @@
 <svelte:window on:click|stopPropagation={() => (draweropen = false)} />
 
 {#if show}
-  <li class="mb-10 ml-6 dark:hover:bg-gray-800 rounded-lg p-3">
+  <li class="mb-10 ml-6 rounded-lg p-3">
     <span
       class="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900"
     >
@@ -69,23 +79,22 @@
           >This Week</span
         >
       {/if}
-      <button
-        class="h-10 w-10 absolute right-5 shadow-xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-base dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        type="button"
-        data-drawer-target="drawer-form"
-        data-drawer-show="drawer-form"
-        aria-controls="drawer-form"
-        on:click|stopPropagation={() => (draweropen = true)}
-      >
-        <FaIcon type="regular" icon="pencil" className="text-base" />
-      </button>
+      {#if $current_group && $current_group.access === "admin"}
+        <button
+          class="h-10 w-10 absolute right-5 shadow-xl text-white font-medium rounded-full text-base dark:hover:bg-slate-600"
+          type="button"
+          data-drawer-target="drawer-form"
+          data-drawer-show="drawer-form"
+          aria-controls="drawer-form"
+          on:click|stopPropagation={() => (draweropen = true)}
+        >
+          <FaIcon type="regular" icon="pencil" className="text-base" />
+        </button>
+      {/if}
     </h3>
     <time
       class="block mb-2 text-base leading-none text-gray-400 dark:text-gray-500"
-      >{formatRelative(new Date(event.time), new Date()).replace(
-        "t",
-        "T"
-      )}</time
+      >{formatRelative(new Date(event.time), new Date())}</time
     >
 
     <p class="mb-4 text-base font-Oxygen text-gray-500 dark:text-gray-400">
