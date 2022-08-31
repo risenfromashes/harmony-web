@@ -3,6 +3,7 @@
     addSubject,
     loadGroups,
     loadMembers,
+    removeGroup,
     removeSubject,
     updateGroup,
     updateMember,
@@ -42,6 +43,9 @@
 
       members = await loadMembers($current_group.id);
       users = await loadUserHandles();
+      users = users.filter(
+        (user) => members.findIndex((member) => user.id == member.id) == -1
+      );
     } catch (e) {
       console.log(e);
     }
@@ -198,6 +202,16 @@
       console.log(e);
     }
   };
+
+  const deleteGroup = async () => {
+    try {
+      if (await removeGroup($current_group.id)) {
+        navigate("/mygroups");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 </script>
 
 <svelte:head>
@@ -270,6 +284,7 @@
             data-modal-toggle="popup-modal"
             type="button"
             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+            on:click={deleteGroup}
           >
             Yes, I'm sure
           </button>

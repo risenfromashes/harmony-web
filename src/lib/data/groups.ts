@@ -197,3 +197,25 @@ export const removeSubject = async (gid: string, sid: string) => {
     throw new Error(res.status.toString());
   }
 };
+
+export const removeGroup = async (gid: string) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
+  }
+  let res = await fetch("/remove-group", {
+    method: "POST",
+    body: JSON.stringify({
+      user_id: current_user.user_id,
+      group_id: gid,
+    }),
+  });
+
+  if (res.ok) {
+    let ret = await res.json();
+    return ret.success;
+  } else if (res.status == 401) {
+    navigate("/login");
+  } else {
+    throw new Error(res.status.toString());
+  }
+};

@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { current_group, current_subject } from "./stores/groups";
+  import { current_group, current_subject, groups } from "./stores/groups";
   import { Router, Link, Route, navigate } from "svelte-navigator";
   import { tabs } from "./stores/tab";
-  import type { Group } from "./data/groups";
+  import { updateMember, type Group } from "./data/groups";
   import { selected_tab } from "./stores/tab";
   import GroupSettings from "../routes/groupsettings.svelte";
+  import { current_user } from "./stores/user";
   //declare an object with name, intro, institution, image_link, department, group_link and batch
   export let group: Group;
 
@@ -83,6 +84,17 @@
           <li>
             <div
               class="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white hover:cursor-pointer"
+              on:click={async () => {
+                try {
+                  if (
+                    await updateMember(current_user.user_id, group.id, false)
+                  ) {
+                    $groups = $groups.filter((g) => g.id != group.id);
+                  }
+                } catch (e) {
+                  console.log(e);
+                }
+              }}
             >
               Leave
             </div>
