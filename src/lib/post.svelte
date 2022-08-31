@@ -67,7 +67,7 @@
           {post.poster_name}
           <span class="ml-2 font-semibold text-sm text-slate-600">{time}</span>
         </h5>
-        <div class="flex flex-col flex-1">
+        <div class="flex flex-col flex-1 w-full">
           <div bind:this={postContent} />
         </div>
       </div>
