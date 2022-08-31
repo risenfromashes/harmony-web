@@ -124,4 +124,5 @@
   font-family: monospace;
   padding: 0.8rem !important;
   border-radius: 0.5rem !important;
+  white-space: pre-wrap;
 }
