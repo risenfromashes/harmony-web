@@ -55,11 +55,7 @@
   in:fly|local={{ duration: 400, x: 100, delay: 200 }}
 >
   <div class="flex w-full">
-    <div
-      class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-4 flex-shrink-0"
-    >
-      <Avatar dp={comment.poster_dp_link} name={comment.poster_name} />
-    </div>
+    <Avatar dp={comment.poster_dp_link} name={comment.poster_name} />
 
     <div class="p-2 w-full">
       <div class="flex flex-1 items-center justify-between">
