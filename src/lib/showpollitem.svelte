@@ -32,10 +32,10 @@
 {/if}
 
 <div class="my-5 p-5 bg-slate-800 rounded-lg" transition:slide|local>
-  <div class="flex justify-between">
-    <div>
+  <div class="grid grid-cols-10">
+    <div class="col-span-7">
       <p
-        class="text-4xl text-gray-500 dark:text-gray-400 font-Oxygen my-2 font-extrabold"
+        class="text-4xl text-gray-500 dark:text-gray-400 font-Oxygen my-2 font-extrabold truncate"
       >
         {poll.title}
       </p>
@@ -43,10 +43,10 @@
         {poll.total_vote} total votes
       </p>
     </div>
-    <div class="flex justify-end items-center">
+    <div class="flex justify-end items-center col-span-3 h-full">
       <button
         type="button"
-        class="text-white bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium transition-shadow rounded-lg text-sm px-5 py-2 text-center w-1/10 mx-2"
+        class="text-white bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium transition-shadow rounded-lg text-sm px-5 py-3 text-center w-1/10 mx-2"
         on:click={() => {
           showedit = true;
         }}
@@ -55,7 +55,7 @@
       </button>
       <button
         type="button"
-        class="text-white bg-red-700 dark:bg-red-600 hover:bg-red-800 dark:hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium transition-shadow rounded-lg text-sm px-5 py-2 text-center w-1/10 mx-2"
+        class="text-white bg-red-700 dark:bg-red-600 hover:bg-red-800 dark:hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium transition-shadow rounded-lg text-sm px-5 py-3 text-center w-1/10 mx-2"
         on:click={() => deletePoll(poll.id)}
       >
         <FaIcon icon="trash" />&nbsp;&nbsp;Delete Poll

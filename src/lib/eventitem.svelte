@@ -1,81 +1,22 @@
 <script lang="ts">
   import FaIcon from "./faIcon.svelte";
-  const month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  export let current_time: Date;
-  export let event: {
-    title: string;
-    start_time: Date;
-    end_time: Date;
-    description: string;
-  };
+  import Drawer from "../lib/drawer.svelte";
+  import type { Event } from "../lib/data/event";
+  import {
+    remainingDays,
+    datetimeStringToJSDate,
+    getDateTimeString,
+  } from "../lib/data/event";
 
-  let urgent: boolean;
+  export let event: Event;
 
-  if (
-    event.end_time.getTime() - current_time.getTime() <=
-    1000 * 60 * 60 * 24 * 2
-  ) {
-    urgent = true;
-  } else {
-    urgent = false;
-  }
+  $: daysLeft = remainingDays(datetimeStringToJSDate(event.date, event.time));
 
-  function remainingDays(date: Date) {
-    let diff = date.getTime() - current_time.getTime();
-    let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    return days;
-  }
-  let daysLeft = remainingDays(event.end_time);
-
-  //write a function that will take a JavaScript Date and will return something in the format like 11 August, 11:59 PM, converting time to AM, PM
-  function getTime(date: Date) {
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let h: string;
-    let m: string;
-    let ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12;
-    h = hours ? hours.toString() : "12"; // the hour '0' should be '12'
-    m = minutes < 10 ? "0" + minutes.toString() : minutes.toString();
-    let strTime = h + ":" + m + " " + ampm;
-    return strTime;
-  }
-  function getDateTimeString(date: Date) {
-    let day = date.getDate();
-    let suff = "";
-    if (day >= 10 && day < 20) suff = "th";
-    else if (day % 10 == 1) {
-      suff = "st";
-    } else if (day % 10 == 2) {
-      suff = "nd";
-    } else if (day % 10 == 3) {
-      suff = "rd";
-    } else {
-      suff = "th";
-    }
-    return (
-      `${date.getDate()}` +
-      suff +
-      " " +
-      `${month[date.getMonth()]}` +
-      ", " +
-      getTime(date)
-    );
-  }
+  let draweropen: boolean = false;
+  $: console.log(event.title, draweropen);
 </script>
+
+<svelte:window on:click|stopPropagation={() => (draweropen = false)} />
 
 <li class="mb-10 ml-6 dark:hover:bg-gray-800 rounded-lg p-3">
   <span
@@ -84,46 +25,151 @@
     <FaIcon type="regular" icon="calendar-check" />
   </span>
 
-  {#if daysLeft <= 1}
-    <h3
-      class="flex items-center mb-1 text-xl font-semibold text-gray-900 dark:text-white font-JosefinSans"
-    >
-      {event.title}
+  <h3
+    class="flex items-center mb-1 text-xl font-semibold text-gray-900 dark:text-white font-JosefinSans"
+  >
+    {event.title}
+    {#if daysLeft <= 2}
       <span
         class="bg-red-100 text-red-800 font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-300 dark:text-red-900 ml-3"
         >Approaching</span
       >
-    </h3>
-    <time
-      class="block mb-2 text-base leading-none text-gray-400 dark:text-gray-500"
-      >{getDateTimeString(event.end_time)}</time
-    >
-  {:else if daysLeft <= 7}
-    <h3
-      class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white font-JosefinSans"
-    >
-      {event.title}
+    {:else if daysLeft <= 7}
       <span
         class="bg-green-100 text-green-800 font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-300 dark:text-green-900 ml-3"
         >This Week</span
       >
-    </h3>
-    <time
-      class="block mb-2 text-base leading-none text-gray-400 dark:text-gray-500"
-      >{getDateTimeString(event.end_time)}</time
+    {/if}
+    <button
+      class="h-10 w-10 absolute right-5 shadow-xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-base dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      type="button"
+      data-drawer-target="drawer-form"
+      data-drawer-show="drawer-form"
+      aria-controls="drawer-form"
+      on:click|stopPropagation={() => (draweropen = true)}
     >
-  {:else}
-    <h3
-      class="flex items-center mb-1 text-base font-semibold text-gray-900 dark:text-white font-JosefinSans"
-    >
-      {event.title}
-    </h3>
-    <time
-      class="block mb-2 text-base leading-none text-gray-400 dark:text-gray-500"
-      >{getDateTimeString(event.end_time)}</time
-    >
-  {/if}
+      <FaIcon type="regular" icon="pencil" className="text-base" />
+    </button>
+  </h3>
+  <time
+    class="block mb-2 text-base leading-none text-gray-400 dark:text-gray-500"
+    >{getDateTimeString(datetimeStringToJSDate(event.date, event.time))}</time
+  >
+
   <p class="mb-4 text-base font-Oxygen text-gray-500 dark:text-gray-400">
     {event.description}
   </p>
 </li>
+
+<Drawer transition_axis="-x" bind:open={draweropen}>
+  <!-- drawer component -->
+  <div slot="body">
+    <h5
+      id="drawer-label"
+      class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400"
+    >
+      <svg
+        class="w-5 h-5 mr-2"
+        aria-hidden="true"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+        ><path
+          fill-rule="evenodd"
+          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+          clip-rule="evenodd"
+        /></svg
+      >Edit Event
+    </h5>
+    <div class="mb-6">
+      <label
+        for="title"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >Title</label
+      >
+      <input
+        type="text"
+        id="title"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Event Headline"
+        required
+        bind:value={event.title}
+      />
+    </div>
+    <div class="mb-6">
+      <label
+        for="description"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+        >Description</label
+      >
+      <textarea
+        id="description"
+        rows="4"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Write event description..."
+        required
+        bind:value={event.description}
+      />
+    </div>
+    <div class="relative mb-6">
+      <div
+        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+      />
+      <input
+        type="date"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"
+        placeholder="Select date"
+        required
+        bind:value={event.date}
+      />
+      <input
+        type="time"
+        id="appt"
+        name="appt"
+        class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"
+        required
+        bind:value={event.time}
+      />
+    </div>
+    <button
+      type="submit"
+      class="text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full"
+      on:click|stopPropagation={() => {
+        // do stuffs
+        draweropen = false;
+      }}
+      ><svg
+        class="w-5 h-5 mr-2"
+        aria-hidden="true"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+        ><path
+          fill-rule="evenodd"
+          d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+          clip-rule="evenodd"
+        /></svg
+      > Update Event</button
+    >
+    <button
+      type="submit"
+      class="text-white justify-center flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 w-full"
+      on:click|stopPropagation={() => {
+        // do stuffs
+        draweropen = false;
+      }}
+      ><svg
+        class="w-5 h-5 mr-2"
+        aria-hidden="true"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+        ><path
+          fill-rule="evenodd"
+          d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+          clip-rule="evenodd"
+        /></svg
+      > Delete Event</button
+    >
+  </div>
+</Drawer>
