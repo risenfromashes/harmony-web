@@ -68,18 +68,18 @@
               Group Chat
             </div>
           </li>
-          <li>
-            <div
-              class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white hover:cursor-pointer"
-              on:click={() => {
-                $current_group = group;
-                $current_subject = $current_group.subjects[0];
-                navigate("/groupsettings");
-              }}
-            >
-              Group Settings
-            </div>
-          </li>
+          {#if group.access === "admin"}
+            <li>
+              <div
+                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white hover:cursor-pointer"
+                on:click={() => {
+                  navigate(`/groupsettings/${group.id}`);
+                }}
+              >
+                Group Settings
+              </div>
+            </li>
+          {/if}
           <li>
             <div
               class="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white hover:cursor-pointer"
@@ -93,11 +93,15 @@
   </div>
   <div class="flex flex-col items-center px-5 pb-0">
     <!-- svelte-ignore a11y-img-redundant-alt -->
-    <img
-      class="mb-3 w-24 h-24 rounded-full shadow-lg"
-      src={group.image_link}
-      alt="Group Photo"
-    />
+    {#if group.image_link != null}
+      <img
+        class="mb-3 w-24 h-24 rounded-full shadow-lg"
+        src={group.image_link}
+        alt="Group Photo"
+      />
+    {:else}
+      <div class="mb-3 w-24 h-24 bg-slate-600 rounded-full shadow-lg" />
+    {/if}
     <h5
       class="mb-1 text-xl font-medium text-gray-900 dark:text-white font-JosefinSans"
     >

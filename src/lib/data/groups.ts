@@ -12,9 +12,10 @@ export interface Subject {
 export interface Group {
   id: string;
   name: string;
+  access: "member" | "admin";
   intro: string;
+  image_id: string;
   image_link: string;
-  group_link: string;
   subjects: Subject[];
 }
 
@@ -27,22 +28,7 @@ export const getGroups = async () => {
 
   if (res.ok) {
     console.log("received groups");
-    let body = await res.json();
-    let new_groups: Group[] = [];
-    for (let group of body) {
-      let g: Group = {
-        id: group.group_id,
-        name: group.group_name,
-        intro: group.intro,
-        image_link: `https://source.unsplash.com/random/${group.group_id}`,
-        group_link: "",
-        subjects: group.subjects.map((s) => ({
-          id: s.subject_id,
-          name: s.subject_name,
-        })),
-      };
-      new_groups.push(g);
-    }
+    let new_groups: Group[] = await res.json();
     groups.update(() => new_groups);
 
     if (new_groups.length > 0) {
@@ -51,7 +37,6 @@ export const getGroups = async () => {
         current_subject.update(() => new_groups[0].subjects[0]);
       }
     }
-    console.log("here");
   } else {
     if (res.status === 401) {
       throw new Error("Unauthorized");
@@ -98,5 +83,117 @@ export let addGroup = async (
     navigate("/login");
   } else {
     throw new Error(res.statusText);
+  }
+};
+
+export let updateGroup = async (
+  gid: string,
+  name: string,
+  intro: string,
+  photo_id: string
+) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
+  }
+  let res = await fetch("/update-group", {
+    method: "POST",
+    body: JSON.stringify({
+      user_id: current_user.user_id,
+      group_id: gid,
+      name: name,
+      intro: intro,
+      photo_id: photo_id,
+    }),
+  });
+
+  if (res.ok) {
+    let ret = await res.json();
+    return ret.success;
+  } else if (res.status == 401) {
+    navigate("/login");
+  } else {
+    throw new Error(res.status.toString());
+  }
+};
+
+export const loadMembers = async (gid: string): Promise<UserHandle[]> => {
+  let res = await fetch(`/members/${current_user.user_id}/${gid}`);
+  if (res.ok) {
+    let body = await res.json();
+    return body as UserHandle[];
+  } else if (res.status == 401) {
+    navigate("/login");
+  } else {
+    throw new Error(res.status.toString());
+  }
+};
+
+export const updateMember = async (mid: string, gid: string, add: boolean) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
+  }
+  let res = await fetch("/update-member", {
+    method: "POST",
+    body: JSON.stringify({
+      user_id: current_user.user_id,
+      member_id: mid,
+      group_id: gid,
+      add: add ? "t" : "f",
+    }),
+  });
+
+  if (res.ok) {
+    let ret = await res.json();
+    return ret.success;
+  } else if (res.status == 401) {
+    navigate("/login");
+  } else {
+    throw new Error(res.status.toString());
+  }
+};
+
+export const addSubject = async (gid: string, name: string) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
+  }
+  let res = await fetch("/add-subject", {
+    method: "POST",
+    body: JSON.stringify({
+      user_id: current_user.user_id,
+      group_id: gid,
+      name: name,
+    }),
+  });
+
+  if (res.ok) {
+    let ret = await res.json();
+    return ret.subject_id;
+  } else if (res.status == 401) {
+    navigate("/login");
+  } else {
+    throw new Error(res.status.toString());
+  }
+};
+
+export const removeSubject = async (gid: string, sid: string) => {
+  if (!current_user.loggedIn) {
+    navigate("/");
+  }
+  let res = await fetch("/remove-subject", {
+    method: "POST",
+    body: JSON.stringify({
+      user_id: current_user.user_id,
+      subject_id: sid,
+      group_id: gid,
+    }),
+  });
+
+  if (res.ok) {
+    let ret = await res.json();
+    return ret.success;
+  } else if (res.status == 401) {
+    navigate("/login");
+  } else {
+    throw new Error(res.status.toString());
   }
 };

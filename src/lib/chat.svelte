@@ -13,11 +13,7 @@
   in:scale|local={{ duration: 300 }}
 >
   <div class="flex mb-4">
-    <div
-      class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-4 flex-shrink-0"
-    >
-      <Avatar {dp} name={poster} />
-    </div>
+    <Avatar {dp} name={poster} />
 
     <div class="p-2">
       <h5 class="font-semibold text-lg mb-1">

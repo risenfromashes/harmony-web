@@ -4,6 +4,7 @@ import { current_user } from "../stores/user";
 export interface UserHandle {
   id: string;
   user_name: string;
+  dp_link: string;
 }
 
 export interface User extends UserHandle {

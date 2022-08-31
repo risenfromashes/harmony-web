@@ -44,8 +44,8 @@
       <Route path="/home/*">
         <Home />
       </Route>
-      <Route path="/groupsettings">
-        <GroupSettings />
+      <Route path="/groupsettings/:gid" let:params>
+        <GroupSettings group_id={params.gid} />
       </Route>
     </div>
   </div>
