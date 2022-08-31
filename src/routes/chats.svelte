@@ -6,7 +6,9 @@
   import { loadGroups, loadGroupsDev } from "../lib/data/groups";
   import { groups } from "../lib/stores/groups";
 
-  loadGroups();
+  if ($groups.length === 0) {
+    loadGroups();
+  }
 </script>
 
 <svelte:head>

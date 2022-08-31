@@ -1,10 +1,37 @@
 <script lang="ts">
+  import { current_user } from "../lib/stores/user";
+
+  import { navigate } from "svelte-navigator";
+
   import { fly } from "svelte/transition";
+  import { current_group, current_subject, groups } from "../lib/stores/groups";
 
   let username = "";
   let password = "";
   let warning = false;
   let warning_text = "";
+
+  const login = async () => {
+    username = username.trim();
+    password = password.trim();
+    if (username.length === 0 || password.length === 0) {
+      warning = true;
+      warning_text = "User name or password cannot be empty";
+      return;
+    }
+    try {
+      await current_user.login(username, password);
+      $groups = [];
+      $current_group = undefined;
+      $current_subject = undefined;
+      warning = false;
+      navigate(`/`);
+    } catch (e) {
+      warning = true;
+      warning_text = `Error: ${e}`;
+      console.log(e);
+    }
+  };
 
   let reg = {
     first_name: "",
@@ -16,6 +43,43 @@
   };
   let other_pass = "";
   let matched = true;
+
+  const register = async () => {
+    if (!matched || reg.password.length < 5) {
+      return;
+    }
+
+    reg.user_name = reg.user_name.trim();
+    reg.password = reg.password.trim();
+    reg.first_name = reg.first_name.trim();
+    reg.middle_name = reg.middle_name.trim();
+    reg.last_name = reg.last_name.trim();
+
+    if (reg.user_name.length == 0 || reg.password.length == 0) {
+      warning = true;
+      warning_text = "Username or password cannot be empty";
+      return;
+    }
+
+    try {
+      let res = await fetch("/register", {
+        method: "POST",
+        body: JSON.stringify(reg),
+      });
+      const body = await res.json();
+
+      if (res.ok) {
+        warning = false;
+        pageStateLogin = true;
+      } else {
+        warning = true;
+        warning_text = body.reason;
+      }
+    } catch (e) {
+      warning = true;
+      warning_text = `Error: ${e}`;
+    }
+  };
 
   let pageStateLogin = true;
 
@@ -68,12 +132,12 @@
     {#if pageStateLogin}
       <div
         class="fixed left-0 h-full w-4/12"
-        in:fly={{
+        in:fly|local={{
           x: -300,
           duration: 500,
           delay: 100,
         }}
-        out:fly={{
+        out:fly|local={{
           x: -300,
           duration: 500,
         }}
@@ -122,6 +186,7 @@
             <button
               type="button"
               class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mr-5 py-2.5 px-4 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer align-middle"
+              on:click={login}
             >
               Log in
               <svg
@@ -140,7 +205,6 @@
 
             <button
               type="button"
-              href="/register"
               class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer align-middle"
               on:click={changeState}
             >
@@ -175,12 +239,12 @@
     {#if !pageStateLogin}
       <div
         class="fixed right-0 h-full w-4/12 flex justify-end pr-4"
-        in:fly={{
+        in:fly|local={{
           x: 300,
           duration: 500,
           delay: 200,
         }}
-        out:fly={{
+        out:fly|local={{
           x: 300,
           duration: 500,
         }}
@@ -366,12 +430,11 @@
             <button
               type="submit"
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium font-OpenSans rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >Submit</button
+              on:click={register}>Submit</button
             >
 
             <button
               type="button"
-              href="/login"
               class="text-white font-OpenSans bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-5 hover:cursor-pointer align-middle"
               on:click={changeState}
             >

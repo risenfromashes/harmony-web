@@ -28,7 +28,7 @@ module.exports = {
         forest:
           "linear-gradient(to bottom, #00000045, #00000096), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e')",
         nebula:
-          "linear-gradient(to bottom, #0f172a96, #0f172a96), url('https://images.unsplash.com/photo-1606125784258-570fc63c22c1')",
+          "linear-gradient(to bottom, #0f172a96, #0f172a96), url('/assets/bg-nebula.jpeg')",
       },
       fontFamily: {
         Hahmlet: ["Hahmlet", "serif"],

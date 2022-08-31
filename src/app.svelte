@@ -18,7 +18,7 @@
     ["My Groups", "/mygroups"],
     ["Edit Profile", "/editprofile"],
     ["About", "/about"],
-    ["Login&Register", "/login-register"],
+    ["Sign In/Up", "/login-register"],
   ]);
 </script>
 
@@ -27,6 +27,9 @@
     <Nav {routes} />
     <div class="">
       <Route path="/">
+        <Home />
+      </Route>
+      <Route path="/home/*">
         <Home />
       </Route>
       <Route path="/about">
