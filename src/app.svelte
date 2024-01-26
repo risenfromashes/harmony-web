@@ -6,6 +6,10 @@
   import Login from "./routes/login.svelte";
   import Register from "./routes/register.svelte";
   import Mygroups from "./routes/mygroups.svelte";
+  import Myevents from "./routes/myevents.svelte";
+  import Chats from "./routes/chats.svelte";
+  import Mypolls from "./routes/mypolls.svelte";
+  import Loginregister from "./routes/loginregister.svelte";
   import Home from "./routes/home.svelte";
   import GroupSettings from "./routes/groupsettings.svelte";
 
@@ -13,9 +17,8 @@
     ["Home", "/home"],
     ["My Groups", "/mygroups"],
     ["Edit Profile", "/editprofile"],
-    ["Login", "/login"],
-    ["Register", "/register"],
     ["About", "/about"],
+    ["Sign In/Up", "/login-register"],
   ]);
 </script>
 
@@ -26,14 +29,17 @@
       <Route path="/">
         <Home />
       </Route>
+      <Route path="/home/*">
+        <Home />
+      </Route>
       <Route path="/about">
         <About />
       </Route>
       <Route path="/login">
-        <Login />
+        <Loginregister pageStateLogin={true} />
       </Route>
       <Route path="/register">
-        <Register />
+        <Loginregister pageStateLogin={false} />
       </Route>
       <Route path="/editprofile">
         <EditProfile />
@@ -41,8 +47,17 @@
       <Route path="/mygroups">
         <Mygroups />
       </Route>
-      <Route path="/home/*">
-        <Home />
+      <Route path="/myevents">
+        <Myevents />
+      </Route>
+      <Route path="/chats">
+        <Chats />
+      </Route>
+      <Route path="/polls">
+        <Mypolls />
+      </Route>
+      <Route path="/login-register">
+        <Loginregister />
       </Route>
       <Route path="/groupsettings/:gid" let:params>
         <GroupSettings group_id={params.gid} />

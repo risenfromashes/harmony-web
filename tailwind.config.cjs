@@ -24,7 +24,12 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {},
+      backgroundImage: {
+        forest:
+          "linear-gradient(to bottom, #00000045, #00000096), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e')",
+        nebula:
+          "linear-gradient(to bottom, #0f172a96, #0f172a96), url('/assets/bg-nebula.jpeg')",
+      },
       fontFamily: {
         Hahmlet: ["Hahmlet", "serif"],
         JosefinSans: ["Josefin Sans", "sans-serif"],
